@@ -1,1 +1,8 @@
+# Node modules
 node_modules/
+
+# Build output
+build/
+
+# OS specific files
+.DS_Store
