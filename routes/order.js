@@ -15,12 +15,13 @@ router.get('/', async function(req, res, next) {
         }else{
             throw new Error("No product list");
         }
+      
+        let customerId = await query(`select customerId from customer 
+                                        where customerId = @customerId`,
+                                        {customerId : req.query.customerId});
 
-        const customerId = req.query.customerId;
-
-        let customerIds = await query('select customerId from customer',null);
         //check if customerid is number and customerid in database
-        if(isNaN(customerId) || customerIds.recordset.indexOf(customerId) == -1){
+        if(!customerId){
             throw new Error("Invalid customerId");
         }
 
