@@ -2,16 +2,43 @@ const express = require('express');
 const router = express.Router();
 const sql = require('mssql');
 const moment = require('moment');
+const query = require('../utilities/query').query;
 
-router.get('/', function(req, res, next) {
+router.get('/', async function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
-    res.write("<title>YOUR NAME Grocery Order Processing</title>");
+    res.write("<title>ChaiMaMa</title>");
 
-    let productList = false;
-    if (req.session.productList && req.session.productList.length > 0) {
-        productList = req.session.productList;
+    try{
+        let productList = false;
+        if (req.session.productList && req.session.productList.length > 0) {
+            productList = req.session.productList;
+        }else{
+            throw new Error("No product list");
+        }
+
+        const customerId = req.query.customerId;
+
+        let customerIds = await query('select customerId from customer',null);
+        //check if customerid is number and customerid in database
+        if(isNaN(customerId) || customerIds.recordset.indexOf(customerId) == -1){
+            throw new Error("Invalid customerId");
+        }
+
+        //store order in databse
+        
+       
+
+
+    }catch(err){
+        if(err.message == "Invalid customerId"){
+            res.write("<h1>Invalid customer id. Go back to the previous page and try again.</h1>")
+        }else if(err.message == "No product list"){
+            res.write("<h1>Your cart is empty</h1>")
+        }else{
+            res.write("<h1>Error connecting to database: " + err + "</h1>");
+        }
+        console.dir(err);
     }
-
     /**
     Determine if valid customer id was entered
     Determine if there are products in the shopping cart
