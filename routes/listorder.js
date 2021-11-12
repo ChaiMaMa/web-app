@@ -33,19 +33,32 @@ router.get('/', function(req, res, next) {
     try {
         let pool = await sql.connect(dbConfig);
 
-        let sqlQuery1 = "SELECT o.orderId as ordId,o.orderDate,c.customerId,concat(firstName,' ',lastName) as name,totalAmount, p.productId, p.quantity, price FROM customer c join ordersummary o on c.customerId = o.customerId join orderproduct p on p.orderId = o.orderId";
+        let sqlQuery1 = "SELECT orderId, orderDate, customer.customerId, concat(firstName,' ',lastName) as name, totalAmount FROM customer join ordersummary on customer.customerId = ordersummary.customerId";
         let results1 = await pool.request()
             .query(sqlQuery1);
-        let sqlQuery2 = "SELECT count(*) from orderproduct";
-        let results2 = await pool.request()
-            .query(sqlQuery2);
-        res.write("<table><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
+
+        res.write("<title>ChaiMaMa</title>");
+
+        res.write("<h1>Order List</h1>");
+
+        res.write("<table border=\"1\"><tbody><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>"); 
+        
         for (let i = 0; i < results1.recordset.length; i++) {
-             let result1 = results1.recordset[i];
-             for(let j=0; j< result
-             if(result1.ordId == result)
-             res.write("<tr><td>" + result1.ordId + "</td><td>" + result1.orderDate + "</td><td>" + result1.customerId + "</td><td>" + result1.name + "</td><td>" + result1.totalAmount + "</td></tr>");
+            let result1 = results1.recordset[i];
+            res.write("<tr><td>" + result1.orderId + "</td><td>" + moment(result1.orderDate).format("YYYY-mm-d HH:m:s") + "</td><td>" + result1.customerId + "</td><td>" + result1.name + "</td><td>" + result1.totalAmount + "</td>");
+            let ordId = result1.orderId;
+            let sqlQuery2 = "SELECT * from orderproduct where orderId=" + ordId;
+            let results2 = await pool.request()
+            .query(sqlQuery2);
+            res.write("<tr align=\"right\"><td colspan=\"5\"><table border=\"1\">");
+            res.write("<tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>");
+             for(let j=0; j< results2.recordset.length; j++){
+                 let result2 = results2.recordset[j];
+                 res.write("<tr><td>" + result2.productId + "</td><td>" + result2.quantity + "</td><td>"+ "$" + result2.price.toFixed(2) + "</td>");
         }
+
+        res.write("</table></td></tr>");
+    }
     
         res.write("</table>");
 
