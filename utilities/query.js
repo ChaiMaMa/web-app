@@ -25,4 +25,15 @@ async function query(query, params) {
     return results;
 }
 
+/**
+ * 
+ * @param {String} query sql query (e.g. UPDATE table SET column = @value WHERE id = @id)
+ * @param {Object} params parameters to be passed to the query
+ * @returns {Promise<sql.IResult<any>} The result of the query
+ */
+async function update(query, params) {
+    return query(query, params);
+}
+
 exports.query = query;
+exports.update = update;
