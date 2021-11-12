@@ -8,6 +8,7 @@ const moment = require('moment');
 router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     res.write('<title>ChaiMaMa</title>');
+    res.write("<h1>Order List</h1>");
 
     /**
     Useful code for formatting currency:
@@ -36,8 +37,6 @@ router.get('/', function(req, res, next) {
         let sqlQuery1 = "SELECT orderId, orderDate, customer.customerId, concat(firstName,' ',lastName) as name, totalAmount FROM customer join ordersummary on customer.customerId = ordersummary.customerId";
         let results1 = await pool.request()
             .query(sqlQuery1);
-
-        res.write("<h1>Order List</h1>");
 
         res.write("<table border=\"1\"><tbody><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>"); 
         
