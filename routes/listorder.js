@@ -31,36 +31,37 @@ s
             null
         );
         res.write(`
-        <html>
-        <head>
-        <title>YOUR NAME Order List</title>
-        </head>
-        <body>
-            <style>
-                table, th, td {
-                    border: 1px solid black;
-                }
-            </style>
-            <h1>Order List</h1>
-            <table>
-                <tr>
-                    <th>Order Id</th>
-                    <th>Order Date</th>
-                    <th>Customer Id</th>
-                    <th>Customer Name</th>
-                    <th>Total Amount</th>
-                </tr>
+<html>
+<head>
+<title>YOUR NAME Order List</title>
+</head>
+<body>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    <h1>Order List</h1>
+    <table>
+        <tr>
+            <th>Order Id</th>
+            <th>Order Date</th>
+            <th>Customer Id</th>
+            <th>Customer Name</th>
+            <th>Total Amount</th>
+        </tr>
         `);
         for (let i = 0; i < orders.recordset.length; i++) {
             let order = orders.recordset[i];
             // console.dir(order);
             res.write(`
-                <tr><td>${order.orderId}</td>
-                    <td>${moment(order.orderDate).format('YYYY-mm-d HH:m:s')}</td>
-                    <td>${order.cusId}</td>
-                    <td>${order.name}</td>
-                    <td>${order.totalAmount.toFixed(2)}</td>
-                </tr>"
+        <tr>
+            <td>${order.orderId}</td>
+            <td>${moment(order.orderDate).format('YYYY-mm-d HH:m:s')}</td>
+            <td>${order.cusId}</td>
+            <td>${order.name}</td>
+            <td>${order.totalAmount.toFixed(2)}</td>
+        </tr>
             `);
 
             // Get the products in the order
@@ -73,36 +74,36 @@ s
             });
 
             res.write(`
-            <tr align="right">
-                <td colspan="5">
-                    <table>
-                        <tr>
-                            <th>Product Id</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                        </tr>
+        <tr align="right">
+            <td colspan="5">
+                <table>
+                    <tr>
+                        <th>Product Id</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
             `);
 
             for (let j = 0; j < products.recordset.length; j++) {
                 let product = products.recordset[j];
                 res.write(`
-                        <tr>
-                            <td>${product.productId}</td>
-                            <td>${product.quantity}</td>
-                            <td>${product.price.toFixed(2)}</td>
-                        </tr>
+                    <tr>
+                        <td>${product.productId}</td>
+                        <td>${product.quantity}</td>
+                        <td>${product.price.toFixed(2)}</td>
+                    </tr>
                 `);
             }
             res.write(`
-                    </table>
-                </td>
-            </tr>
+                </table>
+            </td>
+        </tr>
             `);
         }
         res.write(`
-            </table>
-        </body>
-        </html>
+    </table>
+</body>
+</html>
         `);
     } catch (err) {
         res.write("<h1>Error connecting to database: " + err + "</h1>");
