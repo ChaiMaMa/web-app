@@ -21,7 +21,7 @@ router.get('/', async function (req, res, next) {
 
     // Get the product name to search for
     let name = req.query.productName;
-    let condition = name == undefined || name.length == 0 ? "" : "WHERE productName LIKE '%" + name + "%'";
+    let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'": "";
 
     let products = await query(`
         SELECT * FROM product
