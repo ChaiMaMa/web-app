@@ -19,7 +19,7 @@ router.get('/', async function (req, res, next) {
         </form>
         <h1>All Products</h1>
     `);
-    //need parameter passing?
+   
     
     
 
