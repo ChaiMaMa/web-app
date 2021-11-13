@@ -31,8 +31,8 @@ async function query(query, params) {
  * @param {Object} params parameters to be passed to the query
  * @returns {Promise<sql.IResult<any>} The result of the query
  */
-async function update(query, params) {
-    return query(query, params);
+async function update(queryStr, params) {
+    return query(queryStr, params);
 }
 
 exports.query = query;
