@@ -29,7 +29,7 @@ services:
         expose:
             - '1433'
         volumes:
-            - cosc304-db:/var/lib/mssql
+            - cosc304-db:/var/opt/mssql
         networks:
             node-network:
                 aliases:

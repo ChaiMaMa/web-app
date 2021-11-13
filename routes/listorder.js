@@ -1,15 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const sql = require('mssql');
 const moment = require('moment');
+const query = require('../utilities/query').query;
 
-
-
-router.get('/', function(req, res, next) {
+router.get('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
-    res.write('<title>ChaiMaMa Order List</title>');
-    res.write('<h1>Order List</h1>');
-
     /**
     Useful code for formatting currency:
         let num = 2.87879778;
@@ -21,56 +16,98 @@ router.get('/', function(req, res, next) {
     /** For each order in the results
             Print out the order header information
             Write a query to retrieve the products in the order
-
+s
             For each product in the order
                 Write out product information 
     **/
-  
-   /** Create connection, and validate that it connected successfully **/
 
-
-    
-   (async function() {
+    /** Create connection, and validate that it connected successfully **/
     try {
-        let pool = await sql.connect(dbConfig);
-
-        let sqlQuery1 = "SELECT o.orderId as ordId,o.orderDate,c.customerId,concat(firstName,' ',lastName) as name,totalAmount FROM customer c join ordersummary o on c.customerId = o.customerId";
-        let results1 = await pool.request()
-            .query(sqlQuery1);
-        
-        res.write("<table border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
-        for (let i = 0; i < results1.recordset.length; i++) {
-             let result1 = results1.recordset[i];
-             res.write("<tr><td>" + result1.ordId + "</td><td>" + moment(result1.orderDate).format('YYYY-mm-d HH:m:s') + "</td><td>" + result1.customerId + "</td><td>" + result1.name + "</td><td>" + result1.totalAmount + "</td></tr>");
-             res.write("<tr align= \"right\" ><td colspan= \"5\"><table border = \"1\"; ><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>");
-
-             let sqlQuery2 = "SELECT productId, quantity, price from orderproduct where orderId =" + result1.ordId;
-             let results2 = await pool.request()
-                .query(sqlQuery2);
-
-              for(let j=0; j <results2.recordset.length; j++){
-                let result2 = results2.recordset[j];
-                res.write("<tr><td>" + result2.productId + "</td><td>" + result2.quantity + "</td><td>" + result2.price + "</td></tr>");    
-            }
-
-             res.write("</table>");
-             res.write("</td></tr>");
-            }
-         
-            res.write("</table>");
-            res.end();
+        let orders = await query(`
+        SELECT orderId, orderDate, C.customerId AS cusId, CONCAT(C.firstName, ' ', C.lastName) AS name, totalAmount
+        FROM customer C JOIN ordersummary O ON C.customerId = O.customerId`,
+            null
+        );
+        res.write(`
+<html>
+<head>
+<title>YOUR NAME Order List</title>
+</head>
+<body>
+    <style>
+        table, th, td {
+            border: 1px solid black;
         }
-        
+    </style>
+    <h1>Order List</h1>
+    <table>
+        <tr>
+            <th>Order Id</th>
+            <th>Order Date</th>
+            <th>Customer Id</th>
+            <th>Customer Name</th>
+            <th>Total Amount</th>
+        </tr>
+        `);
+        for (let i = 0; i < orders.recordset.length; i++) {
+            let order = orders.recordset[i];
+            // console.dir(order);
+            res.write(`
+        <tr>
+            <td>${order.orderId}</td>
+            <td>${moment(order.orderDate).format('YYYY-mm-d HH:m:s')}</td>
+            <td>${order.cusId}</td>
+            <td>${order.name}</td>
+            <td>${order.totalAmount.toFixed(2)}</td>
+        </tr>
+            `);
 
-     catch(err) {
+            // Get the products in the order
+            let products = await query(`
+            SELECT productId, quantity, price
+            FROM orderproduct
+            WHERE orderId = @orderId
+            `, {
+                orderId: order.orderId
+            });
+
+            res.write(`
+        <tr align="right">
+            <td colspan="5">
+                <table>
+                    <tr>
+                        <th>Product Id</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+            `);
+
+            for (let j = 0; j < products.recordset.length; j++) {
+                let product = products.recordset[j];
+                res.write(`
+                    <tr>
+                        <td>${product.productId}</td>
+                        <td>${product.quantity}</td>
+                        <td>${product.price.toFixed(2)}</td>
+                    </tr>
+                `);
+            }
+            res.write(`
+                </table>
+            </td>
+        </tr>
+            `);
+        }
+        res.write(`
+    </table>
+</body>
+</html>
+        `);
+    } catch (err) {
+        res.write("<h1>Error connecting to database: " + err + "</h1>");
         console.dir(err);
-        res.write(err)
-        res.end();
-}
-})();
-
-
-        next();
-
+    }
+    res.end();
 });
+
 module.exports = router;
