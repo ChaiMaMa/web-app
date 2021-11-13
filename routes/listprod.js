@@ -1,10 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const query = require('../utilities/query').query;
+const sql = require('mssql');
 
-router.get('/', async function (req, res, next) {
+dbConfig = {
+    user: 'keizo',
+    password: 'KeizoKato427pop!',
+    server: 'sql304.ok.ubc.ca',
+    database: 'Product',
+    options: {
+      'enableArithAbort': true,
+      'encrypt': false,
+    }
+}
+
+
+
+router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
-    //get method
+
+ (async function(){
+ try{
+    let pool = await sql.connect(dbConfig)
+
+    //get method 
     res.write(`
     <head>
         <title>YOUR NAME Grocery</title>
@@ -19,22 +37,18 @@ router.get('/', async function (req, res, next) {
         </form>
         <h1>All Products</h1>
     `);
-    //need parameter passing?
-    
-    
+
 
     // Get the product name to search for
     let name = req.query.productName;
-    let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'": "";
+    
 
-    let products = await query(`
-        SELECT * FROM product
-        ${condition}
-    `, null
-    );
+    /** $name now contains the search string the user entered
+     Use it to build a query and print out the results. */
+    let nameSerchlist = "SELECT name,price FROM Product"
 
-   //listing product name and price
-    res.write(`
+    //HTML format for table of products
+     res.write(`
         <table>
             <tr>
                 <th></th>
@@ -43,26 +57,59 @@ router.get('/', async function (req, res, next) {
             </tr>
     `);
 
-    for (let product of products.recordset) {
-        res.write(`
-            <tr>
+    //case 1: the user types the productName-> print the products's name and price || case 2: the user types nothing list products' names and prices
+    if(name =! null && !name.equals("")){
+        let SQLSt = await pool.request().query(nameSerchlist + "where name Like '%"+name+"%'")
+        
+        let printProduct = res.write(`
+        <tr>
                 <td>
-                    <a href="/addcart?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">Add to cart</a>
+                    <a href="/addcart?id=${nameSerchlist.productId}&name=${nameSerchlist.productName}&price=${product.productPrice}">Add to cart</a>
                 </td>
-                <td>${product.productName}</td>
-                <td>$${product.productPrice.toFixed(2)}</td>
-            </tr>
-        `);
+                <td>${SQLSt.productName}</td>
+                <td>${SQLSt.productPrice}</td>
+        </tr>
+       `);
+
+        
+    }else{
+        for (let nameSerchlist of nameSerchlist.recordset) {
+            printProduct;
+        }
     }
     
-    //Creating URL for each item and calling addcard
-    
+    /** Create and validate connection **/
 
-    res.write(`
-        </table>
-    </body>
-    `);
+    /** Print out the table of products **/
+     /** 
+    For each product create a link of the form
+    addcart?id=<productId>&name=<productName>&price=<productPrice>
+    **/
+   
+
+
+
+
+
+    
+      /* Useful code for formatting currency:
+        let num = 2.89999;
+        num = num.toFixed(2);
+    **/
+
     res.end();
-});
+
+
+
+ }catch(error){
+    console.dir(err);
+            res.write(err)
+            res.end();
+    }
+}
+ 
+
+);})
+
 
 module.exports = router;
