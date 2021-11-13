@@ -142,6 +142,8 @@ router.get('/', async function(req, res, next) {
 
             `);
 
+        res.write('<h2><a href="/">Return to shopping</a></h2>');
+
 
     }catch(err){
         if(err.message == "Invalid customerId"){
