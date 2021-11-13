@@ -5,7 +5,6 @@ const query = require('../utilities/query').query;
 
 router.get('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
-
     /**
     Useful code for formatting currency:
         let num = 2.87879778;
@@ -24,7 +23,6 @@ s
 
     /** Create connection, and validate that it connected successfully **/
     try {
-
         let orders = await query(`
         SELECT orderId, orderDate, C.customerId AS cusId, CONCAT(C.firstName, ' ', C.lastName) AS name, totalAmount
         FROM customer C JOIN ordersummary O ON C.customerId = O.customerId`,
