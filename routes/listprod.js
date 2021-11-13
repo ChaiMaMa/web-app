@@ -19,7 +19,7 @@ router.get('/', async function (req, res, next) {
         </form>
         <h1>All Products</h1>
     `);
-    //need parameter passing 
+    //need parameter passing?
     
     
 
@@ -54,6 +54,8 @@ router.get('/', async function (req, res, next) {
             </tr>
         `);
     }
+    
+    //Creating URL for each item and calling addcard
     
 
     res.write(`
