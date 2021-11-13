@@ -4,6 +4,7 @@ const query = require('../utilities/query').query;
 
 router.get('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
+    //get method
     res.write(`
     <head>
         <title>YOUR NAME Grocery</title>
@@ -18,6 +19,9 @@ router.get('/', async function (req, res, next) {
         </form>
         <h1>All Products</h1>
     `);
+    //need parameter passing 
+    
+    
 
     // Get the product name to search for
     let name = req.query.productName;
@@ -29,7 +33,7 @@ router.get('/', async function (req, res, next) {
     `, null
     );
 
-
+   //listing product name and price
     res.write(`
         <table>
             <tr>
@@ -50,6 +54,7 @@ router.get('/', async function (req, res, next) {
             </tr>
         `);
     }
+    
 
     res.write(`
         </table>
