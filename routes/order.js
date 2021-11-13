@@ -114,7 +114,7 @@ router.get('/', async function(req, res, next) {
                     <td>${orderProduct.name}</td>
                     <td align = "center">${orderProduct.quantity}</td>
                     <td align = "right">$${orderProduct.price}</td>
-                    <td align = "right">${orderProduct.subtotal}</td>
+                    <td align = "right">$${orderProduct.subtotal}</td>
                 </tr>
                 `
             );
