@@ -1,25 +1,29 @@
 class ValidationError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = this.constructor.name;
-    }
-}
-
-class PropertyRequiredError extends ValidationError {
     constructor(property) {
-        super(`Missing property: ${property}`);
+        super("Invalid " + property);
+        this.name = this.constructor.name;
         this.property = property;
     }
 }
 
-class OperationFailedError extends SQLError {
-    constructor(message) {
-        super(message);
+class PropertyRequiredError extends Error {
+    constructor(property) {
+        super(`Missing property: ${property}!`);
+        this.name = this.constructor.name;
+        this.property = property;
+    }
+}
+
+class UserNotFoundError extends Error {
+    constructor(customerId) {
+        super(`User ${customerId} not found!`);
+        this.name = this.constructor.name;
+        this.customerId = customerId;
     }
 }
 
 module.exports = {
     ValidationError,
     PropertyRequiredError,
-    OperationFailedError
+    UserNotFoundError
 };
