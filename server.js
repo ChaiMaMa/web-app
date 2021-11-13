@@ -16,7 +16,7 @@ const app = express();
 dbConfig = {
   user: 'SA',
   password: 'YourStrong@Passw0rd',
-  server: 'db',
+  server: 'cosc304-db',
   database: 'tempdb',
   options: {
     'enableArithAbort': true,
@@ -56,7 +56,7 @@ app.use('/order', order);
 // Rendering the main page
 app.get('/', function (req, res) {
   res.render('index', {
-    title: "YOUR NAME Grocery Main Page"
+    title: "ChaiMaMa"
   });
 })
 

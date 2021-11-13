@@ -1,32 +1,60 @@
 const express = require('express');
 const router = express.Router();
-const sql = require('mssql');
+const query = require('../utilities/query').query;
 
-router.get('/', function(req, res, next) {
+router.get('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
-    res.write("<title>YOUR NAME Grocery</title>")
+    res.write(`
+    <head>
+        <title>YOUR NAME Grocery</title>
+    </head>
+    <body>
+        <h1>Search for the products you want to buy:</h1>
+        <form action="/listprod" method="get">
+            <input type="text" name="productName" size="50">
+            <input type="submit" value="Search">
+            <input type="reset" value="Reset">
+            <p>(Leave blank for all products)</p>
+        </form>
+        <h1>All Products</h1>
+    `);
 
     // Get the product name to search for
     let name = req.query.productName;
-    
-    /** $name now contains the search string the user entered
-     Use it to build a query and print out the results. **/
+    let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'": "";
 
-    /** Create and validate connection **/
+    let products = await query(`
+        SELECT * FROM product
+        ${condition}
+    `, null
+    );
 
-    /** Print out the ResultSet **/
 
-    /** 
-    For each product create a link of the form
-    addcart?id=<productId>&name=<productName>&price=<productPrice>
-    **/
+    res.write(`
+        <table>
+            <tr>
+                <th></th>
+                <th>Product Name</th>
+                <th>Price</th>
+            </tr>
+    `);
 
-    /**
-        Useful code for formatting currency:
-        let num = 2.89999;
-        num = num.toFixed(2);
-    **/
+    for (let product of products.recordset) {
+        res.write(`
+            <tr>
+                <td>
+                    <a href="/addcart?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">Add to cart</a>
+                </td>
+                <td>${product.productName}</td>
+                <td>$${product.productPrice.toFixed(2)}</td>
+            </tr>
+        `);
+    }
 
+    res.write(`
+        </table>
+    </body>
+    `);
     res.end();
 });
 
