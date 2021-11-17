@@ -12,8 +12,8 @@ router.get('/', function(req, res, next) {
         res.write("<th>Price</th><th>Subtotal</th></tr>");
 
         let total = 0;
-        for (let i = 0; i < productList.length; i++) {
-            product = productList[i];
+        for (let productId in productList) {
+            let product = productList[productId];
             if (!product) {
                 continue
             }

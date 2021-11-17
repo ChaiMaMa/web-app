@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     // create a new list.
     let productList = false;
     if (!req.session.productList) {
-        productList = [];
+        productList = {};
     } else {
         productList = req.session.productList;
     }

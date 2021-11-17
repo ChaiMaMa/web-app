@@ -88,7 +88,7 @@ s
                     <tr>
                         <td>${product.productId}</td>
                         <td>${product.quantity}</td>
-                        <td>${product.price.toFixed(2)}</td>
+                        <td>$${product.price.toFixed(2)}</td>
                     </tr>
                 `);
             }
