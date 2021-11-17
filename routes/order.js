@@ -9,8 +9,7 @@ const { ValidationError, PropertyRequiredError, UserNotFoundError } = require('.
 
 router.get('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
-    res.write("<title>ChaiMaMa</title>");
-
+    res.write("<title>Chai MaMa Order Processing</title>");
     try {
         /** 
          * Product list is an object with keys being the product id and the value being the product object.
