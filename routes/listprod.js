@@ -6,7 +6,7 @@ router.get('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     res.write(`
     <head>
-        <title>YOUR NAME Grocery</title>
+        <title>ChaiMaMa</title>
     </head>
     <body>
         <h1>Search for the products you want to buy:</h1>
