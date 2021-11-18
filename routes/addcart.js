@@ -13,6 +13,7 @@ router.get('/', function (req, res, next) {
         productList = req.session.productList;
     }
 
+
     // Check if updates are requested
     if (req.query.update) {
         let id = req.query.id;
@@ -24,6 +25,7 @@ router.get('/', function (req, res, next) {
                 productList[id].quantity = num;
             } else {
                 delete productList[id];
+                req.session.cart_size--;
             }
 
         } else {
@@ -56,6 +58,7 @@ router.get('/', function (req, res, next) {
                 "quantity": 1
             };
         }
+        req.session.cart_size++;
     }
 
 

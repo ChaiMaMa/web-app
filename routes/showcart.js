@@ -55,7 +55,11 @@ router.get('/', function (req, res, next) {
             total = total + product.quantity * product.price;
         }
         res.write("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td><td align=\"right\" id=\"total\">$" + total.toFixed(2) + "</td></tr></table>");
-        res.write("<h2><a href=\"checkout\">Check Out</a></h2>");
+
+        // If there is any items in the cart, show the checkout button
+        if (req.session.cart_size > 0) {
+            res.write("<h2><a href=\"checkout\">Check Out</a></h2>");
+        }
     } else {
         res.write("<h1>Your shopping cart is empty!</h1>");
     }
