@@ -3,6 +3,11 @@ const router = express.Router();
 const query = require('../utilities/query').query;
 
 router.get('/', async function (req, res, next) {
+
+    if (!req.session.cart_size) {
+        req.session.cart_size = 0;
+    }
+
     res.setHeader('Content-Type', 'text/html');
     //get method
     res.write(`
@@ -20,12 +25,12 @@ router.get('/', async function (req, res, next) {
         <h1>All Products</h1>
     `);
     //need parameter passing?
-    
-    
+
+
 
     // Get the product name to search for
     let name = req.query.productName;
-    let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'": "";
+    let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'" : "";
 
     let products = await query(`
         SELECT * FROM product
@@ -33,7 +38,7 @@ router.get('/', async function (req, res, next) {
     `, null
     );
 
-   //listing product name and price
+    //listing product name and price
     res.write(`
         <table>
             <tr>
@@ -54,9 +59,9 @@ router.get('/', async function (req, res, next) {
             </tr>
         `);
     }
-    
+
     //Creating URL for each item and calling addcard
-    
+
 
     res.write(`
         </table>

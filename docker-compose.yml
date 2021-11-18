@@ -5,6 +5,9 @@ services:
             context: ./
             dockerfile: Dockerfile
         image: node-app
+        environment:
+            DB_SERVER: cosc304-db
+            SA_PASSWORD: 'YourStrong@Passw0rd'
         depends_on:
             - db
         container_name: node-app
@@ -34,7 +37,7 @@ services:
             node-network:
                 aliases:
                     - cosc304-db
-volumes: 
-    cosc304-db:
+volumes:
+    cosc304-db: null
 networks:
-    node-network:
+    node-network: null

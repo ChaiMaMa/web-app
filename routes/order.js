@@ -152,7 +152,9 @@ router.get('/', async function (req, res, next) {
         res.write('<h2><a href="/">Return to shopping</a></h2>');
 
         /** Clear session/cart **/
-        req.session.productList = null;
+        delete req.session.productList;
+        delete req.session.cart_size;
+
 
     } catch (err) {
         let message = false;

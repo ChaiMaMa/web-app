@@ -15,8 +15,8 @@ const app = express();
 // This DB Config is accessible globally
 dbConfig = {
   user: 'SA',
-  password: 'YourStrong@Passw0rd',
-  server: 'cosc304-db',
+  password: process.env.SA_PASSWORD,
+  server: process.env.DB_SERVER,
   database: 'tempdb',
   options: {
     'enableArithAbort': true,
