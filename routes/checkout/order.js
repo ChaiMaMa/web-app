@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const sql = require('mssql');
-const query = require('../utilities/query').query;
-const update = require('../utilities/query').update;
-const isNumeric = require('../utilities/validators').isNumeric;
-const { ValidationError, PropertyRequiredError, UserNotFoundError } = require('../utilities/errors');
+const query = require('../../utilities/query').query;
+const update = require('../../utilities/query').update;
+const isNumeric = require('../../utilities/validators').isNumeric;
+const { ValidationError, PropertyRequiredError, UserNotFoundError } = require('../../utilities/errors');
 
 router.get('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
