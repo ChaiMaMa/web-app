@@ -41,6 +41,7 @@ app.use(session({
 // Setting up the rendering engine
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
+app.set('views', './public')
 
 // Setting up Express.js routes.
 // These present a "route" on the URL of the site.
