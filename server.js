@@ -1,14 +1,14 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-const session = require('express-session')
+const session = require('express-session');
 
 let loadData = require('./routes/loaddata');
-let listOrder = require('./routes/listorder');
-let listProd = require('./routes/listprod');
-let addCart = require('./routes/addcart');
-let showCart = require('./routes/showcart');
-let checkout = require('./routes/checkout');
-let order = require('./routes/order');
+let listOrder = require('./routes/account/listorder');
+let listProd = require('./routes/products/listprod');
+let addCart = require('./routes/checkout/addcart');
+let showCart = require('./routes/checkout/showcart');
+let checkout = require('./routes/checkout/checkout');
+let order = require('./routes/checkout//order');
 
 const app = express();
 
@@ -23,6 +23,10 @@ dbConfig = {
     'encrypt': false,
   }
 }
+
+// Setting up JSON Parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Setting up the session.
 // This uses MemoryStorage which is not
@@ -62,4 +66,4 @@ app.get('/', function (req, res) {
 })
 
 // Starting our Express app
-app.listen(3000)
+app.listen(process.env.PORT || 3000, () => console.log('Server started on port ' + (process.env.PORT || 3000)));
