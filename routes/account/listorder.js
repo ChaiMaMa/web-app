@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
-const query = require('../utilities/query').query;
+const query = require('../../utilities/query').query;
 
 router.get('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');

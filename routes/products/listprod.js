@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const query = require('../utilities/query').query;
+const query = require('../../utilities/query').query;
 
 router.get('/', async function (req, res, next) {
 
