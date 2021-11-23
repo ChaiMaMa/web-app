@@ -38,10 +38,20 @@ class NotEnoughInventory extends Error {
         this.inventory = inventory;
     }
 }
+
+class OrderEmptyError extends Error {
+    constructor(orderId) {
+        super(`Order ${orderId}is empty`);
+        this.name = this.constructor.name;
+        this.orderId = orderId;
+    }
+}
+
 module.exports = {
     ValidationError,
     PropertyRequiredError,
     UserNotFoundError,
     ProductNotFound,
-    NotEnoughInventory
+    NotEnoughInventory,
+    OrderEmptyError
 };
