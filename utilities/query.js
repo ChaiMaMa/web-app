@@ -1,5 +1,4 @@
 const sql = require('mssql');
-const moment = require('moment');
 const { ProductNotFound, NotEnoughInventory } = require('./errors');
 
 /**
@@ -34,67 +33,68 @@ async function update(queryStr, params) {
 
 /**
  * Update the database with shipments of ordered product.
- * @param {any} orderedItem The object representing the ordered item.
+ * @param {sql.IRecordSet<any>} orderedItems The object representing the ordered item.
+ * @param {Array<string>} changes The log of successful steps in transaction.
  */
-async function updateShipment(orderedItem) {
+async function updateShipment(orderedItems, changes) {
     let transaction = new sql.Transaction(); // Use global connection pool
     await transaction.begin();
 
     // TODO: For each item verify sufficient quantity available in warehouse 1.
     let warehouseId = 1;
-    let itemInventory = await transaction.request().input(
-        "warehouseId",
-        sql.Int,
-        warehouseId
-    ).input(
-        "productId",
-        sql.Int,
-        orderedItem.productId
-    ).input(
-        "orderedQuantity",
-        sql.Int,
-        Number(orderedItem.quantity)
-    ).query(
-        `
-        UPDATE productinventory
-        SET quantity = quantity - @orderedQuantity
-        OUTPUT inserted.quantity
-        WHERE warehouseId = @warehouseId AND productId = @productId
-        `
-    );
-    console.log(orderedItem);
-    console.log(itemInventory);
-
-    // TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
-    let result = itemInventory.recordset[0];
-    if (!result) {
-        await transaction.rollback();
-        throw new ProductNotFound(orderedItem.productId);
-    } else if (result.quantity < 0) {
-        await transaction.rollback();
-        throw new NotEnoughInventory(orderedItem.productId, result.quantity);
-    } else {
-        // TODO: Create a new shipment record.
-        let insertResult = await transaction.request().input(
-            'shipmentDate',
-            orderedItem.orderDate
+    for (let orderedItem of orderedItems) {
+        let itemInventory = await transaction.request().input(
+            "warehouseId",
+            sql.Int,
+            warehouseId
         ).input(
-            'warehouseId',
-            orderedItem.warehouseId
+            "productId",
+            sql.Int,
+            orderedItem.productId
+        ).input(
+            "orderedQuantity",
+            sql.Int,
+            Number(orderedItem.quantity)
         ).query(
             `
-            INSERT INTO shipment (shipmentDate, warehouseId)
-            OUTPUT inserted.shipmentId
-            VALUES (@shipmentDate, @warehouseId)
-        `
+            UPDATE productinventory
+            SET quantity = quantity - @orderedQuantity
+            OUTPUT inserted.quantity
+            WHERE warehouseId = @warehouseId AND productId = @productId
+            `
         );
 
-        console.log("After inserting: ");
-        console.log(insertResult);
-
-        await transaction.commit();
+        // TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
+        let result = itemInventory.recordset[0];
+        if (!result) {
+            await transaction.rollback();
+            throw new ProductNotFound(orderedItems.productId);
+        } else if (result.quantity < 0) {
+            await transaction.rollback();
+            throw new NotEnoughInventory(orderedItems.productId, result.quantity);
+        } else {
+            changes.push(`Ordered Product ID: ${orderedItem.productId} Qty: ${orderedItem.quantity} Previous inventory: ${result.quantity + orderedItem.quantity} New inventory: ${result.quantity}`);
+        }
     }
+
+    // TODO: Create a new shipment record.
+    let insertResult = await transaction.request().input(
+        'shipmentDate',
+        orderedItems[0].orderDate
+    ).input(
+        'warehouseId',
+        warehouseId
+    ).query(
+        `
+        INSERT INTO shipment (shipmentDate, warehouseId)
+        OUTPUT inserted.shipmentId
+        VALUES (@shipmentDate, @warehouseId)
+        `
+    );
+
+    await transaction.commit();
 }
+
 
 module.exports = {
     query,

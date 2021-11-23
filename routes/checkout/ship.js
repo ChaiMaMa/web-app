@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { TransactionError } = require('mssql');
-const { NotEnoughInventory, ProductNotFound } = require('../../utilities/errors');
+const { NotEnoughInventory, ProductNotFound, OrderEmptyError } = require('../../utilities/errors');
 const { isValidOrder } = require('../../utilities/validators');
 const { updateShipment, query } = require('../../utilities/query');
+const { reset } = require('nodemon');
 
 router.get('/', function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
@@ -15,34 +16,51 @@ router.get('/', function (req, res, next) {
         (async function () {
             // TODO: Check if valid order id
             let isValid = await isValidOrder(Number(orderId));
+            let changes = [];
             if (isValid) {
                 try {
 
                     // TODO: Retrieve all items in order with given id
-                    let orderedItems = await query(`
+                    let orderedItems = await query(
+                        `
                         SELECT OS.orderId AS orderId, productId, quantity, orderDate
                         FROM ordersummary AS OS, orderproduct AS OP
                         WHERE OS.orderId = OP.orderId AND OS.orderId = @orderId
-                    `,
-                        {
-                            orderId: orderId
-                        }
+                        `,
+                        { orderId: orderId }
                     );
 
                     // Run transaction for each item
-                    for (item of orderedItems.recordset) {
-                        // TODO: Start a transaction
-                        // Might throw an error
-                        await updateShipment(item);
+                    // TODO: Start a transaction
+                    // Might throw an error if a rollback is triggered or any sql-related errors occur
+                    if (orderedItems.recordset.length > 0) {
+                        await updateShipment(orderedItems.recordset, changes);
+                        for (let change of changes) {
+                            res.write(`<p>${change}<p>`);
+                        }
+                        res.write(
+                            `
+                            <h1>Order ${orderId} shipment has been processed!</h1>
+                            `
+                        );
+                    } else {
+                        throw new OrderEmptyError(orderId);
                     }
+
+
                 } catch (err) {
+                    // For logging purposes
+                    for (let change of changes) {
+                        res.write(`<p>${change}<p>`);
+                    }
+
                     if (err instanceof TransactionError) {
                         res.status(500);
                     } else if (err instanceof NotEnoughInventory) {
                         res.status(500).write(`
                         <h1>${err.message}</h1>
                         `);
-                    } else if (err instanceof ProductNotFound) {
+                    } else if (err instanceof ProductNotFound || err instanceof OrderEmptyError) {
                         res.status(400).write(`
                         <h1>${err.message}</h1>
                         `);
@@ -52,11 +70,14 @@ router.get('/', function (req, res, next) {
                         `);
                     }
                     console.dir(err);
-                    res.end();
                 }
+
+                res.write(`<a href='/'><h2>Return to home page</h2></a>`);
             } else {
-                res.status(404).end();
+                res.status(404);
             }
+            res.end();
+
         })();
     } else {
         res.status(404).end();
