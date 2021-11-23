@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
         <head> 
             <style>
                 input[type='number']{
-                    width: 50px;s
+                    width: 50px;
                 } 
 
                 button {
