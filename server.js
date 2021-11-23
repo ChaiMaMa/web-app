@@ -10,6 +10,7 @@ let showCart = require('./routes/checkout/showcart');
 let checkout = require('./routes/checkout/checkout');
 let order = require('./routes/checkout//order');
 let product = require('./routes/products/product');
+let displayImage = require('./routes/products/displayImage');
 
 const app = express();
 
@@ -60,6 +61,7 @@ app.use('/showcart', showCart);
 app.use('/checkout', checkout);
 app.use('/order', order);
 app.use('/product', product);
+app.use('/displayImage', displayImage);
 app.use('/images', express.static('./public/images'));
 
 // Rendering the main page
