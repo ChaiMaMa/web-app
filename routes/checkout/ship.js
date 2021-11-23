@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
                         WHERE OS.orderId = OP.orderId AND OS.orderId = @orderId
                     `,
                         {
-                            orderId = orderId
+                            orderId: orderId
                         }
                     );
 

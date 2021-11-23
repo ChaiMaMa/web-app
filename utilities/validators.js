@@ -24,7 +24,7 @@ async function isValidOrder(orderId) {
         WHERE OS.orderId = OP.orderId AND OS.orderId = @orderId
     `,
         {
-            orderId = orderId
+            orderId: orderId
         }
     );
 
