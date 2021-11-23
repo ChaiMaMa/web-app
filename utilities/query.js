@@ -1,4 +1,5 @@
 const sql = require('mssql');
+const moment = require('moment');
 const { ProductNotFound, NotEnoughInventory } = require('./errors');
 
 /**
@@ -52,13 +53,12 @@ async function updateShipment(orderedItem) {
     ).input(
         "orderedQuantity",
         sql.Int,
-        orderedItem.quantity
-    ).output(
-        "quantity", sql.Int
+        Number(orderedItem.quantity)
     ).query(
         `
         UPDATE productinventory
         SET quantity = quantity - @orderedQuantity
+        OUTPUT inserted.quantity
         WHERE warehouseId = @warehouseId AND productId = @productId
         `
     );
@@ -66,7 +66,7 @@ async function updateShipment(orderedItem) {
     console.log(itemInventory);
 
     // TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
-    let result = itemInventory.output.quantity;
+    let result = itemInventory.recordset[0];
     if (!result) {
         await transaction.rollback();
         throw new ProductNotFound(orderedItem.productId);
@@ -75,17 +75,22 @@ async function updateShipment(orderedItem) {
         throw new NotEnoughInventory(orderedItem.productId, result.quantity);
     } else {
         // TODO: Create a new shipment record.
-        let record = `${orderedItem.productId}, ${orderedItem.orderDate}, NULL, ${warehouseId}`;
-        await transaction.request().input(
-            "record",
-            sql.String,
-            record
+        let insertResult = await transaction.request().input(
+            'shipmentDate',
+            orderedItem.orderDate
+        ).input(
+            'warehouseId',
+            orderedItem.warehouseId
         ).query(
             `
-            INSERT INTO shipment
-            VALUES (@record)
+            INSERT INTO shipment (shipmentDate, warehouseId)
+            OUTPUT inserted.shipmentId
+            VALUES (@shipmentDate, @warehouseId)
         `
         );
+
+        console.log("After inserting: ");
+        console.log(insertResult);
 
         await transaction.commit();
     }
