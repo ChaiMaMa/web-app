@@ -62,9 +62,11 @@ async function updateShipment(orderedItem) {
         WHERE warehouseId = @warehouseId AND productId = @productId
         `
     );
+    console.log(orderedItem);
+    console.log(itemInventory);
 
     // TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
-    let result = itemInventory.recordset[0];
+    let result = itemInventory.output.quantity;
     if (!result) {
         await transaction.rollback();
         throw new ProductNotFound(orderedItem.productId);

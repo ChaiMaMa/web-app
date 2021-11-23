@@ -14,8 +14,7 @@ router.get('/', function (req, res, next) {
     if (orderId) {
         (async function () {
             // TODO: Check if valid order id
-            let isValid = await isValidOrder(orderId);
-
+            let isValid = await isValidOrder(Number(orderId));
             if (isValid) {
                 try {
 

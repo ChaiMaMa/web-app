@@ -20,15 +20,14 @@ function isNumeric(input) {
 async function isValidOrder(orderId) {
     let itemsOrdered = await query(`
         SELECT OP.productId AS productId, OP.quantity AS quantity
-        FROM ordersummar OS, orderproduct OP
+        FROM ordersummary OS, orderproduct OP
         WHERE OS.orderId = OP.orderId AND OS.orderId = @orderId
     `,
         {
             orderId: orderId
         }
     );
-
-    let valid = false;
+    let valid = true;
     if (itemsOrdered.recordset.length > 0) {
         for (let item of itemsOrdered.recordset) {
             if (item.quantity < 1) {
@@ -36,7 +35,8 @@ async function isValidOrder(orderId) {
                 break;
             }
         }
-
+    } else {
+        valid = false;
     }
     return valid;
 }
