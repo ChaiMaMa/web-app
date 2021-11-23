@@ -48,6 +48,7 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 app.set('views', './public')
 
+
 // Setting up Express.js routes.
 // These present a "route" on the URL of the site.
 // Eg: http://127.0.0.1/loaddata
@@ -59,6 +60,7 @@ app.use('/showcart', showCart);
 app.use('/checkout', checkout);
 app.use('/order', order);
 app.use('/product', product);
+app.use('/images', express.static('./public/images'));
 
 // Rendering the main page
 app.get('/', function (req, res) {

@@ -54,9 +54,7 @@ router.get('/', async function (req, res, next) {
                 <td>
                     <a href="/addcart?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">Add to cart</a>
                 </td>
-                <td>
-                    <a href="/product?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">${product.productName}</a>
-                </td>
+                <td> <a href="/product?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">${product.productName}</a></td>
                 <td>$${product.productPrice.toFixed(2)}</td>
             </tr>
         `);
