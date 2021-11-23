@@ -42,5 +42,31 @@ async function isValidOrder(orderId) {
 }
 
 
-exports.isNumeric = isNumeric;
-exports.isValidOrder = isValidOrder;
+/**
+ * Validate if an order has already been processed to ship successfully.
+ * @param {Number} orderId 
+ */
+async function shipmentProcssed(orderId) {
+    let result = await query(
+        `
+        SELECT shipmentId, shipmentDate
+        FROM shipment
+        WHERE orderId = @orderId
+        `
+        ,
+        { orderId: orderId }
+    );
+
+    if (result.recordset.length > 0) {
+        console.log(result);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+module.exports = {
+    isNumeric,
+    isValidOrder,
+    shipmentProcssed
+}

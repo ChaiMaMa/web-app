@@ -84,11 +84,14 @@ async function updateShipment(orderedItems, changes) {
     ).input(
         'warehouseId',
         warehouseId
+    ).input(
+        'orderId',
+        orderedItems[0].orderId
     ).query(
         `
-        INSERT INTO shipment (shipmentDate, warehouseId)
+        INSERT INTO shipment (orderId, shipmentDate, warehouseId)
         OUTPUT inserted.shipmentId
-        VALUES (@shipmentDate, @warehouseId)
+        VALUES (@orderId, @shipmentDate, @warehouseId)
         `
     );
 

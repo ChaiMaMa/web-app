@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { TransactionError } = require('mssql');
 const { NotEnoughInventory, ProductNotFound, OrderEmptyError } = require('../../utilities/errors');
-const { isValidOrder } = require('../../utilities/validators');
+const { isValidOrder, shipmentProcssed } = require('../../utilities/validators');
 const { updateShipment, query } = require('../../utilities/query');
 const { reset } = require('nodemon');
 
@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
     if (orderId) {
         (async function () {
             // TODO: Check if valid order id
-            let isValid = await isValidOrder(Number(orderId));
+            let isValid = await isValidOrder(Number(orderId)) && !(await shipmentProcssed(Number(orderId)));
             let changes = [];
             if (isValid) {
                 try {
