@@ -9,7 +9,8 @@ let addCart = require('./routes/checkout/addcart');
 let showCart = require('./routes/checkout/showcart');
 let checkout = require('./routes/checkout/checkout');
 let order = require('./routes/checkout//order');
-
+let login = require('./routes/authentication/login');
+let validateLogin = require('./routes/authentication/validateLogin');
 const app = express();
 
 // This DB Config is accessible globally
@@ -57,7 +58,11 @@ app.use('/addcart', addCart);
 app.use('/showcart', showCart);
 app.use('/checkout', checkout);
 app.use('/order', order);
+app.use('/login', login);
+app.use('/validateLogin', validateLogin);
 app.use('/images', express.static('public/images'));
+app.use('/stylesheets', express.static('public/stylesheets'));
+app.use('/js', express.static('public/javascripts'));
 
 // Rendering the main page
 app.get('/', function (req, res) {
