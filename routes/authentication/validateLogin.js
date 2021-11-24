@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../auth');
+// const auth = require('../auth');
 const sql = require('mssql');
 
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
     // Have to preserve async context since we make an async call
     // to the database in the validateLogin function.
     (async () => {
@@ -13,7 +13,7 @@ router.post('/', function(req, res) {
         } else {
             res.redirect("/login");
         }
-     })();
+    })();
 });
 
 async function validateLogin(req) {
@@ -23,15 +23,15 @@ async function validateLogin(req) {
 
     let username = req.body.username;
     let password = req.body.password;
-    let authenticatedUser =  await (async function() {
+    let authenticatedUser = await (async function () {
         try {
             let pool = await sql.connect(dbConfig);
 
-	// TODO: Check if userId and password match some customer account. 
-	// If so, set authenticatedUser to be the username.
+            // TODO: Check if userId and password match some customer account. 
+            // If so, set authenticatedUser to be the username.
 
-           return false;
-        } catch(err) {
+            return false;
+        } catch (err) {
             console.dir(err);
             return false;
         }
