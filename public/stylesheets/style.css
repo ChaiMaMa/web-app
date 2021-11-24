@@ -50,6 +50,7 @@ body.my-login-page {
 
 .my-login-page .btn.btn-block {
 	background-color: #828887;
+	color: white;
 	padding: 12px 10px;
 }
 
