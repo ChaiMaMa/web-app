@@ -57,6 +57,7 @@ app.use('/addcart', addCart);
 app.use('/showcart', showCart);
 app.use('/checkout', checkout);
 app.use('/order', order);
+app.use('/images', express.static('public/images'));
 
 // Rendering the main page
 app.get('/', function (req, res) {
