@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="author" content="Kodinger">
+    <meta name="author" content="ChaiMaMa">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>ChaiMaMa</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 </head>
 
 <body class="my-login-page">
@@ -15,32 +15,25 @@
         <div class="row justify-content-md-center h-100">
             <div class="card-wrapper">
                 <div class="brand">
-                    <img src="../images/logo.jpg" alt="logo">
+                    <img src="/images/logo.jpg" alt="logo">
                 </div>
                 <div class="card fat">
                     <div class="card-body">
                         <h4 class="card-title">Login</h4>
-                        <form method="POST" class="my-login-validation" novalidate="">
-                            <div class="form-group">
-                                <label for="email">E-Mail Address</label>
-                                <input id="email" type="email" class="form-control" name="email" value="" required
+                        <form id="login_form" method="POST" action="/validateLogin">
+                            <div class=" form-group">
+                                <label for="username">Username</label>
+                                <input id="username" type="text" class="form-control" name="username" value="" required
                                     autofocus>
-                                <div class="invalid-feedback">
-                                    Email is invalid
-                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="password">Password
-                                    <a href="forgot.html" class="float-right link">
-                                        Forgot Password?
-                                    </a>
+                                    <!-- TODO: Add routes for Forgot password -->
+                                    <a href="/reset_password" class="float-right link">Forgot Password?</a>
                                 </label>
                                 <input id="password" type="password" class="form-control" name="password" required
                                     data-eye>
-                                <div class="invalid-feedback">
-                                    Password is required
-                                </div>
                             </div>
 
                             <div class="form-group">
@@ -56,7 +49,7 @@
                                 </button>
                             </div>
                             <div class="mt-4 text-center">
-                                Don't have an account? <a href="register.html" class="link">Create One</a>
+                                Don't have an account? <a href="/register" class="link">Create One</a>
                             </div>
                         </form>
                     </div>
@@ -78,7 +71,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="js/my-login.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 
 </html>
