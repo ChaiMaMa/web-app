@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-// const auth = require('../auth');
 const sql = require('mssql');
+const { isAuthenticated } = require('../../utilities/validators')
 
 router.post('/', function (req, res) {
     // Have to preserve async context since we make an async call
     // to the database in the validateLogin function.
     (async () => {
-        let authenticatedUser = await validateLogin(req);
-        if (authenticatedUser) {
+        let authenticated = await validateLogin(req);
+        if (authenticated) {
             res.redirect("/");
         } else {
             res.redirect("/login");
@@ -23,21 +23,14 @@ async function validateLogin(req) {
 
     let username = req.body.username;
     let password = req.body.password;
-    let authenticatedUser = await (async function () {
-        try {
-            let pool = await sql.connect(dbConfig);
+    let authenticated = false;
+    try {
+        authenticated = await isAuthenticated(username, password);
+    } catch (err) {
+        console.dir(err);
+    }
 
-            // TODO: Check if userId and password match some customer account. 
-            // If so, set authenticatedUser to be the username.
-
-            return false;
-        } catch (err) {
-            console.dir(err);
-            return false;
-        }
-    })();
-
-    return authenticatedUser;
+    return authenticated;
 }
 
 module.exports = router;
