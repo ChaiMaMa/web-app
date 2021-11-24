@@ -5,6 +5,7 @@ html,body {
 body.my-login-page {
 	background-color: rgba(190,197,197,1);
 	font-size: 14px;
+	font-family: brandon-grotesque,sans-serif;
 }
 
 .my-login-page .brand {
