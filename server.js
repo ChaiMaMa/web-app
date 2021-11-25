@@ -1,6 +1,7 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
+const path = require('path');
 
 let loadData = require('./routes/loaddata');
 let listOrder = require('./routes/account/listorder');
@@ -66,9 +67,7 @@ app.use('/js', express.static('public/javascripts'));
 
 // Rendering the main page
 app.get('/', function (req, res) {
-  res.render('index', {
-    title: "ChaiMaMa"
-  });
+  res.sendFile(path.join(__dirname, "public", "layouts", "index.html"));
 })
 
 // Starting our Express app
