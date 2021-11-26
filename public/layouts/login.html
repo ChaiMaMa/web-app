@@ -20,7 +20,7 @@
                 <div class="card fat">
                     <div class="card-body">
                         <h4 class="card-title">Login</h4>
-                        <form id="login_form" method="POST" action="/validateLogin">
+                        <form id="login_form" onsubmit="authenticateUser(); return false;" method="post">
                             <div class=" form-group">
                                 <label for="username">Username</label>
                                 <input id="username" type="text" class="form-control" name="username" value="" required
@@ -61,11 +61,12 @@
         </div>
         </div>
     </section>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="/js/script.js"></script>
+    <script src="/js/login.js"></script>
 </body>
 
 </html>

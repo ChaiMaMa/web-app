@@ -3,6 +3,8 @@ const exphbs = require('express-handlebars');
 const session = require('express-session');
 const path = require('path');
 
+
+// Imports route handlers
 let loadData = require('./routes/loaddata');
 let listOrder = require('./routes/account/listorder');
 let listProd = require('./routes/products/listprod');
@@ -12,6 +14,8 @@ let checkout = require('./routes/checkout/checkout');
 let order = require('./routes/checkout//order');
 let login = require('./routes/authentication/login');
 let validateLogin = require('./routes/authentication/validateLogin');
+
+// Create an express app
 const app = express();
 
 // This DB Config is accessible globally
@@ -27,8 +31,8 @@ dbConfig = {
 }
 
 // Setting up JSON Parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Parsing json string to js object
+app.use(express.urlencoded({ extended: true })); // Parsing queries in POST http message (Content-Type: application/x-www-form-urlencoded)
 
 // Setting up the session.
 // This uses MemoryStorage which is not
