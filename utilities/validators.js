@@ -86,5 +86,6 @@ async function shipmentProcssed(orderId) {
 module.exports = {
     isNumeric,
     isValidOrder,
-    shipmentProcssed
+    shipmentProcssed,
+    isAuthenticated
 }

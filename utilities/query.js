@@ -66,12 +66,13 @@ async function updateShipment(orderedItems, changes) {
 
         // TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
         let result = itemInventory.recordset[0];
+        console.log(itemInventory);
         if (!result) {
             await transaction.rollback();
-            throw new ProductNotFound(orderedItems.productId);
+            throw new ProductNotFound(orderedItem.productId);
         } else if (result.quantity < 0) {
             await transaction.rollback();
-            throw new NotEnoughInventory(orderedItems.productId, result.quantity);
+            throw new NotEnoughInventory(orderedItem.productId, result.quantity);
         } else {
             changes.push(`Ordered Product ID: ${orderedItem.productId} Qty: ${orderedItem.quantity} Previous inventory: ${result.quantity + orderedItem.quantity} New inventory: ${result.quantity}`);
         }

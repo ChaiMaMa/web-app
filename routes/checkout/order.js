@@ -141,15 +141,21 @@ router.get('/', async function (req, res, next) {
         </tr>
         `);
 
-        res.write("</table></body>");
+        res.write("</table>");
 
         res.write(`    
             <h1>Order completed. Will be shipped soon...</h1>
-            <h1>Your order reference number is: ${orderId}</h1>
+            <h1>Your order reference number is: <span id = 'orderId'>${orderId}</span></h1>
             <h1>Shipping to customer: ${customerInfo.customerId}</h1>
             <h1>Name: ${customerInfo.firstName + " " + customerInfo.lastName}</h1>
         `);
-        res.write('<h2><a href="/">Return to shopping</a></h2>');
+        res.write(`
+            <h2>
+                <a href="/">Return to shopping</a>
+            </h2>
+            <script src='js/ship.js'></script>
+        </body>
+        `);
 
         /** Clear session/cart **/
         delete req.session.productList;
@@ -167,7 +173,8 @@ router.get('/', async function (req, res, next) {
         } else {
             message = "Unknown Error occurs while placing your order. Please try again!";
         }
-        res.write(`<h1>${message}</h1>`);
+        res.write(`
+        <h1>${message}</h1>`);
         console.dir(err);
     }
     res.end();
