@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
         try {
             let pool = await sql.connect(dbConfig);
 
-            let sqlQuery = "// TODO: Modify SQL to retrieve productImage given productId";
+            let sqlQuery = `select productImage from Product where productId = ${id}`;
 
             result = await pool.request()
                 .input('id', sql.Int, idVal)

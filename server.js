@@ -16,7 +16,8 @@ let login = require('./routes/authentication/login');
 let logout = require('./routes/authentication/logout');
 let validateLogin = require('./routes/authentication/validateLogin');
 // let customer = require('./routes/account/customer');
-
+let product = require('./routes/products/product');
+let displayImage = require('./routes/products/displayImage');
 
 // Create an express app
 const app = express();
@@ -56,6 +57,7 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 app.set('views', './public')
 
+
 // Setting up Express.js routes.
 // These present a "route" on the URL of the site.
 // Eg: http://127.0.0.1/loaddata
@@ -69,10 +71,11 @@ app.use('/order', order);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/validateLogin', validateLogin);
-// app.use('/account', customer);
 app.use('/images', express.static('public/images'));
 app.use('/stylesheets', express.static('public/stylesheets'));
 app.use('/js', express.static('public/javascripts'));
+app.use('/product', product);
+app.use('/displayImage', displayImage);
 
 // Rendering the main page
 app.get('/', function (req, res) {
