@@ -3,7 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>chaimama</title>
+    <title>ChaiMaMa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.reflowhq.com/v1/toolkit.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -61,6 +64,21 @@
             </div>
         </div>
     </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.reflowhq.com/v1/toolkit.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-bss-tooltip]').tooltip();
+
+            $('[data-bss-dynamic-product]').each(function (index, elem) {
+                var param = $(elem).data('bss-dynamic-product-param');
+                $(elem).data('reflow-product', new URL(location.href).searchParams.get(param));
+            });
+
+        });
+    </script>
 </body>
 
 </html>
