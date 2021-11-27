@@ -13,7 +13,10 @@ let showCart = require('./routes/checkout/showcart');
 let checkout = require('./routes/checkout/checkout');
 let order = require('./routes/checkout//order');
 let login = require('./routes/authentication/login');
+let logout = require('./routes/authentication/logout');
 let validateLogin = require('./routes/authentication/validateLogin');
+// let customer = require('./routes/account/customer');
+
 
 // Create an express app
 const app = express();
@@ -64,7 +67,9 @@ app.use('/showcart', showCart);
 app.use('/checkout', checkout);
 app.use('/order', order);
 app.use('/login', login);
+app.use('/logout', logout);
 app.use('/validateLogin', validateLogin);
+// app.use('/account', customer);
 app.use('/images', express.static('public/images'));
 app.use('/stylesheets', express.static('public/stylesheets'));
 app.use('/js', express.static('public/javascripts'));
@@ -75,4 +80,5 @@ app.get('/', function (req, res) {
 })
 
 // Starting our Express app
-app.listen(process.env.PORT || 3000, () => console.log('Server started on port ' + (process.env.PORT || 3000)));
+let port = process.env.PORT || 3000;
+app.listen(port, () => console.log('Server started on port ' + port));
