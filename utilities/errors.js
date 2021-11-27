@@ -22,8 +22,36 @@ class UserNotFoundError extends Error {
     }
 }
 
+class ProductNotFound extends Error {
+    constructor(productId) {
+        super(`Product not found with Id ${productId}`);
+        this.name = this.constructor.name;
+        this.productId = productId;
+    }
+}
+
+class NotEnoughInventory extends Error {
+    constructor(productId, inventory) {
+        super(`Not enough inventory for product ${productId}`);
+        this.name = this.constructor.name;
+        this.productId = productId;
+        this.inventory = inventory;
+    }
+}
+
+class OrderEmptyError extends Error {
+    constructor(orderId) {
+        super(`Order ${orderId}is empty`);
+        this.name = this.constructor.name;
+        this.orderId = orderId;
+    }
+}
+
 module.exports = {
     ValidationError,
     PropertyRequiredError,
-    UserNotFoundError
+    UserNotFoundError,
+    ProductNotFound,
+    NotEnoughInventory,
+    OrderEmptyError
 };

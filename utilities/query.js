@@ -1,5 +1,5 @@
 const sql = require('mssql');
-
+const { ProductNotFound, NotEnoughInventory } = require('./errors');
 
 /**
  * Execute an SQL query and return the result (as a Promise). All exceptions must be caught by the caller.
@@ -30,5 +30,77 @@ async function update(queryStr, params) {
     return await query(queryStr, params);
 }
 
-exports.query = query;
-exports.update = update;
+
+/**
+ * Update the database with shipments of ordered product.
+ * @param {sql.IRecordSet<any>} orderedItems The object representing the ordered item.
+ * @param {Array<string>} changes The log of successful steps in transaction.
+ */
+async function updateShipment(orderedItems, changes) {
+    let transaction = new sql.Transaction(); // Use global connection pool
+    await transaction.begin();
+
+    // TODO: For each item verify sufficient quantity available in warehouse 1.
+    let warehouseId = 1;
+    for (let orderedItem of orderedItems) {
+        let itemInventory = await transaction.request().input(
+            "warehouseId",
+            sql.Int,
+            warehouseId
+        ).input(
+            "productId",
+            sql.Int,
+            orderedItem.productId
+        ).input(
+            "orderedQuantity",
+            sql.Int,
+            Number(orderedItem.quantity)
+        ).query(
+            `
+            UPDATE productinventory
+            SET quantity = quantity - @orderedQuantity
+            OUTPUT inserted.quantity
+            WHERE warehouseId = @warehouseId AND productId = @productId
+            `
+        );
+
+        // TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
+        let result = itemInventory.recordset[0];
+        if (!result) {
+            await transaction.rollback();
+            throw new ProductNotFound(orderedItems.productId);
+        } else if (result.quantity < 0) {
+            await transaction.rollback();
+            throw new NotEnoughInventory(orderedItems.productId, result.quantity);
+        } else {
+            changes.push(`Ordered Product ID: ${orderedItem.productId} Qty: ${orderedItem.quantity} Previous inventory: ${result.quantity + orderedItem.quantity} New inventory: ${result.quantity}`);
+        }
+    }
+
+    // TODO: Create a new shipment record.
+    let insertResult = await transaction.request().input(
+        'shipmentDate',
+        orderedItems[0].orderDate
+    ).input(
+        'warehouseId',
+        warehouseId
+    ).input(
+        'orderId',
+        orderedItems[0].orderId
+    ).query(
+        `
+        INSERT INTO shipment (orderId, shipmentDate, warehouseId)
+        OUTPUT inserted.shipmentId
+        VALUES (@orderId, @shipmentDate, @warehouseId)
+        `
+    );
+
+    await transaction.commit();
+}
+
+
+module.exports = {
+    query,
+    update,
+    updateShipment
+};
