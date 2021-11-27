@@ -160,9 +160,9 @@ body.my-login-page {
 	grid-area: 1/ 2/ 1/ 2;
 }
 
-
-
-
+.my-list-prod {
+	padding: 30px;
+}
 
 @media screen and (max-width: 425px) {
 	.my-login-page .card-wrapper {

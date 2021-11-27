@@ -3,267 +3,120 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.reflowhq.com/v1/toolkit.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <title>chaimama</title>
 </head>
 
 <body>
-    <div data-reflow-type="product-list" data-reflow-order="name_asc" data-reflow-layout="cards">
-        <div class="reflow-product-list ref-cards">
-            <div class="ref-products">
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-16_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Blandit egestas</h5>
-                            <p class="ref-excerpt">Lectus torquent sem luctus, massa mattis euismod. Sagittis platea
-                                gravida.</p>
-                        </div>
-                        <p class="ref-price">$248.81</p>
-                    </div>
+    <div>
+        <nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button"
+            style="height:60px;background-color:#37434d;color:#ffffff;">
+            <div class="container-fluid"><a class="navbar-brand" href="#">
+                    <svg id='logo' width="34" height="34" viewBox="0 0 34 34" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M7.8095 20.9911C7.8095 12.5848 15.2432 5.48451 25.9194 4.44997C27.846 4.26327 29.1218 2.86693 30.7606 2.50395C33.4216 1.91457 31.1331 1.76475 30.0434 2.47615C27.5775 4.08589 27.82 8.8239 27.82 11.4834C27.82 17.5778 24.7152 20.2529 16.8106 21.0189C13.4102 21.3484 9.45157 22.6191 6.5185 23.8823C2.4938 25.6157 2 28.6389 2 32"
+                            stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>&nbsp;&nbsp;<span style="color:#ffffff;font-size: 26px">ChaiMaMa</span>
+                </a>
+                <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+                    <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link active" style="color:#ffffff;" href="/"><i
+                                    class="fa fa-home"></i>&nbsp;Home</a></li>
+                    </ul>
                 </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-19_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Commodo aliquam</h5>
-                            <p class="ref-excerpt">Sem etiam congue, malesuada potenti sagittis. Neque etiam mi cubilia.
-                            </p>
+            </div>
+        </nav>
+    </div>
+    <div class="my-list-prod">
+        <form action="/listprod" method="get" style="padding-bottom: 10px;">
+            <div class="row padMar">
+                <div class="col padMar">
+                    <div class="input-group">
+                        <div class="input-group-prepend"></div>
+                        <input class="form-control autocomplete" type="text" name="productName"
+                            placeholder="Search your product">
+                        <div class="input-group-append">
+                            <button class="btn btn-warning" type="submit"
+                                style="background-color:#828887; color: white">
+                                <i class="fa fa-search"></i>
+                            </button>
                         </div>
-                        <p class="ref-price">$176.79</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-6_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Curabitur et</h5>
-                            <p class="ref-excerpt">Porta suspendisse ut, congue aenean netus justo. Egestas donec
-                                malesuada.</p>
-                        </div>
-                        <p class="ref-price">$223.68</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-2_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Diam sodales</h5>
-                            <p class="ref-excerpt">Molestie nibh ornare egestas ultrices, rhoncus eros. Habitasse
-                                accumsan fames.</p>
-                        </div>
-                        <p class="ref-price">$222.54</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-30_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Dolor inceptos</h5>
-                            <p class="ref-excerpt">Fames nulla nam non eleifend. Justo nisl habitasse aliquam platea.
-                            </p>
-                        </div>
-                        <p class="ref-price">$79.44</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-9_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Habitasse tempor</h5>
-                            <p class="ref-excerpt">Vulputate a risus, posuere integer varius. Fringilla sem porta
-                                scelerisque.</p>
-                        </div>
-                        <p class="ref-price">$117.55</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-14_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Hendrerit consequat</h5>
-                            <p class="ref-excerpt">Ac quisque augue donec turpis. Porttitor blandit vivamus tempus
-                                mauris.</p>
-                        </div>
-                        <p class="ref-price">$52.22</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-7_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Himenaeos donec</h5>
-                            <p class="ref-excerpt">Neque varius iaculis, class amet rutrum neque. Non duis libero.</p>
-                        </div>
-                        <p class="ref-price">$190.73</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-11_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Malesuada nec</h5>
-                            <p class="ref-excerpt">Torquent vestibulum imperdiet volutpat ullamcorper ipsum viverra
-                                sagittis, vulputate vel.</p>
-                        </div>
-                        <p class="ref-price">$196.62</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-25_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Massa posuere</h5>
-                            <p class="ref-excerpt">Id orci semper taciti himenaeos, rhoncus augue. Nec mauris etiam.</p>
-                        </div>
-                        <p class="ref-price">$259.15</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-3_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Mi congue</h5>
-                            <p class="ref-excerpt">Hac id cursus fames aptent mattis, id quis. Senectus lectus.</p>
-                        </div>
-                        <p class="ref-price">$148.6</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-27_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Morbi aliquam</h5>
-                            <p class="ref-excerpt">Aliquam dolor egestas, convallis lectus laoreet donec elementum
-                                iaculis accumsan.</p>
-                        </div>
-                        <p class="ref-price">$62.71</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-1_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Nibh habitasse</h5>
-                            <p class="ref-excerpt">Nam posuere vitae sollicitudin, phasellus adipiscing semper.
-                                Ultricies diam fermentum.</p>
-                        </div>
-                        <p class="ref-price">$139.09</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-24_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Non aptent</h5>
-                            <p class="ref-excerpt">Maecenas auctor dictum erat rhoncus erat porta, hendrerit metus
-                                lobortis.</p>
-                        </div>
-                        <p class="ref-price">$133.7</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-15_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Non semper</h5>
-                            <p class="ref-excerpt">Nisi nulla sollicitudin gravida orci, convallis nisi curabitur
-                                rhoncus. Senectus.</p>
-                        </div>
-                        <p class="ref-price">$158.7</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-10_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Ornare velit</h5>
-                            <p class="ref-excerpt">Ad magna nullam, ante lacus amet eros aenean scelerisque. Quam.</p>
-                        </div>
-                        <p class="ref-price">$100.95</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-20_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Pharetra at</h5>
-                            <p class="ref-excerpt">Facilisis ligula congue tortor metus, senectus orci egestas eros
-                                diam.</p>
-                        </div>
-                        <p class="ref-price">$181.46</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-18_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Phasellus vitae</h5>
-                            <p class="ref-excerpt">Nec elit suscipit purus odio condimentum non mauris libero, potenti
-                            </p>
-                        </div>
-                        <p class="ref-price">$142.94</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-23_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Placerat hendrerit</h5>
-                            <p class="ref-excerpt">Pharetra orci praesent libero, aliquam risus orci eu. Lacus leo.</p>
-                        </div>
-                        <p class="ref-price">$122.01</p>
-                    </div>
-                </div>
-                <div class="ref-product"><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-28_md.jpg" loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">Porta per</h5>
-                            <p class="ref-excerpt">Sollicitudin curabitur sem etiam, eu potenti fermentum. Nisi pulvinar
-                                phasellus.</p>
-                        </div>
-                        <p class="ref-price">$264.83</p>
                     </div>
                 </div>
             </div>
-            <ul class="ref-pagination">
-                <li class="ref-page-item disabled" data-reflow-page="1"><a class="ref-page-link ref-prev-btn"
-                        href="file:///Applications/Bootstrap%20Studio.app/Contents/Resources/app.asar/app/index.html?server=https%3A%2F%2Fbootstrapstudio.io&amp;version=5.8.6&amp;page=1">
-                        <!--?xml version='1.0' encoding='iso-8859-1'?--><svg id="Capa_1" version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                            y="0px" viewBox="0 0 34.075 34.075" style="enable-background:new 0 0 34.075 34.075;"
-                            xml:space="preserve">
-                            <g>
+            <p style="padding-top: 10px;">(Leave blank for all products)</p>
+        </form>
+        <h1>All Products</h1>
+        <div data-reflow-type="product-list" data-reflow-order="name_asc" data-reflow-layout="cards">
+            <div class="reflow-product-list ref-cards">
+                <div class="ref-products">
+                    {{{products}}}
+                </div>
+                {{!-- <ul class="ref-pagination">
+                    <li class="ref-page-item disabled" data-reflow-page="1"><a class="ref-page-link ref-prev-btn"
+                            href="file:///Applications/Bootstrap%20Studio.app/Contents/Resources/app.asar/app/index.html?server=https%3A%2F%2Fbootstrapstudio.io&amp;version=5.8.6&amp;page=1">
+                            <!--?xml version='1.0' encoding='iso-8859-1'?--><svg id="Capa_1" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                y="0px" viewBox="0 0 34.075 34.075" style="enable-background:new 0 0 34.075 34.075;"
+                                xml:space="preserve">
                                 <g>
-                                    <path style="fill:currentColor;"
-                                        d="M24.57,34.075c-0.505,0-1.011-0.191-1.396-0.577L8.11,18.432c-0.771-0.771-0.771-2.019,0-2.79 L23.174,0.578c0.771-0.771,2.02-0.771,2.791,0s0.771,2.02,0,2.79l-13.67,13.669l13.67,13.669c0.771,0.771,0.771,2.021,0,2.792 C25.58,33.883,25.075,34.075,24.57,34.075z">
-                                    </path>
+                                    <g>
+                                        <path style="fill:currentColor;"
+                                            d="M24.57,34.075c-0.505,0-1.011-0.191-1.396-0.577L8.11,18.432c-0.771-0.771-0.771-2.019,0-2.79 L23.174,0.578c0.771-0.771,2.02-0.771,2.791,0s0.771,2.02,0,2.79l-13.67,13.669l13.67,13.669c0.771,0.771,0.771,2.021,0,2.792 C25.58,33.883,25.075,34.075,24.57,34.075z">
+                                        </path>
+                                    </g>
                                 </g>
-                            </g>
-                        </svg>
-                    </a></li>
-                <li class="ref-page-item active" data-reflow-page="1"><span class="ref-page-link">1</span></li>
-                <li class="ref-page-item" data-reflow-page="2"><a class="ref-page-link"
-                        href="file:///Applications/Bootstrap%20Studio.app/Contents/Resources/app.asar/app/index.html?server=https%3A%2F%2Fbootstrapstudio.io&amp;version=5.8.6&amp;page=2">2</a>
-                </li>
-                <li class="ref-page-item" data-reflow-page="2"><a class="ref-page-link ref-next-btn"
-                        href="file:///Applications/Bootstrap%20Studio.app/Contents/Resources/app.asar/app/index.html?server=https%3A%2F%2Fbootstrapstudio.io&amp;version=5.8.6&amp;page=2">
-                        <!--?xml version='1.0' encoding='iso-8859-1'?--><svg id="Capa_1" version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                            y="0px" viewBox="0 0 185.343 185.343" style="enable-background:new 0 0 185.343 185.343;"
-                            xml:space="preserve">
-                            <g>
+                            </svg>
+                        </a></li>
+                    <li class="ref-page-item active" data-reflow-page="1"><span class="ref-page-link">1</span></li>
+                    <li class="ref-page-item" data-reflow-page="2"><a class="ref-page-link"
+                            href="file:///Applications/Bootstrap%20Studio.app/Contents/Resources/app.asar/app/index.html?server=https%3A%2F%2Fbootstrapstudio.io&amp;version=5.8.6&amp;page=2">2</a>
+                    </li>
+                    <li class="ref-page-item" data-reflow-page="2"><a class="ref-page-link ref-next-btn"
+                            href="file:///Applications/Bootstrap%20Studio.app/Contents/Resources/app.asar/app/index.html?server=https%3A%2F%2Fbootstrapstudio.io&amp;version=5.8.6&amp;page=2">
+                            <!--?xml version='1.0' encoding='iso-8859-1'?--><svg id="Capa_1" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                y="0px" viewBox="0 0 185.343 185.343" style="enable-background:new 0 0 185.343 185.343;"
+                                xml:space="preserve">
                                 <g>
-                                    <path style="fill:currentColor;"
-                                        d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175 l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934 c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z">
-                                    </path>
+                                    <g>
+                                        <path style="fill:currentColor;"
+                                            d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175 l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934 c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z">
+                                        </path>
+                                    </g>
                                 </g>
-                            </g>
-                        </svg>
-                    </a></li>
-            </ul>
+                            </svg>
+                        </a></li>
+                </ul> --}}
+            </div>
         </div>
     </div>
+
+
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.reflowhq.com/v1/toolkit.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-bss-tooltip]').tooltip();
+
+            $('[data-bss-dynamic-product]').each(function (index, elem) {
+                var param = $(elem).data('bss-dynamic-product-param');
+                $(elem).data('reflow-product', new URL(location.href).searchParams.get(param));
+            });
+
+        });
+    </script>
 </body>
 
 </html>

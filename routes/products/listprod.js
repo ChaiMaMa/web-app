@@ -8,25 +8,9 @@ router.get('/', async function (req, res, next) {
         req.session.cart_size = 0;
     }
 
+    var productInfo = '';
+
     res.setHeader('Content-Type', 'text/html');
-    //get method
-    res.write(`
-    <head>
-        <title>ChaiMaMa</title>
-    </head>
-    <body>
-        <h1>Search for the products you want to buy:</h1>
-        <form action="/listprod" method="get">
-            <input type="text" name="productName" size="50">
-            <input type="submit" value="Search">
-            <input type="reset" value="Reset">
-            <p>(Leave blank for all products)</p>
-        </form>
-        <h1>All Products</h1>
-    `);
-    //need parameter passing?
-
-
 
     // Get the product name to search for
     let name = req.query.productName;
@@ -38,36 +22,39 @@ router.get('/', async function (req, res, next) {
     `, null
     );
 
-    //listing product name and price
-    res.write(`
-        <table>
-            <tr>
-                <th></th>
-                <th>Product Name</th>
-                <th>Price</th>
-            </tr>
-    `);
-
     for (let product of products.recordset) {
-        res.write(`
-            <tr>
-                <td>
-                    <a href="/addcart?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">Add to cart</a>
-                </td>
-                <td> <a href="/product?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">${product.productName}</a></td>
-                <td>$${product.productPrice.toFixed(2)}</td>
-            </tr>
-        `);
+        let imageLink = product.productImageURL;
+        let binaryImage = product.productImage;
+        let src = '/images/placeholder.jpeg';
+        if (imageLink) {
+            src = imageLink;
+        }
+        else if (binaryImage) {
+            src = "/displayImage?id=${product.productId}";
+        }
+
+        productInfo += `
+        <a href="/product?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">
+            <div class="ref-product"><img class="ref-image"
+                        src=${src} loading="lazy" />
+                    <div class="ref-product-data">
+                        <div class="ref-product-info">
+                            <h5 class="ref-name">${product.productName}</h5>
+                        </div>
+                        <p class="ref-price">$${Number(product.productPrice).toFixed(2)}</p>
+                    </div>
+                </div>
+        </a>
+        `;
     }
 
-    //Creating URL for each item and calling addcard
-
-
-    res.write(`
-        </table>
-    </body>
-    `);
-    res.end();
+    res.render(
+        'layouts/listprod',
+        {
+            products: productInfo
+        }
+    );
 });
 
 module.exports = router;
+// `<a href="/addcart?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">Add to cart</a>`
