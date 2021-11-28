@@ -13,15 +13,16 @@
     <div data-reflow-type="product" data-reflow-show="media,name,price,add-to-cart" data-toggle="tooltip">
         <div class="reflow-product">
             <div class="ref-media">
-                <div class="ref-preview"><img class="ref-image active"
-                        src="https://cdn.bootstrapstudio.io/products/product-page-3_md.jpg"
-                        data-reflow-preview-type="image" /><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-page-1_md.jpg"
-                        data-reflow-preview-type="image" /><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-page-4_md.jpg"
-                        data-reflow-preview-type="image" /><img class="ref-image"
-                        src="https://cdn.bootstrapstudio.io/products/product-page-2_md.jpg"
-                        data-reflow-preview-type="image" /></div>
+                <div class="ref-preview">
+                    <img class="ref-image active" src="https://cdn.bootstrapstudio.io/products/product-page-3_md.jpg"
+                        data-reflow-preview-type="image" />
+                    <img class="ref-image" src="https://cdn.bootstrapstudio.io/products/product-page-1_md.jpg"
+                        data-reflow-preview-type="image" />
+                    <img class="ref-image" src="https://cdn.bootstrapstudio.io/products/product-page-4_md.jpg"
+                        data-reflow-preview-type="image" />
+                    <img class="ref-image" src="https://cdn.bootstrapstudio.io/products/product-page-2_md.jpg"
+                        data-reflow-preview-type="image" />
+                </div>
                 <div class="ref-thumbnails">
                     <div class="ref-thumbnail">
                         <div class="ref-image active" data-reflow-preview-type="image" data-reflow-preview="undefined"
@@ -46,19 +47,15 @@
                 </div>
             </div>
             <div class="ref-product-data">
-                <h2 class="ref-name">Awesome Product</h2><strong class="ref-price">$168.73</strong><span
-                    data-reflow-type="add-to-cart" data-reflow-product="558773655" data-reflow-variant="746363596_s">
+                <h2 class="ref-name">{{{product_name}}}</h2>
+                <strong class="ref-price">{{{price}}}</strong>
+                <span data-reflow-type="add-to-cart" data-reflow-product="558773655" data-reflow-variant="746363596_s">
                     <div class="ref-product-controls">
-                        <div class="ref-variant"><label><span>Size</span><select class="ref-field-variants"
-                                    name="variant-state" required>
-                                    <option value="746363596_s">S</option>
-                                    <option value="746363596_m">M</option>
-                                    <option value="746363596_l">L</option>
-                                </select></label></div>
                         <div class="ref-quantity-widget">
                             <div class="ref-decrease">-</div><input type="text" value="1" />
                             <div class="ref-increase">+</div>
-                        </div><a class="ref-button" href="#">Add to Cart</a>
+                        </div>
+                        <a class="ref-button" style="background-color: #828887;" href="#">Add to Cart</a>
                     </div>
                 </span>
             </div>

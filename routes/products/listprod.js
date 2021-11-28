@@ -35,15 +35,15 @@ router.get('/', async function (req, res, next) {
 
         productInfo += `
         <a href="/product?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">
-            <div class="ref-product"><img class="ref-image"
-                        src=${src} loading="lazy" />
-                    <div class="ref-product-data">
-                        <div class="ref-product-info">
-                            <h5 class="ref-name">${product.productName}</h5>
-                        </div>
-                        <p class="ref-price">$${Number(product.productPrice).toFixed(2)}</p>
+            <div class="ref-product">
+                <img class="ref-image" src=${src} loading="lazy" />
+                <div class="ref-product-data">
+                    <div class="ref-product-info">
+                        <h5 class="ref-name">${product.productName}</h5>
                     </div>
+                    <p class="ref-price">$${Number(product.productPrice).toFixed(2)}</p>
                 </div>
+            </div>
         </a>
         `;
     }
