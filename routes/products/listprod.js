@@ -30,7 +30,7 @@ router.get('/', async function (req, res, next) {
             src = imageLink;
         }
         else if (binaryImage) {
-            src = "/displayImage?id=${product.productId}";
+            src = `/displayImage?id=${product.productId}`;
         }
 
         productInfo += `
