@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const sql = require('mssql');
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     res.setHeader('Content-Type', 'image/jpeg');
 
     let id = req.query.id;
@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
         return;
     }
 
-    (async function() {
+    (async function () {
         try {
             let pool = await sql.connect(dbConfig);
 
@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
             }
 
             res.end()
-        } catch(err) {
+        } catch (err) {
             console.dir(err);
             res.write(err + "")
             res.end();
