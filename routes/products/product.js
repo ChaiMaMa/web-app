@@ -7,76 +7,86 @@ const query = require('../../utilities/query').query;
 router.get('/', function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     (async function () {
-        res.write("<title>Chai MaMa</title>");
         try {
-            res.write('<h1 align="center"><font face="cursive" color="#3399FF"><a href="/">Chai MaMa</a></font></h1><hr>');
-            let pool = await sql.connect(dbConfig);
 
             // Get product name to search for
             let id = req.query.id;
             let name = req.query.name;
             let price = req.query.price;
 
-            // TODO: Retrieve and display info for the product
-            res.write(`<h1>${name}</h1>`);
+            // Check if parameters are present
+            if (!id || !name || !price) {
+                res.status(400).send('Missing parameters');
+            }
 
-            // TODO: If there is a productImageURL, display using IMG tag
-            // TODO: Retrieve any image stored directly in database. Note: Call displayImage.jsp with product id as parameter.
-
+            // Get product images
             let result = await query(
-                `select productImageURL, productImage from Product where productId = @productId`,
+                `
+                SELECT productImageURL, productImage 
+                FROM Product 
+                WHERE productId = @productId
+                `,
                 {
                     productId: id
                 }
             );
 
+            // Check if product exists
+            if (result.recordset.length === 0) {
+                res.status(400).send('Product does not exist');
+            }
+
             let imageLink = result.recordset[0].productImageURL;
             let binaryImage = result.recordset[0].productImage;
 
+
+            let image_ref = '';
+            let thumbnail = '';
+            // Check if image url is present
             if (imageLink) {
-                res.write(`
-                    <img src= "${imageLink}" width="300" height="300">
-                    `
-                );
+                image_ref += `
+                    <img id= "image_0" class="ref-image active" src="${imageLink}" alt= "Product Image" data-reflow-preview-type="image" />
+                `;
+                thumbnail += `
+                    <img id= "thumb_0" class="ref-image active" src="${imageLink}" alt= "Product Image" data-reflow-preview-type="image" onclick="switchMainImage(0);" />
+                `;
             }
 
             if (binaryImage) {
-                res.write(`
-                    <img src= "/displayImage?id=${id}" width="300" height="300"></img>
-                    `
-                );
+                // If there is already an image, we don't set the second image as active
+                let isActive = imageLink ? '' : 'active';
+                image_ref += `
+                    <img id= "image_1" class="ref-image ${isActive}" src="/displayImage?id=${id}" alt= "Product Image" data-reflow-preview-type="image" />
+                `;
+                thumbnail += `
+                    <img id= "thumb_1" class="ref-image ${isActive}" src="/displayImage?id=${id}" alt= "Product Image" data-reflow-preview-type="image" onclick="switchMainImage(1)"/>
+                `;
             }
 
-            // res.write(`
-            //         <img src= "${imageLink}" width="300" height="300">`);
+            // If there are no images, set default image
+            if (image_ref.length == 0) {
+                image_ref += `
+                    <img class="ref-image active" src="/images/placeholder.jpeg" alt= "Product Image" data-reflow-preview-type="image" />
+                `;
+            }
 
-            res.write(
-                `<table>
-                    <tr>
-                        <th>Id</th>
-                        <td>${id}</td>
-                    </tr>
-                    <tr>
-                        <th>Price</th>
-                        <td>$${price}</td>
-                    </tr>
-                </table>`
-            );
 
-            // TODO: Add links to Add to Cart and Continue Shopping
-
-            res.write(
-                `<h2><a href="/addcart?id=${id}&name=${name}&price=${price}">Add to cart</a></h2>
-                <h2><a href="/listprod">Continue Shopping</a></h2></body>`
-            );
-
-            res.end()
+            res.render('layouts/product', {
+                product_name: name,
+                price: Number(price).toFixed(2),
+                productId: id,
+                image_ref: image_ref,
+                thumbnail: thumbnail
+            });
         } catch (err) {
             console.dir(err);
-            res.write(err + "")
-            res.end();
+            res.status(500).send('Internal server error');
         }
     })();
 });
 
 module.exports = router;
+
+
+
+
