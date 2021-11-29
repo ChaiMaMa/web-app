@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const { getProductImageURL } = require('../../utilities/query');
 
 /**
  * Default ship fee. Default to 10.
  */
 var shipFee = 10;
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
 
     // Get cart information
@@ -17,12 +18,14 @@ router.get('/', function (req, res, next) {
         let subTotal = 0;
         for (let productId in cart) {
             let product = cart[productId];
+
+            let imageURL = await getProductImageURL(productId);
             products += `
             <div class="ref-products">
                 <div class="ref-product">
                     <div class="ref-product-col">
                         <img class="ref-product-photo"
-                            src="https://cdn.reflowhq.com/media/267418190/108661429/b82e1b79d627910086003ce6309b2cec_sm.jpg"
+                            src="${imageURL}"
                             alt="Dermentum Quisque">
                         <div class ="ref-product-name">${product.name}</div>
                         <div class ="ref-product-secondary">${Number(product.price).toFixed(2)} x ${product.quantity}</div>
@@ -55,5 +58,6 @@ router.get('/', function (req, res, next) {
 
 
 });
+
 
 module.exports = router;

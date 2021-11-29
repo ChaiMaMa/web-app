@@ -100,8 +100,32 @@ async function updateShipment(orderedItems, changes) {
 }
 
 
+
+async function getProductImageURL(productId) {
+    let result = await query(`
+        SELECT productImageURL, productImage 
+        FROM Product 
+        WHERE productId = @productId
+    `, {
+        productId: productId
+    });
+
+    let record = result.recordset[0];
+    if (record.productImageURL) {
+        return record.productImageURL;
+    } else if (record.productImage) {
+        return `/displayImage?id=${productId}`;
+    } else {
+        return '/images/placeholder.jpeg';
+    }
+
+}
+
+
+
 module.exports = {
     query,
     update,
-    updateShipment
+    updateShipment,
+    getProductImageURL
 };

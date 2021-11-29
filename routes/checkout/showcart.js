@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const { getProductImageURL } = require('../../utilities/query');
 
 
-router.get('/', function (req, res) {
+router.get('/', async function (req, res) {
 
     let productList = req.session.productList;
     if (productList && req.session.productCount > 0) {
@@ -12,13 +13,14 @@ router.get('/', function (req, res) {
         for (let productId in productList) {
             let product = productList[productId];
 
+            let imageURL = await getProductImageURL(productId);
             // Create a product element for displaying
             products += `
             <div id='product_${product.id}'>
                 <div class="ref-product">
                 <div class="ref-product-col">
                     <div class="ref-product-wrapper"><img class="ref-product-photo"
-                            src="https://cdn.bootstrapstudio.io/products/product-9_sm.jpg"
+                            src="${imageURL}"
                             alt="${product.name}" />
                         <div class="ref-product-data">
                             <div class="ref-product-info">
