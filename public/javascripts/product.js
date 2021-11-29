@@ -3,24 +3,46 @@ var amount = 0;
 
 function addCart() {
     console.log("Adding to cart...");
-    alert("Adding to cart...");
+    // Get the information to add to cart
+    var productId = document.getElementById('product_id').innerHTML;
+    var productName = document.getElementById('product_name').innerHTML;
+    var price = document.getElementById('price').innerHTML;
+    var body = "id=" + productId + "&name=" + productName + "&price=" + price + "&quantity=" + document.getElementById('quantity').value;
 
 
-    let success = true;
+    // Add to cart
+    var xhttp = new XMLHttpRequest();
 
-    if (success) {
-        document.body.innerHTML += `
-        <div id = 'dialog' data-reflow-type="toast" class="ref-notification success no-description" style="transform: translateY(-20px);">
-            <div class="ref-notification-content">
-                <div class="ref-notification-title">Product added to cart</div>
-                <div class="ref-notification-description"></div>
-                <div class="ref-close-button" onclick='closeDialog();'>×</div>
-                <a class="ref-button" href='/showcart'>See Cart</a>
+    xhttp.onload = function () {
+        if (xhttp.status == 200) {
+            document.body.innerHTML += `
+            <div id = 'dialog' data-reflow-type="toast" class="ref-notification success no-description" style="transform: translateY(-20px);">
+                <div class="ref-notification-content">
+                    <div class="ref-notification-title">Product added to cart</div>
+                    <div class="ref-notification-description"></div>
+                    <div class="ref-close-button" onclick='closeDialog();'>×</div>
+                    <a class="ref-button" href='/showcart'>See Cart</a>
+                </div>
             </div>
-        </div>
-        `;
-    }
+            `;
+        } else {
+            document.body.innerHTML += `
+            <div id = 'dialog' data-reflow-type="toast" class="ref-notification error no-description" style="transform: translateY(-20px);">
+                <div class="ref-notification-content">
+                    <div class="ref-notification-title">Failed to add to cart</div>
+                    <div class="ref-notification-description"></div>
+                    <div class="ref-close-button" onclick='closeDialog();'>×</div>
+                </div>
+            </div>
+            `;
+        }
+    };
 
+
+
+    xhttp.open("POST", "/addcart", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(body);
 }
 
 function closeDialog() {

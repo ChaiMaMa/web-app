@@ -1,9 +1,7 @@
-const e = require('express');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', function (req, res, next) {
-    res.setHeader('Content-Type', 'text/html');
+router.post('/', function (req, res) {
     // If the product list isn't set in the session,
     // create a new list.
     let productList = false;
@@ -12,59 +10,29 @@ router.get('/', function (req, res, next) {
     } else {
         productList = req.session.productList;
     }
-
-
-    // Check if updates are requested
-    if (req.query.update) {
-        let id = req.query.id;
-        let quantity = req.query.quantity;
-
-        if (id && quantity && productList[id]) {
-            let num = Number(quantity);
-            if (num > 0) {
-                productList[id].quantity = num;
-            } else {
-                delete productList[id];
-                req.session.cart_size--;
-            }
-
-        } else {
-            res.redirect("/listprod");
-            return;
-        }
+    // Add the product to the list.
+    // Get product information
+    let id = req.body.id;
+    let name = req.body.name;
+    let price = req.body.price;
+    let quantity = req.body.quantity;
+    if (!id || !name || !price || !quantity) {
+        res.status(400).send('Missing product information.');
     } else {
-        // Add new product selected
-        // Get product information
-        let id = false;
-        let name = false;
-        let price = false;
-        if (req.query.id && req.query.name && req.query.price) {
-            id = req.query.id;
-            name = req.query.name;
-            price = req.query.price;
-        } else {
-            res.redirect("/listprod");
-            return;
-        }
-
-        // Update quantity if add same item to order again
+        // Update quantity if product already exists in the list.
         if (productList[id]) {
-            productList[id].quantity = productList[id].quantity + 1;
+            productList[id].quantity = quantity;
         } else {
             productList[id] = {
                 "id": id,
                 "name": name,
                 "price": price,
-                "quantity": 1
+                "quantity": quantity
             };
         }
         req.session.cart_size++;
+        res.status(200).send(productList[id]);
     }
-
-
-
-    req.session.productList = productList;
-    res.redirect("/showcart");
 });
 
 module.exports = router;
