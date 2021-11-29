@@ -12,7 +12,7 @@ class User {
     async intializeInfo() {
         let result = await query(
             `
-            SELECT firstName, lastName, email, phonenum, address, city, state, postalCode, country
+            SELECT customerId, firstName, lastName, email, phonenum, address, city, state, postalCode, country
             FROM customer
             WHERE userid = @username AND password = @password`,
             {
@@ -30,6 +30,7 @@ class User {
 
         let userInfo = result.recordset[0];
         this.info = {
+            id: userInfo.customerId,
             username: userInfo.username,
             password: userInfo.password,
             firstName: userInfo.firstName,
