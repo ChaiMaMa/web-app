@@ -56,7 +56,7 @@ function increase() {
 
 function decrease() {
     var inputEle = document.getElementById('quantity');
-    if (inputEle.value > 0) {
+    if (inputEle.value > 1) {
         inputEle.value = Number(inputEle.value) - 1;
     }
 }
