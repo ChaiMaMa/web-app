@@ -24,10 +24,15 @@ router.post('/', function (req, res) {
         // Update quantity if product already exists in the list.
         if (productList[id]) {
             if (quantity > 0) {
-                productList[id].quantity = Number(quantity);
+                if (req.body.add) {
+                    productList[id].quantity += Number(quantity);
+                } else {
+                    productList[id].quantity = Number(quantity);
+                }
             }
             else {
-                delete productList[id]; req.session.productCount--;
+                delete productList[id];
+                req.session.productCount--;
             }
         } else {
             productList[id] = {

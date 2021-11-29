@@ -7,8 +7,8 @@ function addCart() {
     var productId = document.getElementById('product_id').innerHTML;
     var productName = document.getElementById('product_name').innerHTML;
     var price = document.getElementById('price').innerHTML.replace('$', '');
-    var body = "id=" + productId + "&name=" + productName + "&price=" + price + "&quantity=" + document.getElementById('quantity').value;
-
+    var quantity = document.getElementById('quantity').value;
+    var body = "id=" + productId + "&name=" + productName + "&price=" + price + "&quantity=" + quantity + "&add=" + true;
 
     // Add to cart
     var xhttp = new XMLHttpRequest();
@@ -36,6 +36,9 @@ function addCart() {
             </div>
             `;
         }
+
+        // Set the chosen quantity (Why? Adding elements will reset the value)
+        document.getElementById('quantity').value = quantity;
     };
 
     xhttp.open("POST", "/addcart", true);
