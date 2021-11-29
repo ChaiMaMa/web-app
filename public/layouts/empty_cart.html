@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/litera/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.reflowhq.com/v1/toolkit.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <title>ChaiMaMa</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md shadow-sm" style="background-color: rgba(190,197,197,1);">
+        <div class="container">
+            <a class="navbar-brand" href="/">ChaiMaMa Store</a>
+            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                <span class="visually-hidden">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/listprod">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/showcart">Cart</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container pt-5">
+        <div data-reflow-type="shopping-cart">
+            <div class="reflow-shopping-cart">
+
+                <div class="ref-loading-overlay"></div>
+                <div class="ref-message" style="display: block;">Your shopping cart is empty.</div>
+
+                <div class="ref-cart" style="display: none;">
+                    <div class="ref-heading">Shopping Cart</div>
+                    <div class="ref-th">
+                        <div class="ref-product-col">Product</div>
+                        <div class="ref-price-col">Price</div>
+                        <div class="ref-quantity-col">Quantity</div>
+                        <div class="ref-total-col">Total</div>
+                    </div>
+                    <div class="ref-cart-table">
+                        <div class="ref-product" data-id="458412058" data-quantity="4"
+                            data-variant_id="458412058_ceramic">
+                            <div class="ref-product-col">
+                                <div class="ref-product-wrapper">
+                                    <img class="ref-product-photo"
+                                        src="https://cdn.reflowhq.com/media/267418190/458412058/a216847dee10710331029b71263044c0_sm.jpg"
+                                        alt="Auctor Turpis">
+                                    <div class="ref-product-data">
+                                        <div class="ref-product-info">
+                                            <div class="ref-product-name">Auctor Turpis</div>
+                                            <div class="ref-product-category">Accessories</div>
+                                            <div class="ref-product-variants">
+                                                <div class="ref-product-variant">Material: Ceramic</div>
+                                            </div>
+                                        </div>
+                                        <div class="ref-product-price">$450.00</div>
+                                    </div>
+                                </div>
+                                <div class="ref-product-controls">
+                                    <div class="ref-product-quantity">
+                                        <div class="ref-quantity-widget">
+                                            <div class="ref-decrease">-</div>
+                                            <input type="text">
+                                            <div class="ref-increase">+</div>
+                                        </div>
+                                        <div class="ref-product-remove">Remove</div>
+                                    </div>
+                                    <div class="ref-product-total">
+                                        <div class="ref-product-total-sum">$1,800.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ref-price-col">
+                                <div class="ref-product-price">$450.00</div>
+                            </div>
+                            <div class="ref-quantity-col">
+                                <div class="ref-product-quantity">
+                                    <div class="ref-quantity-widget">
+                                        <div class="ref-decrease">-</div>
+                                        <input type="text">
+                                        <div class="ref-increase">+</div>
+                                    </div>
+                                    <div class="ref-product-remove">Remove</div>
+                                </div>
+                            </div>
+                            <div class="ref-total-col">
+                                <div class="ref-product-total">
+                                    <div class="ref-product-total-sum">$1,800.00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ref-footer">
+                        <div class="ref-links"></div>
+                        <div class="ref-totals">
+                            <div class="ref-subtotal">Subtotal: $1,800.00</div>
+                            <div class="ref-shipping-taxes">Shipping and taxes are calculated<br> during checkout.</div>
+                            <div class="ref-button ref-checkout-button">Checkout</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ref-checkout" style="display: none;">
+                    <div class="ref-checkout-content">
+                        <form class="ref-details">
+                            <div class="ref-heading">Details</div>
+                            <label>
+                                <span>Email</span>
+                                <input type="email" name="email" id="ref-field-email" value="" required=""
+                                    data-state-src="email">
+                                <div class="ref-validation-error"></div>
+                            </label>
+                            <label>
+                                <span>Phone</span>
+                                <input type="tel" name="phone" id="ref-field-phone" value="" pattern="[0-9\+\- ]{5,30}"
+                                    placeholder="+1234567890" required="" data-state-src="phone">
+                                <div class="ref-validation-error"></div>
+                            </label>
+                            <div class="ref-shipping-address-holder"></div>
+                            <div class="ref-tax-note">
+                                <label class="ref-checkbox">
+                                    <input type="checkbox" id="ref-field-have-tax-exemption">
+                                    <span></span>
+                                </label>
+                                <div class="ref-tax-exemption-fields">
+                                    <label class="ref-tax-exemption-file">
+                                        <span></span>
+                                        <input type="file" name="tax-exemption-file" id="ref-field-exemption-file"
+                                            accept=".doc,.docx,.pdf,.jpg,.jpeg,.png" required="">
+                                        <div class="ref-validation-error"></div>
+                                    </label>
+                                    <label class="ref-tax-exemption-text">
+                                        <span></span>
+                                        <input type="text" name="tax-exemption-text" id="ref-field-exemption-text"
+                                            required="" data-state-src="tax-text">
+                                        <div class="ref-validation-error"></div>
+                                    </label>
+                                </div>
+                            </div>
+                            <hr>
+                            <label class="ref-field-collapsible ref-note-to-seller">
+                                <span>Note to Seller</span>
+                                <textarea id="ref-field-note-seller" name="note-to-seller" row="4" maxlength="1000"
+                                    placeholder="If you have any specific instructions you want to give to the seller, write them here."
+                                    data-state-src="note"></textarea>
+                                <div class="ref-validation-error"></div>
+                            </label>
+                            <hr>
+                            <div class="ref-nav">
+                                <div class="ref-row">
+                                    <div class="ref-back">← Back to Shopping Cart</div>
+                                    <div class="ref-button ref-next">Next</div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="ref-shipping-payment">
+                            <div class="ref-heading">Shipping &amp; Payment</div>
+                            <div class="ref-tabs">
+                                <div class="ref-tab" data-tab="express"><b>Express Checkout</b></div>
+                                <div class="ref-tab" data-tab="custom"><b>Credit/Debit Card</b><i>Google Pay &amp; Apple
+                                        Pay</i></div>
+                            </div>
+                            <div class="ref-tab-content-holder">
+                                <div class="ref-tab-content ref-tab-express">
+                                    <div class="ref-paypal-button-holder"></div>
+                                </div>
+                                <div class="ref-tab-content ref-tab-custom">
+                                    <form class="ref-shipping-form">
+                                        <div class="ref-heading-small">Shipping Address</div>
+                                        <div class="ref-shipping-address-holder"></div>
+                                        <label class="ref-checkbox ref-billing-checkbox">
+                                            <input type="checkbox" id="ref-field-billing-same-shipping">
+                                            <span>Billing address same as shipping</span>
+                                        </label>
+                                        <fieldset class="ref-billing-address" disabled="">
+                                            <div class="ref-heading-small">Billing Address</div>
+                                            <div class="ref-billing-address-holder"></div>
+                                        </fieldset>
+                                        <div class="ref-heading-shipping-methods ref-heading-small">Shipping Method
+                                        </div>
+                                        <div class="ref-shipping-methods ref-error-parent"></div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="ref-nav">
+                                <div class="ref-row">
+                                    <div class="ref-back">← Back to Details</div>
+                                    <div class="ref-button ref-proceed-payment">Proceed to Payment</div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="ref-links"></div>
+                    </div>
+                    <div class="ref-checkout-summary">
+                        <div class="ref-heading">Order Summary</div>
+                        <div class="ref-products"></div>
+                        <hr>
+                        <div class="ref-totals">
+                            <div class="ref-subtotal">
+                                <div class="ref-row"><span>Subtotal</span><span></span></div>
+                            </div>
+                            <div class="ref-shipping">
+                                <div class="ref-row"><span>Shipping</span><span></span></div>
+                            </div>
+                            <div class="ref-taxes">
+                                <div class="ref-row"><span></span><span></span></div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="ref-total">
+                            <div class="ref-row"><span>Total</span><span></span></div>
+                            <div class="ref-total-note">All prices are in <span></span></div>
+                        </div>
+                    </div>
+                    <div class="ref-summary-toggle ref-field-collapsible">
+                        <span>Show Summary</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox@3.1.0/dist/js/glightbox.min.js"></script>
+</body>

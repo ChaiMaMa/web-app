@@ -22,7 +22,8 @@ router.post('/', function (req, res) {
     } else {
         // Update quantity if product already exists in the list.
         if (productList[id]) {
-            productList[id].quantity += Number(quantity);
+            if (quantity > 0) { productList[id].quantity = Number(quantity); }
+            else { delete productList[id]; }
         } else {
             productList[id] = {
                 "id": id,
@@ -32,9 +33,18 @@ router.post('/', function (req, res) {
             };
 
         }
-        console.log(productList[id]);
-        req.session.cartIsEmpty = false;
-        res.status(200).send(productList[id]);
+
+        // Calculate subtotal
+        let subTotal = 0;
+        for (let productId in productList) {
+            let product = productList[productId];
+            subTotal += Number(product.price) * Number(product.quantity);
+        }
+
+        res.status(200).send({
+            added: productList[id],
+            subTotal: subTotal,
+        });
     }
 });
 

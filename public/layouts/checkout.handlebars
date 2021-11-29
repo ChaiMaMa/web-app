@@ -1,0 +1,97 @@
+<div class="ref-checkout">
+    <div class="ref-checkout-content">
+        <form class="ref-details">
+            <div class="ref-heading">Details</div><label><span>Email</span><input id="ref-field-email" type="email"
+                    name="email" value required data-state-src="email" />
+                <div class="ref-validation-error"></div>
+            </label><label><span>Phone</span><input id="ref-field-phone" type="tel" name="phone" value
+                    pattern="[0-9\+\- ]{5,30}" placeholder="+1234567890" required data-state-src="phone" />
+                <div class="ref-validation-error"></div>
+            </label>
+            <div class="ref-shipping-address-holder"></div>
+            <div class="ref-tax-note"><label class="ref-checkbox"><input id="ref-field-have-tax-exemption"
+                        type="checkbox" /><span></span></label>
+                <div class="ref-tax-exemption-fields"><label class="ref-tax-exemption-file"><span></span><input
+                            id="ref-field-exemption-file" type="file" name="tax-exemption-file"
+                            accept=".doc,.docx,.pdf,.jpg,.jpeg,.png" required />
+                        <div class="ref-validation-error"></div>
+                    </label><label class="ref-tax-exemption-text"><span></span><input id="ref-field-exemption-text"
+                            type="text" name="tax-exemption-text" required data-state-src="tax-text" />
+                        <div class="ref-validation-error"></div>
+                    </label></div>
+            </div>
+            <hr /><label class="ref-field-collapsible ref-note-to-seller"><span>Note to
+                    Seller</span><textarea id="ref-field-note-seller" name="note-to-seller" row="4" maxlength="1000"
+                    placeholder="If you have any specific instructions you want to give to the seller, write them here."
+                    data-state-src="note"></textarea>
+                <div class="ref-validation-error"></div>
+            </label>
+            <hr />
+            <div class="ref-nav">
+                <div class="ref-row">
+                    <div class="ref-back">← Back to Shopping Cart</div>
+                    <div class="ref-button ref-next">Next</div>
+                </div>
+            </div>
+        </form>
+        <div class="ref-shipping-payment">
+            <div class="ref-heading">Shipping &amp; Payment</div>
+            <div class="ref-tabs">
+                <div class="ref-tab" data-tab="express"><b>Express Checkout</b></div>
+                <div class="ref-tab" data-tab="custom"><b>Credit/Debit Card</b><i>Google Pay
+                        &amp; Apple Pay</i></div>
+            </div>
+            <div class="ref-tab-content-holder">
+                <div class="ref-tab-content ref-tab-express">
+                    <div class="ref-paypal-button-holder"></div>
+                </div>
+                <div class="ref-tab-content ref-tab-custom">
+                    <form class="ref-shipping-form">
+                        <div class="ref-heading-small">Shipping Address</div>
+                        <div class="ref-shipping-address-holder"></div><label
+                            class="ref-checkbox ref-billing-checkbox"><input id="ref-field-billing-same-shipping"
+                                type="checkbox" /><span>Billing address same as
+                                shipping</span></label>
+                        <fieldset class="ref-billing-address" disabled>
+                            <div class="ref-heading-small">Billing Address</div>
+                            <div class="ref-billing-address-holder"></div>
+                        </fieldset>
+                        <div class="ref-heading-shipping-methods ref-heading-small">Shipping
+                            Method</div>
+                        <div class="ref-shipping-methods ref-error-parent"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="ref-nav">
+                <div class="ref-row">
+                    <div class="ref-back">← Back to Details</div>
+                    <div class="ref-button ref-proceed-payment">Proceed to Payment</div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="ref-links"></div>
+    </div>
+    <div class="ref-checkout-summary">
+        <div class="ref-heading">Order Summary</div>
+        <div class="ref-products"></div>
+        <hr />
+        <div class="ref-totals">
+            <div class="ref-subtotal">
+                <div class="ref-row"><span>Subtotal</span><span></span></div>
+            </div>
+            <div class="ref-shipping">
+                <div class="ref-row"><span>Shipping</span><span></span></div>
+            </div>
+            <div class="ref-taxes">
+                <div class="ref-row"><span></span><span></span></div>
+            </div>
+        </div>
+        <hr />
+        <div class="ref-total">
+            <div class="ref-row"><span>Total</span><span></span></div>
+            <div class="ref-total-note">All prices are in <span></span></div>
+        </div>
+    </div>
+    <div class="ref-summary-toggle ref-field-collapsible"><span>Show Summary</span></div>
+</div>

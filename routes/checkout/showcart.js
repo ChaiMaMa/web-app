@@ -1,71 +1,68 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 
-router.get('/', function (req, res, next) {
-    let productList = false;
-    res.setHeader('Content-Type', 'text/html');
-    res.write("<title>Your Shopping Cart</title>");
-    if (req.session.productList) {
-        productList = req.session.productList;
-        res.write("<h1>Your Shopping Cart</h1>");
-        res.write(`
-        <head> 
-            <style>
-                input[type='number']{
-                    width: 50px;
-                } 
 
-                button {
-                    margin-right: 10px;
-                    margin-left: 10px;
-                }
-            </style>
-        </head>
-        <body>
-        <script>
-            function updateQuantity(id) {
-                window.location = '/addcart?update=1&id=' + id + '&quantity=' + document.getElementById(id + "_quantity").value;
-            }
-        </script>
-        <table>
-            <tr>
-                <th>Product Id</th>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Subtotal</th>
-            </tr>
-        `);
-        let total = 0;
+router.get('/', function (req, res) {
+
+    let productList = req.session.productList;
+    if (productList && !req.session.cartIsEmpty) {
+        let products = '';
+        let subTotal = 0;
         for (let productId in productList) {
             let product = productList[productId];
 
-            res.write(`
-            <tr id = "${product.id}_row">
-                <td>${product.id}</td>
-                <td>${product.name}</td>
-                <td align="center">
-                <input type="number" name="quantity" id ="${product.id}_quantity" value=${product.quantity} min="0"></input>
-                </td>
-                <td align="right">${Number(product.price).toFixed(2)}</td>
-                <td align="right">${(Number(product.quantity) * Number(product.price)).toFixed(2)}</td>
-                <td><button onclick="updateQuantity(${product.id})" size = "40">Update Quantity</button></td>
-            </tr>
-            `);
-            total = total + product.quantity * product.price;
-        }
-        res.write("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td><td align=\"right\" id=\"total\">$" + total.toFixed(2) + "</td></tr></table>");
+            // Create a product element for displaying
+            products += `
+            <div id='product_${product.id}'>
+                <div class="ref-product">
+                <div class="ref-product-col">
+                    <div class="ref-product-wrapper"><img class="ref-product-photo"
+                            src="https://cdn.bootstrapstudio.io/products/product-9_sm.jpg"
+                            alt="${product.name}" />
+                        <div class="ref-product-data">
+                            <div class="ref-product-info">
+                                <div id='product_name_${product.id}' class="ref-product-name">${product.name}</div>
+                                <!--  <div class="ref-product-category">Tea</div> -->
+                                <div id='product_id_${product.id}' class="ref-product-id" hidden>${product.id}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ref-price-col">
+                    <div id='price_${product.id}' class="ref-product-price">$${product.price}</div>
+                </div>
+                <div class="ref-quantity-col">
+                    <div class="ref-product-quantity">
+                        <div class="ref-quantity-widget">
+                            <div class="ref-decrease" onclick='updateQuantity(${product.id}, false, false);'>-</div>
+                            <input id='quantity_${product.id}' type="text" value=${product.quantity} />
+                            <div class="ref-increase" onclick='updateQuantity(${product.id}, true, false);'>+</div>
+                        </div>
+                        <div class="ref-product-remove" onclick='updateQuantity(${product.id}, false, true);'>Remove</div>
+                    </div>
+                </div>
+                <div class="ref-total-col">
+                    <div class="ref-product-total">
+                        <div id='total_${product.id}' class="ref-product-total-sum">$${(Number(product.quantity) * Number(product.price)).toFixed(2)}</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            `;
 
-        // If there is any items in the cart, show the checkout button
-        if (req.session.cart_size > 0) {
-            res.write("<h2><a href=\"checkout\">Check Out</a></h2>");
+            // Computing the subtotal
+            subTotal += product.quantity * product.price;
+
         }
+
+        res.render('layouts/showcart', {
+            products: products,
+            subTotal: subTotal.toFixed(2)
+        });
     } else {
-        res.write("<h1>Your shopping cart is empty!</h1>");
+        res.sendFile(path.join(__dirname, '../../public/layouts/empty_cart.html'));
     }
-    res.write('<h2><a href="/listprod">Continue Shopping</a></h2></body>');
-
-    res.end();
 });
 
 module.exports = router;

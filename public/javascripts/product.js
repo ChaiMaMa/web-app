@@ -38,8 +38,6 @@ function addCart() {
         }
     };
 
-
-
     xhttp.open("POST", "/addcart", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(body);
@@ -59,6 +57,82 @@ function decrease() {
     if (inputEle.value > 1) {
         inputEle.value = Number(inputEle.value) - 1;
     }
+}
+
+
+function updateQuantity(id, isIncrease, isRemove) {
+
+    // Rollback
+    if (isIncrease) {
+        var inputEle = document.getElementById(`quantity_${id}`);
+        inputEle.value = Number(inputEle.value) + 1;
+    } else {
+        var inputEle = document.getElementById(`quantity_${id}`);
+        if (inputEle.value > 1) {
+            inputEle.value = Number(inputEle.value) - 1;
+        }
+    }
+
+
+    let productName = document.getElementById(`product_name_${id}`).innerHTML;
+    let price = document.getElementById(`price_${id}`).innerHTML.replace('$', '');
+    let productId = document.getElementById(`product_id_${id}`).innerHTML;
+    let quantity = isRemove ? 0 : document.getElementById(`quantity_${id}`).value;
+    var body = "id=" + productId + "&name=" + productName + "&price=" + price + "&quantity=" + quantity;
+    let xhttp = new XMLHttpRequest();
+
+
+    // Set listener
+    xhttp.onload = function () {
+
+        if (xhttp.status == 200) {
+            let json = xhttp.response;
+            let subTotal = json.subTotal;
+            let product = json.added;
+
+            // Check if subtotal is 0
+            // If so, show empty cart page
+            console.log(subTotal);
+            if (Number(subTotal) == 0) {
+                document.location.href = '/showcart';
+                return;
+            }
+
+            if (product) {
+                // Update the total $$ of the product
+                document.getElementById(`total_${id}`).innerHTML = `$${(Number(product.quantity) * Number(product.price)).toFixed(2)}`
+            } else {
+                document.getElementById(`product_${id}`).remove();
+            }
+
+            // Update the subTotal
+            document.getElementById('subTotal').innerHTML = `$${Number(subTotal).toFixed(2)}`;
+
+        } else {
+            // Rollback
+            if (isIncrease) {
+                decrease();
+            } else {
+                increase();
+            }
+
+            document.body.innerHTML += `
+            <div id = 'dialog' data-reflow-type="toast" class="ref-notification error no-description" style="transform: translateY(-20px);">
+                <div class="ref-notification-content">
+                    <div class="ref-notification-title">Failed to update cart</div>
+                    <div class="ref-notification-description"></div>
+                    <div class="ref-close-button" onclick='closeDialog();'>×</div>
+                </div>
+            </div>
+            `;
+        }
+    };
+
+    xhttp.responseType = 'json';
+    xhttp.open("POST", "/addcart", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(body);
+
 }
 
 function switchMainImage(id) {
