@@ -7,6 +7,7 @@ router.post('/', function (req, res) {
     let productList = false;
     if (!req.session.productList) {
         productList = {};
+        req.session.productCount = 0; // Distinct products in cart
         req.session.productList = productList;
     } else {
         productList = req.session.productList;
@@ -22,8 +23,12 @@ router.post('/', function (req, res) {
     } else {
         // Update quantity if product already exists in the list.
         if (productList[id]) {
-            if (quantity > 0) { productList[id].quantity = Number(quantity); }
-            else { delete productList[id]; }
+            if (quantity > 0) {
+                productList[id].quantity = Number(quantity);
+            }
+            else {
+                delete productList[id]; req.session.productCount--;
+            }
         } else {
             productList[id] = {
                 "id": id,
@@ -31,7 +36,7 @@ router.post('/', function (req, res) {
                 "price": price,
                 "quantity": Number(quantity)
             };
-
+            req.session.productCount++;
         }
 
         // Calculate subtotal

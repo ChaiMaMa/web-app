@@ -6,7 +6,7 @@ const path = require('path');
 router.get('/', function (req, res) {
 
     let productList = req.session.productList;
-    if (productList && !req.session.cartIsEmpty) {
+    if (productList && req.session.productCount > 0) {
         let products = '';
         let subTotal = 0;
         for (let productId in productList) {
