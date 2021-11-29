@@ -5,18 +5,18 @@ const sql = require('mssql');
 const query = require('../../utilities/query').query;
 const update = require('../../utilities/query').update;
 const isNumeric = require('../../utilities/validators').isNumeric;
+const path = require('path');
 const { ValidationError, PropertyRequiredError, UserNotFoundError } = require('../../utilities/errors');
 
-router.get('/', async function (req, res, next) {
+router.post('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
-    res.write("<title>Chai MaMa Order Processing</title>");
     try {
         /** 
          * Product list is an object with keys being the product id and the value being the product object.
          * Each entry (product object) in the productList is an object with key values: id, name, quantity, price 
          **/
         let productList = req.session.productList;
-        let customerId = req.query.customerId;
+        let customerId = req.body.customerId;
         /**
             Determine if valid customer id was entered
             Determine if there are products in the shopping cart
@@ -43,6 +43,8 @@ router.get('/', async function (req, res, next) {
         }
 
         let customerInfo = customer.recordset[0];
+
+
         /** Save order information to database**/
         let result = await update(`
             INSERT INTO ordersummary(orderDate, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) 
@@ -92,76 +94,12 @@ router.get('/', async function (req, res, next) {
             WHERE orderId = ${orderId}
         `);
 
-        /** Print out order summary **/
-        res.write(`
-            <body>
-                <h1>Your Order Summary</h1>
-                <table>
-                    <tr>
-                        <th>Product Id</th>
-                        <th>Product Name</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Subtotal</th>
-                    </tr>
-        `);
-
-        let orderProducts = await query(
-            `
-            SELECT O.productId as productId, productName as name, quantity, price, (price * quantity) as subtotal 
-            FROM orderproduct O JOIN product P
-            ON O.productId = P.productId
-            WHERE orderId = @orderId
-            `,
-            { orderId: orderId }
-        );
-
-        for (let i = 0; i < orderProducts.recordset.length; i++) {
-            let orderProduct = orderProducts.recordset[i];
-            res.write(
-                `
-                <tr>
-                    <td>${orderProduct.productId}</td>
-                    <td>${orderProduct.name}</td>
-                    <td align = "center">${orderProduct.quantity}</td>
-                    <td align = "right">$${orderProduct.price}</td>
-                    <td align = "right">$${orderProduct.subtotal}</td>
-                </tr>
-                `
-            );
-        }
-
-        res.write(`
-        
-        <tr align="right">
-            <td colspan="4" >
-                <b>Order Total</b>
-            </td>
-            <td>$${totalAmt}</td>
-        </tr>
-        `);
-
-        res.write("</table>");
-
-        res.write(`    
-            <h1>Order completed. Will be shipped soon...</h1>
-            <h1>Your order reference number is: <span id = 'orderId'>${orderId}</span></h1>
-            <h1>Shipping to customer: ${customerInfo.customerId}</h1>
-            <h1>Name: ${customerInfo.firstName + " " + customerInfo.lastName}</h1>
-        `);
-        res.write(`
-            <h2>
-                <a href="/">Return to shopping</a>
-            </h2>
-            <script src='js/ship.js'></script>
-        </body>
-        `);
-
-        /** Clear session/cart **/
+        /** Clear the shopping cart **/
         delete req.session.productList;
-        delete req.session.cart_size;
+        delete req.session.productCount;
 
-
+        /** Redirect to shipment route to handle creating shipments **/
+        res.redirect(`/shipment?orderId=${orderId}`);
     } catch (err) {
         let message = false;
         if (err instanceof ValidationError || err instanceof UserNotFoundError) {
@@ -173,11 +111,10 @@ router.get('/', async function (req, res, next) {
         } else {
             message = "Unknown Error occurs while placing your order. Please try again!";
         }
-        res.write(`
-        <h1>${message}</h1>`);
         console.dir(err);
+        res.status(500).sendFile(path.join(__dirname, '../../public/layouts/error.html'));
     }
-    res.end();
 });
+
 
 module.exports = router;
