@@ -7,6 +7,7 @@ router.post('/', function (req, res) {
     let productList = false;
     if (!req.session.productList) {
         productList = {};
+        req.session.productList = productList;
     } else {
         productList = req.session.productList;
     }
@@ -21,16 +22,18 @@ router.post('/', function (req, res) {
     } else {
         // Update quantity if product already exists in the list.
         if (productList[id]) {
-            productList[id].quantity = quantity;
+            productList[id].quantity += Number(quantity);
         } else {
             productList[id] = {
                 "id": id,
                 "name": name,
                 "price": price,
-                "quantity": quantity
+                "quantity": Number(quantity)
             };
+
         }
-        req.session.cart_size++;
+        console.log(productList[id]);
+        req.session.cartIsEmpty = false;
         res.status(200).send(productList[id]);
     }
 });

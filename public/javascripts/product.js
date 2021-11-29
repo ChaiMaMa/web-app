@@ -6,7 +6,7 @@ function addCart() {
     // Get the information to add to cart
     var productId = document.getElementById('product_id').innerHTML;
     var productName = document.getElementById('product_name').innerHTML;
-    var price = document.getElementById('price').innerHTML;
+    var price = document.getElementById('price').innerHTML.replace('$', '');
     var body = "id=" + productId + "&name=" + productName + "&price=" + price + "&quantity=" + document.getElementById('quantity').value;
 
 

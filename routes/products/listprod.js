@@ -3,11 +3,6 @@ const router = express.Router();
 const query = require('../../utilities/query').query;
 
 router.get('/', async function (req, res, next) {
-
-    if (!req.session.cart_size) {
-        req.session.cart_size = 0;
-    }
-
     var productInfo = '';
 
     res.setHeader('Content-Type', 'text/html');
@@ -55,4 +50,3 @@ router.get('/', async function (req, res, next) {
 });
 
 module.exports = router;
-// `<a href="/addcart?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">Add to cart</a>`
