@@ -29,9 +29,9 @@
             <div class="col-md-12">
                 <div data-reflow-type="shopping-cart">
                     <div class="reflow-shopping-cart">
-                        <div class="ref-checkout" style="display: block;">
+                        <div class="ref-checkout" style="display:flex;">
                             <div class="ref-checkout-content">
-                                <form class="ref-details" action="/order" method="get">
+                                <form id='checkout_form' class="ref-details" action="/order" method="get">
                                     <div class="ref-heading">Details</div>
                                     <label>
                                         <span>Customer ID</span>
@@ -52,7 +52,7 @@
                                     </label>
                                     <div class="ref-shipping-address-holder"></div>
 
-                                    <label class="ref-note-to-seller">
+                                    <label class="ref-note-to-seller ref-field-collapsible open">
                                         <span>
                                             <strong>Note to Seller</strong>
                                         </span>
@@ -69,13 +69,34 @@
                                                 style="text-decoration: none; color:#828887">
                                                 ← Back to Shopping Cart
                                             </a>
-                                            <button class="ref-button" style="background-color: #828887;" type="submit">
+                                            <button class="ref-button" style="background-color: #828887;">
                                                 Confirm Order
                                             </button>
                                         </div>
                                     </div>
                                 </form>
-
+                            </div>
+                            <div class="ref-checkout-summary">
+                                <div class="ref-heading">Order Summary</div>
+                                {{{products}}}
+                                <hr>
+                                <div class="ref-totals">
+                                    <div class="ref-subtotal">
+                                        <div class="ref-row"><span>Subtotal</span><span>${{{subTotal}}}</span></div>
+                                    </div>
+                                    <div class="ref-shipping" style="display: block;">
+                                        <div class="ref-row"><span>Shipping</span><span>${{{shipFee}}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="ref-taxes" style="display: none;">
+                                        <div class="ref-row"><span></span><span></span></div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="ref-total">
+                                    <div class="ref-row"><span>Total</span><span>${{{total}}}</span></div>
+                                    <div class="ref-total-note">All prices are in <span>CAD</span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,4 +111,6 @@
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
         </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox@3.1.0/dist/js/glightbox.min.js"></script>
+    <script src='/js/checkout.js'></script>
 </body>
