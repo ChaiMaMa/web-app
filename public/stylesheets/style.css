@@ -132,7 +132,6 @@ body.my-login-page {
 } 
 
 .my-home-page #our-product {
-	padding-top: 40px;
 	/*margin-top: 50px;*/
 	padding-bottom: 40px;
 	font-family: castlerocks;
@@ -148,11 +147,13 @@ body.my-login-page {
 	margin-right: auto;
 	height: 370px;
 	width: 300px;
-	grid-area: 1/ 2/ 1/ 2;
+	/* grid-area: 1/ 2/ 1/ 2; */
   }
   
-.my-home-page .product.name {
+.my-home-page .product-name {
 	color: white;
+	margin-top: 16px;
+	font-size: 24px;
   }
   
   
