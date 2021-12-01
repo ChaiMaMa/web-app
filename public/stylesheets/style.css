@@ -3,20 +3,23 @@ html,body {
 }
 
 .link {
-	color: #828887;
+	color: rgba(142,147,115,1);
 }
 
 /* Log-in page */
 body.my-login-page {
-	background-color: rgba(190,197,197,1);
+	background-image: url("../images/login/background.jpg");
+	background-color: rgba(142,147,115,1);
+	background-size: cover;
+	background-blend-mode: multiply;
 	font-size: 14px;
 	font-family: brandon-grotesque,sans-serif;
 }
 
 
 .my-login-page .brand {
-	width: 130px;
-	height: 130px;
+	width: 60px;
+	height: 60px;
 	margin: 20px auto;
 	/* box-shadow: 0 4px 8px rgba(0,0,0,.05); */
 	/* border-radius: 50%; */
@@ -56,14 +59,14 @@ body.my-login-page {
 }
 
 .my-login-page .btn.btn-block {
-	background-color: #828887;
+	background-color: rgba(142,147,115,1);
 	color: white;
 	padding: 12px 10px;
 }
 
 .my-login-page .footer {
 	margin: 40px 0;
-	color: #888;
+	color: rgb(255, 255, 255);
 	text-align: center;
 }
 
