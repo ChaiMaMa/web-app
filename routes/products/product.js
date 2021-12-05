@@ -45,10 +45,10 @@ router.get('/', function (req, res, next) {
             // Check if image url is present
             if (imageLink) {
                 image_ref += `
-                    <img id= "image_0" class="ref-image active" src="${imageLink}" alt= "Product Image" data-reflow-preview-type="image" />
+                    <img id= "image_0" class="ref-image active rounded-img" src="${imageLink}" alt= "Product Image" data-reflow-preview-type="image" />
                 `;
                 thumbnail += `
-                    <img id= "thumb_0" class="ref-image active" src="${imageLink}" alt= "Product Image" data-reflow-preview-type="image" onclick="switchMainImage(0);" />
+                    <img id= "thumb_0" class="ref-image active rounded-img" src="${imageLink}" alt= "Product Image" data-reflow-preview-type="image" onclick="switchMainImage(0);" />
                 `;
             }
 
@@ -56,17 +56,17 @@ router.get('/', function (req, res, next) {
                 // If there is already an image, we don't set the second image as active
                 let isActive = imageLink ? '' : 'active';
                 image_ref += `
-                    <img id= "image_1" class="ref-image ${isActive}" src="/displayImage?id=${id}" alt= "Product Image" data-reflow-preview-type="image" />
+                    <img id= "image_1" class="ref-image ${isActive} rounded-img" src="/displayImage?id=${id}" alt= "Product Image" data-reflow-preview-type="image" />
                 `;
                 thumbnail += `
-                    <img id= "thumb_1" class="ref-image ${isActive}" src="/displayImage?id=${id}" alt= "Product Image" data-reflow-preview-type="image" onclick="switchMainImage(1)"/>
+                    <img id= "thumb_1" class="ref-image ${isActive} rounded-img" src="/displayImage?id=${id}" alt= "Product Image" data-reflow-preview-type="image" onclick="switchMainImage(1)"/>
                 `;
             }
 
             // If there are no images, set default image
             if (image_ref.length == 0) {
                 image_ref += `
-                    <img class="ref-image active" src="/images/placeholder.jpeg" alt= "Product Image" data-reflow-preview-type="image" />
+                    <img class="ref-image active rounded-img" src="/images/placeholder.jpeg" alt= "Product Image" data-reflow-preview-type="image" />
                 `;
             }
 

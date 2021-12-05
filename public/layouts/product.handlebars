@@ -11,7 +11,7 @@
     <title>ChaiMaMa</title>
 </head>
 
-<body>
+<body class = "my-product-page">
     <nav class="navbar navbar-light navbar-expand-md shadow-sm" style="background-color: rgba(190,197,197,1);">
         <div class="container"><a class="navbar-brand" href="/">ChaiMaMa Store</a><button data-bs-toggle="collapse"
                 class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle
@@ -26,43 +26,44 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-5">
+    <div>
         <div class="row">
-            <div class="col-md-12">
-                <div data-reflow-type="product" data-reflow-show="media,name,price,add-to-cart" data-toggle="tooltip"
-                    data-bss-dynamic-product-param='product'>
-                    <div class="reflow-product">
-                        <div class="ref-media">
-                            <div class="ref-preview">
-                                {{{image_ref}}}
-                            </div>
-                            <div class="ref-thumbnails">
-                                {{{thumbnail}}}
-                            </div>
-                        </div>
-
-                        {{!-- Add product data here! --}}
-                        <div class="ref-product-data">
-                            <h2 id='product_name' class="ref-name">{{{product_name}}}</h2>
-                            <strong id='price' class="ref-price">${{{price}}}</strong>
-                            <span data-reflow-type="add-to-cart" data-reflow-variant="746363596_s">
-                                <div class="ref-product-controls">
-                                    <div class="ref-quantity-widget">
-                                        <div class="ref-decrease" onclick="decrease();">-</div>
-                                        <input id="quantity" type="text" value="1" />
-                                        <div class="ref-increase" onclick="increase();">+</div>
-                                    </div>
-                                    <a class="ref-button" style="background-color: #828887;" onclick="addCart();">Add to
-                                        Cart
-                                    </a>
+            <div class="col align-self-center">{{{image_ref}}}</div>
+            <div class="col">
+                <div><span class="d-lg-flex justify-content-lg-end" style="font-size: 18px;">Japan</span>
+                    <h1 class="display-1 text-center" style="font-family: 'Didact Gothic', sans-serif;">Matcha</h1>
+                    <div id="divider" class="container" style="justify-content: center;">
+                        <hr style="min-width: 50px;"/>
+                        <svg class="icon icon-tabler icon-tabler-leaf" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M5 21c.5 -4.5 2.5 -8 7 -10"></path>
+                            <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"></path>
+                        </svg>
+                        <hr style="min-width: 50px;"/>
+                    </div>
+                </div><span class="d-lg-flex justify-content-lg-center" style="transform: translate(0px);">$ 24.00</span>
+                <p style="font-family: 'Didact Gothic', sans-serif;">Different countries have different ways to enjoy tea. And, with an appreciation that tea can bring more refreshment to our lives, we want to bring tea closer to everyone. Our business will operate an online store for people to order a kit to make one specific tea from a country of their choice.<br /><br /></p>
+                <div>
+                    {{!-- Add product data here! --}}
+                    <div class="ref-product-data">
+                        <span data-reflow-type="add-to-cart" data-reflow-variant="746363596_s">
+                            <div class="ref-product-controls">
+                                <div class="ref-quantity-widget">
+                                    <div class="ref-decrease" onclick="decrease();">-</div>
+                                    <input id="quantity" type="text" value="1" />
+                                    <div class="ref-increase" onclick="increase();">+</div>
                                 </div>
-                            </span>
-                        </div>
+                                <a class="ref-button" style="background-color: rgba(142,147,115,1);" onclick="addCart();">Add to
+                                    Cart
+                                </a>
+                            </div>
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div id='product_id' hidden>{{{productId}}}</div>
     <script src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
