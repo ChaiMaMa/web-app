@@ -19,6 +19,7 @@ let validateLogin = require('./routes/authentication/validateLogin');
 let product = require('./routes/products/product');
 let displayImage = require('./routes/products/displayImage');
 let shipment = require('./routes/checkout/ship');
+let admin = require('./routes/account/admin')
 
 // Create an express app
 const app = express();
@@ -71,6 +72,7 @@ app.use('/checkout', checkout);
 app.use('/order', order);
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/admin', admin);
 app.use('/validateLogin', validateLogin);
 app.use('/images', express.static('public/images'));
 app.use('/stylesheets', express.static('public/stylesheets'));
