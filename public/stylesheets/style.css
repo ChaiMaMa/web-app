@@ -11,7 +11,7 @@ html,body {
 body.my-product-page {
 	color: rgba(142,147,115,1);
 }
-
+    
 /* Log-in page */
 body.my-login-page {
 	background-image: url("../images/login/background.jpg");
