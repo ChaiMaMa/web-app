@@ -153,7 +153,6 @@ function submitUpdate() {
                         <div class="ref-notification-title">Update succeeded!</div>
                         <div class="ref-notification-description"></div>
                         <div class="ref-close-button" onclick='closeDialog();'>×</div>
-                        <a class="ref-button" href='/showcart'>See Cart</a>
                     </div>
                 </div>
             `;
