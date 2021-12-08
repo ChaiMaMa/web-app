@@ -193,7 +193,7 @@ function submitUpdate() {
     // Build a body
     let body = "firstName=" + currentInfo.firstName
         + "&lastName=" + currentInfo.lastName
-        + "&phoneNum=" + currentInfo.phoneNum
+        + "&phonenum=" + currentInfo.phoneNum
         + "&email=" + currentInfo.email
         + "&address=" + currentInfo.address
         + "&state=" + currentInfo.state

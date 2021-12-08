@@ -3,9 +3,9 @@ const { query } = require('../../utilities/query');
 
 
 class User {
-    constructor(username, password) { // Password should be hashed
+    constructor(userid, password) { // Password should be hashed
         this.info = false; // Holder
-        this.username = username;
+        this.userid = userid;
         this.password = password;
     }
 
@@ -14,9 +14,9 @@ class User {
             `
             SELECT customerId, firstName, lastName, email, phonenum, address, city, state, postalCode, country
             FROM customer
-            WHERE userid = @username AND password = @password`,
+            WHERE userid = @userid AND password = @password`,
             {
-                username: this.username,
+                userid: this.userid,
                 password: this.password
             }
         );
@@ -31,13 +31,13 @@ class User {
         let userInfo = result.recordset[0];
         this.info = {
             customerId: userInfo.customerId,
-            username: userInfo.username,
-            password: userInfo.password,
+            userid: this.userid,
+            password: this.password,
             firstName: userInfo.firstName,
             lastName: userInfo.lastName,
             email: userInfo.email,
             phonenum: userInfo.phonenum,
-            addressNum: userInfo.address,
+            address: userInfo.address,
             city: userInfo.city,
             state: userInfo.state,
             postalCode: userInfo.postalCode,

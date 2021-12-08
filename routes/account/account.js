@@ -27,7 +27,6 @@ router.get('/', function (req, res, next) {
         res.setHeader('Content-Type', 'text/html');
 
         let user = req.session.user;
-        console.log(user);
 
         // Render the template
         res.render('layouts/account', {
@@ -36,7 +35,7 @@ router.get('/', function (req, res, next) {
             lastName: user.info.lastName,
             email: user.info.email,
             phoneNum: user.info.phonenum,
-            address: user.info.addressNum,
+            address: user.info.address,
             city: user.info.city,
             state: user.info.state,
             postalCode: user.info.postalCode,
@@ -53,7 +52,7 @@ router.post("/update",
         body("firstName").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
         body("lastName").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
         body("email").exists({ checkFalsy: true, checkNull: true }).not().isEmpty().isEmail(),
-        body("phoneNum").exists({ checkFalsy: true, checkNull: true }).not().isEmpty().isMobilePhone(),
+        body("phonenum").exists({ checkFalsy: true, checkNull: true }).not().isEmpty().isMobilePhone('any'),
         body("address").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
         body("city").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
         body("state").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
@@ -69,11 +68,13 @@ router.post("/update",
             let user = req.session.user;
             let newInfo = {
                 customerId: user.info.customerId,
+                userid: user.info.userid,
+                password: user.info.password,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
                 phonenum: req.body.phonenum,
-                address: req.body.addressNum,
+                address: req.body.address,
                 city: req.body.city,
                 state: req.body.state,
                 postalCode: req.body.postalCode,
@@ -86,6 +87,9 @@ router.post("/update",
                 if (success) {
                     req.session.user.info = newInfo; // Update user property in current session
                 }
+
+                console.log("NEW INFO");
+                console.log(req.session.user.info);
 
                 res.status(success ? 200 : 500).end();
             } catch (e) {
