@@ -1,6 +1,12 @@
-// Global information
+// Global information (intial information)
 var firstName = document.getElementById("firstName").getAttribute("value");
-
+var lastName = document.getElementById("lastName").getAttribute("value");
+var phoneNum = document.getElementById("phoneNum").getAttribute("value");
+var email = document.getElementById("email").getAttribute("value");
+var address = document.getElementById("address").getAttribute("value");
+var city = document.getElementById("city").getAttribute("value");
+var state = document.getElementById("state").getAttribute("value");
+var postalCode = document.getElementById("postalCode").getAttribute("value");
 /**
  * 
  * @param {HTMLElement} list_item The currently selected tab on the sidebar
@@ -65,6 +71,16 @@ function enableInput() {
  * Cancel all updates and restore current information
  */
 function cancelUpdate() {
+
+    // Reset to current information (before editting)
+    document.getElementById("firstName").value = firstName;
+    document.getElementById("lastName").value = lastName;
+    document.getElementById("phoneNum").value = phoneNum;
+    document.getElementById("email").value = email;
+    document.getElementById("address").value = address;
+    document.getElementById("city").value = city;
+    document.getElementById("state").value = state;
+    document.getElementById("postalCode").value = postalCode;
 
     // Disable all inputs and hide buttons
     disableInput();
