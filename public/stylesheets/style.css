@@ -14,7 +14,7 @@ body.my-product-page {
     
 /* Log-in page */
 body.my-login-page {
-	background-image: url("../images/login/background.jpg");
+	background-image: url("/images/login/background.jpg");
 	background-color: rgba(142,147,115,1);
 	background-size: cover;
 	background-blend-mode: multiply;

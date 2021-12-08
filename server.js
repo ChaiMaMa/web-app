@@ -19,6 +19,7 @@ let validateLogin = require('./routes/authentication/validateLogin');
 let product = require('./routes/products/product');
 let displayImage = require('./routes/products/displayImage');
 let shipment = require('./routes/checkout/ship');
+let account = require('./routes/account/account');
 
 // Create an express app
 const app = express();
@@ -78,6 +79,7 @@ app.use('/js', express.static('public/javascripts'));
 app.use('/product', product);
 app.use('/displayImage', displayImage);
 app.use('/shipment', shipment);
+app.use('/account', account);
 
 // Rendering the main page
 app.get('/', function (req, res) {

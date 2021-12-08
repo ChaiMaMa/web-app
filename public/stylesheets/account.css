@@ -1,0 +1,84 @@
+body {
+  font-family: brandon-grotesque,sans-serif;
+}
+
+.far:hover {
+  cursor: pointer;
+}
+
+.far span{
+  font-family: brandon-grotesque,sans-serif;
+  color: black;
+}
+
+
+.form-control {
+  border: 1px solid #cfd1d8;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  font-size: 16px;
+  background: #ffffff;
+  color: #2e323c;
+  width: 100%;
+}
+
+.info-section {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+
+.edit-buttons .btn{
+  border-radius: 10px;
+  float: right !important;
+  margin-left: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.edit-buttons .btn.btn-primary {
+  background-color: #828887;
+  border-color: #828887;
+}
+
+.card {
+  background: #ffffff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 1rem;
+  padding-top: 16px;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.list-group {
+  padding-top: 16px;
+}
+
+
+/* Sidebar tab */
+.list-group-item.tab{
+  background-color: #ffffff;
+  color: rgb(120, 120, 120);
+  cursor: pointer;
+}
+
+/**
+ * Sidebar hovered tab
+ */
+.list-group-item.tab :hover{
+  text-decoration: underline;
+}
+
+/* Selected tab */
+.list-group-item.tab.active {
+  background-color: #828887;
+  border-color: #828887;
+  color: #ffffff;
+}
+
