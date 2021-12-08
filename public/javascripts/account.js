@@ -112,6 +112,7 @@ function commitUpdate(currentInfo) {
     document.getElementById("address").value = currentInfo.address;
     document.getElementById("city").value = currentInfo.city;
     document.getElementById("state").value = currentInfo.state;
+    document.getElementById("country").value = currentInfo.country;
     document.getElementById("postalCode").value = currentInfo.postalCode;
 }
 
@@ -135,9 +136,9 @@ function submitUpdate() {
         address: document.getElementById("address").value,
         city: document.getElementById("city").value,
         state: document.getElementById("state").value,
+        country: document.getElementById("country").value,
         postalCode: document.getElementById("postalCode").value
     };
-    console.log(currentInfo);
 
     // Create an ajax object
     let xhttp = new XMLHttpRequest();
@@ -184,6 +185,7 @@ function submitUpdate() {
         + "&address=" + currentInfo.address
         + "&state=" + currentInfo.state
         + "&city=" + currentInfo.city
+        + "&country" + currentInfo.country
         + "&postalCode=" + currentInfo.postalCode;
 
 
