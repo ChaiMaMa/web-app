@@ -50,7 +50,7 @@ app.use(session({
   cookie: {
     httpOnly: false,
     secure: false,
-    maxAge: 60000,
+    maxAge: 1 * 60 * 60 * 1000, // Expire after 1 hour
   }
 }))
 
