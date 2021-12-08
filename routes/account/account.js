@@ -27,6 +27,7 @@ router.get('/', function (req, res, next) {
         res.setHeader('Content-Type', 'text/html');
 
         let user = req.session.user;
+        console.log(user);
 
         // Render the template
         res.render('layouts/account', {
@@ -60,12 +61,14 @@ router.post("/update",
         body("country").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
     ],
     async function (req, res) {
+        console.log("BODY: ");
+        console.log(req.body);
 
         // If authenticated
         if (req.session.user) {
             let user = req.session.user;
-            let success = await updateAccount({
-                customerId: user.info.id,
+            let newInfo = {
+                customerId: user.info.customerId,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
@@ -75,7 +78,13 @@ router.post("/update",
                 state: req.body.state,
                 postalCode: req.body.postalCode,
                 country: req.body.country
-            });
+            };
+            // console.log(newInfo);
+            let success = await updateAccount(newInfo);
+
+            if (success) {
+                req.session.user.info = newInfo; // Update user property in current session
+            }
 
             res.status(success ? 200 : 500).end();
 

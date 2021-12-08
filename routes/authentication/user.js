@@ -30,7 +30,7 @@ class User {
 
         let userInfo = result.recordset[0];
         this.info = {
-            id: userInfo.customerId,
+            customerId: userInfo.customerId,
             username: userInfo.username,
             password: userInfo.password,
             firstName: userInfo.firstName,
