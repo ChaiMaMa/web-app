@@ -79,14 +79,19 @@ router.post("/update",
                 postalCode: req.body.postalCode,
                 country: req.body.country
             };
-            // console.log(newInfo);
-            let success = await updateAccount(newInfo);
+            try {
+                // console.log(newInfo);
+                let success = await updateAccount(newInfo);
 
-            if (success) {
-                req.session.user.info = newInfo; // Update user property in current session
+                if (success) {
+                    req.session.user.info = newInfo; // Update user property in current session
+                }
+
+                res.status(success ? 200 : 500).end();
+            } catch (e) {
+                console.dir(e);
+                res.status(500).end();
             }
-
-            res.status(success ? 200 : 500).end();
 
         } else {
             // If not authenticated, return 401 (Check out http status code!)
