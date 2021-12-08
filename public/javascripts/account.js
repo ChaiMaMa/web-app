@@ -7,6 +7,8 @@ var address = document.getElementById("address").getAttribute("value");
 var city = document.getElementById("city").getAttribute("value");
 var state = document.getElementById("state").getAttribute("value");
 var postalCode = document.getElementById("postalCode").getAttribute("value");
+
+
 /**
  * 
  * @param {HTMLElement} list_item The currently selected tab on the sidebar
@@ -51,6 +53,12 @@ function disableInput() {
     }
 }
 
+/**
+ * Duplicate utitility function for closing dialog from product.js
+ */
+function closeDialog() {
+    document.getElementById('dialog').remove();
+}
 
 /**
  * Enable all input fields
@@ -68,11 +76,9 @@ function enableInput() {
 }
 
 /**
- * Cancel all updates and restore current information
+ * Fallback to current information (before updating/editing)
  */
-function cancelUpdate() {
-
-    // Reset to current information (before editting)
+function fallback() {
     document.getElementById("firstName").value = firstName;
     document.getElementById("lastName").value = lastName;
     document.getElementById("phoneNum").value = phoneNum;
@@ -81,10 +87,35 @@ function cancelUpdate() {
     document.getElementById("city").value = city;
     document.getElementById("state").value = state;
     document.getElementById("postalCode").value = postalCode;
+}
+
+/**
+ * Cancel all updates and restore current information
+ */
+function cancelUpdate() {
+
+    // Reset to current information (before editting)
+    fallback();
 
     // Disable all inputs and hide buttons
     disableInput();
 }
+
+/**
+ * If update succeeded, commit those changes but setting values of input elements
+ */
+function commitUpdate(currentInfo) {
+    document.getElementById("firstName").value = currentInfo.firstName;
+    document.getElementById("lastName").value = currentInfo.lastName;
+    document.getElementById("phoneNum").value = currentInfo.phoneNum;
+    document.getElementById("email").value = currentInfo.email;
+    document.getElementById("address").value = currentInfo.address;
+    document.getElementById("city").value = currentInfo.city;
+    document.getElementById("state").value = currentInfo.state;
+    document.getElementById("postalCode").value = currentInfo.postalCode;
+}
+
+
 /**
  * Submit new changes to account settings
  */
@@ -93,10 +124,74 @@ function submitUpdate() {
 
     // Lock all inputs again and hide buttons
     disableInput();
+
+    // Get current values
+    // Create an object to pass to callback later
+    let currentInfo = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        phoneNum: document.getElementById("phoneNum").value,
+        email: document.getElementById("email").value,
+        address: document.getElementById("address").value,
+        city: document.getElementById("city").value,
+        state: document.getElementById("state").value,
+        postalCode: document.getElementById("postalCode").value
+    };
+    console.log(currentInfo);
+
+    // Create an ajax object
+    let xhttp = new XMLHttpRequest();
+
+    // Set callback
+    xhttp.onload = function () {
+        if (xhttp.status == 200) {
+            // Add a dialog for notifications
+            document.body.innerHTML +=
+                `
+            <div id = 'dialog' data-reflow-type="toast" class="ref-notification success no-description" style="transform: translateY(-20px);">
+                    <div class="ref-notification-content">
+                        <div class="ref-notification-title">Update succeeded!</div>
+                        <div class="ref-notification-description"></div>
+                        <div class="ref-close-button" onclick='closeDialog();'>×</div>
+                        <a class="ref-button" href='/showcart'>See Cart</a>
+                    </div>
+                </div>
+            `;
+            // Commit updates
+            commitUpdate(currentInfo);
+        } else {
+            // Fall back on failure
+            fallback();
+
+            // Add a dialog for notifications
+            document.body.innerHTML +=
+                `
+                <div id = 'dialog' data-reflow-type="toast" class="ref-notification error no-description" style="transform: translateY(-20px);">
+                <div class="ref-notification-content">
+                    <div class="ref-notification-title">Update failed!</div>
+                    <div class="ref-notification-description"></div>
+                    <div class="ref-close-button" onclick='closeDialog();'>×</div>
+                </div>
+            </div>
+            `;
+        }
+    };
+
+    // Build a body
+    let body = "firstName=" + currentInfo.firstName
+        + "&lastName=" + currentInfo.lastName
+        + "&phoneNum=" + currentInfo.phoneNum
+        + "&email=" + currentInfo.email
+        + "&address=" + currentInfo.address
+        + "&state=" + currentInfo.state
+        + "&city=" + currentInfo.city
+        + "&postalCode=" + currentInfo.postalCode;
+
+
+    xhttp.open("POST", "/account/update", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(body);
 }
-
-
-
 
 // Initializing code
 disableInput();
