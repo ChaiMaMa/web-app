@@ -185,7 +185,7 @@ function submitUpdate() {
         + "&address=" + currentInfo.address
         + "&state=" + currentInfo.state
         + "&city=" + currentInfo.city
-        + "&country" + currentInfo.country
+        + "&country=" + currentInfo.country
         + "&postalCode=" + currentInfo.postalCode;
 
 

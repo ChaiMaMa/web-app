@@ -66,15 +66,15 @@ router.post("/update",
             let user = req.session.user;
             let success = await updateAccount({
                 customerId: user.info.id,
-                firstName: user.info.firstName,
-                lastName: user.info.lastName,
-                email: user.info.email,
-                phonenum: user.info.phonenum,
-                address: user.info.addressNum,
-                city: user.info.city,
-                state: user.info.state,
-                postalCode: user.info.postalCode,
-                country: user.info.country
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                phonenum: req.body.phonenum,
+                address: req.body.addressNum,
+                city: req.body.city,
+                state: req.body.state,
+                postalCode: req.body.postalCode,
+                country: req.body.country
             });
 
             res.status(success ? 200 : 500).end();
