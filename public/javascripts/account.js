@@ -1,12 +1,13 @@
 // Global information (intial information)
-var firstName = document.getElementById("firstName").getAttribute("value");
-var lastName = document.getElementById("lastName").getAttribute("value");
-var phoneNum = document.getElementById("phoneNum").getAttribute("value");
-var email = document.getElementById("email").getAttribute("value");
-var address = document.getElementById("address").getAttribute("value");
-var city = document.getElementById("city").getAttribute("value");
-var state = document.getElementById("state").getAttribute("value");
-var postalCode = document.getElementById("postalCode").getAttribute("value");
+var firstName = document.getElementById("firstName").value;
+var lastName = document.getElementById("lastName").value;
+var phoneNum = document.getElementById("phoneNum").value;
+var email = document.getElementById("email").value;
+var address = document.getElementById("address").value;
+var city = document.getElementById("city").value;
+var state = document.getElementById("state").value;
+var country = document.getElementById("country").value;
+var postalCode = document.getElementById("postalCode").value;
 
 
 /**
@@ -79,14 +80,14 @@ function enableInput() {
  * Fallback to current information (before updating/editing)
  */
 function fallback() {
-    document.getElementById("firstName").value = firstName;
-    document.getElementById("lastName").value = lastName;
-    document.getElementById("phoneNum").value = phoneNum;
-    document.getElementById("email").value = email;
-    document.getElementById("address").value = address;
-    document.getElementById("city").value = city;
-    document.getElementById("state").value = state;
-    document.getElementById("postalCode").value = postalCode;
+    document.getElementById("firstName").value = document.firstName;
+    document.getElementById("lastName").value = document.lastName;
+    document.getElementById("phoneNum").value = document.phoneNum;
+    document.getElementById("email").value = document.email;
+    document.getElementById("address").value = document.address;
+    document.getElementById("city").value = document.city;
+    document.getElementById("state").value = document.state;
+    document.getElementById("postalCode").value = document.postalCode;
 }
 
 /**
@@ -105,6 +106,8 @@ function cancelUpdate() {
  * If update succeeded, commit those changes but setting values of input elements
  */
 function commitUpdate(currentInfo) {
+
+    // Update input elements
     document.getElementById("firstName").value = currentInfo.firstName;
     document.getElementById("lastName").value = currentInfo.lastName;
     document.getElementById("phoneNum").value = currentInfo.phoneNum;
@@ -114,8 +117,18 @@ function commitUpdate(currentInfo) {
     document.getElementById("state").value = currentInfo.state;
     document.getElementById("country").value = currentInfo.country;
     document.getElementById("postalCode").value = currentInfo.postalCode;
-}
 
+    // Update global variables
+    document.firstName = currentInfo.firstName;
+    document.lastName = currentInfo.lastName;
+    document.phoneNum = currentInfo.phoneNum;
+    document.email = currentInfo.email;
+    document.address = currentInfo.address;
+    document.city = currentInfo.city;
+    document.state = currentInfo.state;
+    document.country = currentInfo.country;
+    document.postalCode = currentInfo.postalCode;
+}
 
 /**
  * Submit new changes to account settings
