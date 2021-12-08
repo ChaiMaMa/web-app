@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
+const { updateAccount, update } = require('../../utilities/query');
 const { body } = require('express-validator');
 
 // // Mock user used for testing
@@ -28,8 +28,6 @@ router.get('/', function (req, res, next) {
 
         let user = req.session.user;
 
-        console.log(user);
-
         // Render the template
         res.render('layouts/account', {
             title: `Your account - ${user.info.firstName} ${user.info.lastName}`,
@@ -48,5 +46,44 @@ router.get('/', function (req, res, next) {
         res.redirect("/login");
     }
 });
+
+router.post("/update",
+    [
+        body("firstName").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
+        body("lastName").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
+        body("email").exists({ checkFalsy: true, checkNull: true }).not().isEmpty().isEmail(),
+        body("phoneNum").exists({ checkFalsy: true, checkNull: true }).not().isEmpty().isMobilePhone(),
+        body("address").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
+        body("city").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
+        body("state").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
+        body("postalCode").exists({ checkFalsy: true, checkNull: true }).not().isEmpty().isPostalCode('any'),
+        body("country").exists({ checkFalsy: true, checkNull: true }).not().isEmpty(),
+    ],
+    async function (req, res) {
+
+        // If authenticated
+        if (req.session.user) {
+            let user = req.session.user;
+            let success = await updateAccount({
+                customerId: user.info.id,
+                firstName: user.info.firstName,
+                lastName: user.info.lastName,
+                email: user.info.email,
+                phonenum: user.info.phonenum,
+                address: user.info.addressNum,
+                city: user.info.city,
+                state: user.info.state,
+                postalCode: user.info.postalCode,
+                country: user.info.country
+            });
+
+            res.status(success ? 200 : 500).end();
+
+        } else {
+            // If not authenticated, return 401 (Check out http status code!)
+            res.status(401).end();
+        }
+
+    });
 
 module.exports = router;

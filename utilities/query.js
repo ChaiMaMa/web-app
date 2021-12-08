@@ -101,6 +101,11 @@ async function updateShipment(orderedItems, changes) {
 
 
 
+/**
+ * 
+ * @param {number} productId The id of the product to get image url for
+ * @returns 
+ */
 async function getProductImageURL(productId) {
     let result = await query(`
         SELECT productImageURL, productImage 
@@ -118,6 +123,27 @@ async function getProductImageURL(productId) {
     } else {
         return '/images/placeholder.jpeg';
     }
+}
+
+/**
+ * 
+ * @param {number} cusId 
+ * @param {object} info 
+ * @returns True if update is successful and False otherwise.
+ */
+async function updateAccount(info) {
+    let result = await update(
+        `
+        UPDATE customer
+        SET firstName = @firstname, lastName = @lastname, email = @email, phonenum = @phonenum, 
+        address = @address, city = @city, state = @city, postalCode = @postalCode, country = @country
+        WHERE customerId  = @customerId
+        `,
+        info
+    );
+    console.log(result);
+    return result.rowsAffected[0] > 0;
+
 
 }
 
@@ -127,5 +153,6 @@ module.exports = {
     query,
     update,
     updateShipment,
-    getProductImageURL
+    getProductImageURL,
+    updateAccount
 };
