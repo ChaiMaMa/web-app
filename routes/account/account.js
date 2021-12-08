@@ -33,12 +33,10 @@ router.get('/', function (req, res, next) {
         // Render the template
         res.render('layouts/account', {
             title: `Your account - ${user.info.firstName} ${user.info.lastName}`,
-            auth_ref: "#",
-            auth_text: "Account",
             firstName: user.info.firstName,
             lastName: user.info.lastName,
             email: user.info.email,
-            phoneNum: user.info.phoneNum,
+            phoneNum: user.info.phonenum,
             address: user.info.addressNum,
             city: user.info.city,
             state: user.info.state,
