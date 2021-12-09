@@ -76,6 +76,7 @@ app.use('/validateLogin', validateLogin);
 app.use('/images', express.static('public/images'));
 app.use('/stylesheets', express.static('public/stylesheets'));
 app.use('/js', express.static('public/javascripts'));
+app.use('/fonts', express.static('public/fonts'));
 app.use('/product', product);
 app.use('/displayImage', displayImage);
 app.use('/shipment', shipment);
