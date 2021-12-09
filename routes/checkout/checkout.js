@@ -37,15 +37,16 @@ router.get('/', async function (req, res, next) {
             subTotal += Number(product.price) * Number(product.quantity);
         }
 
-        let options = {};
-        options.products = products;
-        options.subTotal = subTotal.toFixed(2);
-        options.shipFee = shipFee.toFixed(2);
-        options.total = (subTotal + shipFee).toFixed(2);
+        let options = {
+            products: products,
+            subTotal: subTotal.toFixed(2),
+            shipFee: shipFee.toFixed(2),
+            total: (subTotal + shipFee).toFixed(2)
+        };
 
         if (req.session.user) {
             let user = req.session.user;
-            options.id = user.info.id;
+            options.id = user.info.customerId;
             options.email = user.info.email;
             options.phone = user.info.phonenum;
         }
