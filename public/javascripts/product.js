@@ -62,6 +62,13 @@ function decrease() {
     }
 }
 
+function updateSelect() {
+    let inputEle = document.getElementById("quantity");
+    if (!(/\d+/.test(inputEle.value))) {
+        inputEle.value = 1;
+    }
+}
+
 
 function updateQuantity(id, isIncrease, isRemove, isManual) {
     var inputEle = document.getElementById(`quantity_${id}`);
