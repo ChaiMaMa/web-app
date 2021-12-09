@@ -18,7 +18,7 @@
 
 <body>
     <div>
-        <nav class="navbar navbar-dark navbar-expand sb-topnav" style = "background-color:rgba(142,147,115,1);">
+        <nav class="navbar navbar-dark navbar-expand sb-topnav" style="background-color: rgba(142,147,115,1);">
             <div class="container-fluid">
                 <div class="navbar-brand">
                     <svg id='logo' viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" width="28px">
@@ -64,7 +64,7 @@
                                 </a>
                             </div>
                             <div>
-                                <a class="nav-link active" href="/admin/products">
+                                <a class="nav-link" href="/admin/products">
                                     <div class="sb-nav-link-icon">
                                         <i class="icon ion-ios-box"></i>
                                     </div>
@@ -80,7 +80,7 @@
                                 </a>
                             </div>
                             <div>
-                                <a class="nav-link" href="/admin/inventory">
+                                <a class="nav-link active" href="/admin/inventory">
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-warehouse"></i>
                                     </div>
@@ -97,32 +97,28 @@
                 </div>
             </div>
             <div id="layoutSidenav_content" style="align-items: self-center;">
-                <main>
-                    <button class="btn btn-primary" type="button" style="position: fixed;bottom: 10px;right: 10px;" onclick="updateProduct();">Update</button>
-                    <div class="form-group pull-right">
-                        <input type="text" class="search form-control" placeholder="What you looking for?">
-                    </div>
-                    <span class="counter pull-right"></span>
-                    <table class="table table-hover table-bordered results">
-                        <thead>
-                            <tr>
-                                <th class="col-md-1 col-xs-1">Product Id</th>
-                                <th class="col-md-2 col-xs-2">Product Name</th>
-                                <th class="col-md-3 col-xs-3">Product Description</th>
-                                <th class="col-md-4 col-xs-4">Product Price</th>
-                                <th class="col-md-5 col-xs-5">Product Image</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{{products}}}
-                        </tbody>
-                    </table>
-                </main>
+                <main><div class="form-group pull-right">
+    <input type="text" class="search form-control" placeholder="What you looking for?">
+</div>
+<span class="counter pull-right"></span>
+<table class="table table-hover table-bordered results">
+  <thead>
+    <tr>
+        <th class="col-md-1 col-xs-1">Product Id</th>
+        <th class="col-md-2 col-xs-2">Quantity Available</th>
+        <th class="col-md-3 col-xs-3">Warehouse Id</th>
+        <th class="col-md-4 col-xs-4">Warehouse Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{{warehouses}}}
+  </tbody>
+</table></main>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/Table-with-search.js"></script>
-    <script src="/js/admin.js"></script>
 </body>
+
 </html>
