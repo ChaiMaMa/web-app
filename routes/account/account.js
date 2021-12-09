@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { updateAccount, update } = require('../../utilities/query');
+const { updateAccount, getOrderHistory, getProductInOrder } = require('../../utilities/query');
 const { body } = require('express-validator');
+const moment = require('moment');
 
 // // Mock user used for testing
 // let mockUser = {
@@ -17,33 +18,108 @@ const { body } = require('express-validator');
 //     country: "Canada"
 // }
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
 
     // If the current session has a user property, we have an authenticated user.
     let authenticated = req.session.user != undefined;
 
-    if (authenticated) {
-        // Define content type in http response message
-        res.setHeader('Content-Type', 'text/html');
+    try {
+        if (authenticated) {
+            // Define content type in http response message
+            res.setHeader('Content-Type', 'text/html');
 
-        let user = req.session.user;
+            let user = req.session.user;
 
-        // Render the template
-        res.render('layouts/account', {
-            title: `Your account - ${user.info.firstName} ${user.info.lastName}`,
-            firstName: user.info.firstName,
-            lastName: user.info.lastName,
-            email: user.info.email,
-            phoneNum: user.info.phonenum,
-            address: user.info.address,
-            city: user.info.city,
-            state: user.info.state,
-            postalCode: user.info.postalCode,
-            country: user.info.country,
-            layout: false // This will not set a default layout (e.g. avoiding duplicate head/body tags)
-        });
-    } else { // Not authenticated? Redirect to login
-        res.redirect("/login");
+            // Get order history
+            let historyResults = await getOrderHistory(user.info.customerId);
+
+            // Add order history to the orderHistory variable.
+            let orderHistory = "";
+            console.log(historyResults);
+
+            for (let historyResult of historyResults) {
+                // Append header
+                orderHistory += `
+                <div class='order-item'>
+                    <div class="row order-header">
+                        <div class="col-4">
+                            <span class="title">ORDER PLACED</span><br><span class="value">${moment(historyResult.orderDate, "YYYY-MM-DD hh:m:s").format("MMMM DD, YYYY")}</span>
+                        </div>
+                        <div class="col-3">
+                            <span class="title">TOTAL</span><br><span class="value">CDN$ ${Number(historyResult.totalAmount).toFixed(2)}</span>
+                        </div>
+                        <div class="col-3">
+                            <span class="title">SHIP TO</span><br><span class="value">${historyResult.shiptoPostalCode ? historyResult.shiptoPostalCode : "Unknown"}</span>
+                        </div>
+                        <div class="col-2">
+                            <span class="title">ORDER #${historyResult.orderId}</span>
+                        </div>
+                    </div>
+                    <div class="order-list">
+                `;
+
+                console.log(historyResult);
+                // Get the products that were in each order
+                let orderedProducts = await getProductInOrder(historyResult.orderId);
+
+                for (let orderProduct of orderedProducts) {
+                    // let imageSrc = orderProduct.
+                    orderHistory += `   
+                        <div class="row order-list-item">
+                            <div class="col-2">
+                                <img src="/images/placeholder.jpeg" height="100%" width="100%"
+                                    style="border-radius: 6px;">
+                            </div>
+                            <div class="col-4">
+                                <span class="title">Product Detail</span>
+                                <br>
+                                <span class="product-name">${orderProduct.productName}</span>
+                                <br><span class="category">${orderProduct.categoryName}</span>
+                            </div>
+                            <div class="col-3">
+                                <span class="title">Quantity</span>
+                                <br><span class="quantity">${orderProduct.quantity}</span>
+                            </div>
+                            <div class="col-3">
+                                <span class="title">Price</span>
+                                <br>
+                                <span class="price">$${Number(orderProduct.price).toFixed(2)}</span>
+                            </div>
+                        </div>
+
+                    `;
+                }
+
+                // Add closing tags
+                orderHistory += `
+                    </div>
+                </div>
+                `;
+            }
+
+
+
+            // Render the template
+            res.render('layouts/account', {
+                title: `Your account - ${user.info.firstName} ${user.info.lastName} `,
+                firstName: user.info.firstName,
+                lastName: user.info.lastName,
+                email: user.info.email,
+                phoneNum: user.info.phonenum,
+                address: user.info.address,
+                city: user.info.city,
+                state: user.info.state,
+                postalCode: user.info.postalCode,
+                country: user.info.country,
+                orderHistory: orderHistory,
+                layout: false // This will not set a default layout (e.g. avoiding duplicate head/body tags)
+            });
+        } else { // Not authenticated? Redirect to login
+            res.redirect("/login");
+        }
+    } catch (e) {
+        console.dir(e);
+        res.status(500).send();
     }
 });
 
