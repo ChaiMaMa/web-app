@@ -1,16 +1,25 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
 
     // Invalidate the session ID -> destroy the session
     // This appears to be equavalent to setting req.session.cookie.maxAge to 0
-    req.session.destroy(function (err) {
-        if (err) {
-            console.log(err);
-        }
-    });
-    res.redirect('/login', 301);
+    if (req.session.user) {
+        req.session.destroy(function (err) {
+            if (err) {
+                console.log(err);
+                // Return status 500
+                res.status(500).send();
+            } else {
+                // Return status code 200 to indicate success
+                res.redirect('/', 200);
+            }
+        });
+    } else {
+        // If not authenticated, return status code 404 (no information found to logout)
+        res.status(404).send();
+    }
 });
 
 module.exports = router;
