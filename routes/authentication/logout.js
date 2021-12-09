@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
                 res.status(500).send();
             } else {
                 // Return status code 200 to indicate success
-                res.redirect('/', 200);
+                res.status(200).redirect('/login');
             }
         });
     } else {
