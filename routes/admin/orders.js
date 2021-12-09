@@ -17,10 +17,16 @@ router.get('/', async function (req, res, next) {
     `, null
     );
 
+    let totalSales = 0;
+    let totalOrders = orders.recordset.length ;
+
     for (let i = 0; i < orders.recordset.length; i++) {
 
         let order = orders.recordset[i];
-        let status = ""
+        let status = "";
+
+        totalSales += order.totalAmount;
+
         if(order.shipment == null)
             status = "Not shipped"
         else
@@ -32,7 +38,6 @@ router.get('/', async function (req, res, next) {
                 <td>${order.customerId}</td>
                 <td>${order.totalAmount}</td>
                 <td>${status}</td>
-
             </tr>
         `;
     }
@@ -40,7 +45,9 @@ router.get('/', async function (req, res, next) {
     res.render(
         'layouts/admin_order',
         {
-            orders: orderInfo
+            orders: orderInfo,
+            totalOrders: totalOrders,
+            totalSales: totalSales.toFixed(2)
         }
     );
 });

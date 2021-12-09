@@ -12,7 +12,7 @@ router.get('/', async function (req, res, next) {
     // let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'" : "";
 
     let warehouses= await query(`
-        SELECT warehouseId, warehouseName FROM warehouse
+        SELECT w.warehouseId, warehouseName, p.productId, quantity FROM warehouse w join productinventory p on w.warehouseId = p.warehouseId
     `, null
     );
 
@@ -22,8 +22,11 @@ router.get('/', async function (req, res, next) {
        
         warehouseInfo += `
             <tr>
+                <td>${warehouse.productId}</td>
+                <td>${warehouse.quantity}</td>
                 <td>${warehouse.warehouseId}</td>
                 <td>${warehouse.warehouseName}</td>
+                
             </tr>
         `;
     }
