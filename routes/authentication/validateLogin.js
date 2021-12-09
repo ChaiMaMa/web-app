@@ -28,6 +28,11 @@ router.post('/',
                     // Add the user as a property to the current session after self-intializing
                     req.session.user = await user.intializeInfo();
 
+                    // If remember is set to true, set session maxAge to a large number (default a year)
+                    if (req.body.remember === "true") {
+                        req.session.cookie.maxAge = 365 * 24 * 60 * 60 * 1000;
+                    }
+
                     // Return success status
                     res.status(200).end();
                 }
