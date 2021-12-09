@@ -63,24 +63,27 @@ function decrease() {
 }
 
 
-function updateQuantity(id, isIncrease, isRemove) {
-
-    // Rollback
-    if (isIncrease) {
-        var inputEle = document.getElementById(`quantity_${id}`);
-        inputEle.value = Number(inputEle.value) + 1;
+function updateQuantity(id, isIncrease, isRemove, isManual) {
+    var inputEle = document.getElementById(`quantity_${id}`);
+    if (/\d+/.test(inputEle.value)) {
+        // If the user use the +/- buttons
+        if (!isManual) {
+            if (isIncrease) {
+                inputEle.value = Number(inputEle.value) + 1;
+            } else {
+                if (inputEle.value > 1) {
+                    inputEle.value = Number(inputEle.value) - 1;
+                }
+            }
+        } // Else don't do anything
     } else {
-        var inputEle = document.getElementById(`quantity_${id}`);
-        if (inputEle.value > 1) {
-            inputEle.value = Number(inputEle.value) - 1;
-        }
+        inputEle.value = 1; // If input quantity is not numeric, just set quantity to 1
     }
-
 
     let productName = document.getElementById(`product_name_${id}`).innerHTML;
     let price = document.getElementById(`price_${id}`).innerHTML.replace('$', '');
     let productId = document.getElementById(`product_id_${id}`).innerHTML;
-    let quantity = isRemove ? 0 : document.getElementById(`quantity_${id}`).value;
+    let quantity = isRemove ? 0 : inputEle.value;
     var body = "id=" + productId + "&name=" + productName + "&price=" + price + "&quantity=" + quantity;
     let xhttp = new XMLHttpRequest();
 
@@ -101,7 +104,7 @@ function updateQuantity(id, isIncrease, isRemove) {
                 return;
             }
 
-            if (product) {
+            if (product) { // If the product id is returned, the product is still in cart (quantity > 0)
                 // Update the total $$ of the product
                 document.getElementById(`total_${id}`).innerHTML = `$${(Number(product.quantity) * Number(product.price)).toFixed(2)}`
             } else {
