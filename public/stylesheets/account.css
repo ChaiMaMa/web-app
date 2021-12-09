@@ -136,6 +136,19 @@ body {
   font-weight: 600;
 }
 
+/**
+ * Link tag parent of product-name
+ */
+.row.order-list-item a {
+  text-decoration: none;
+  color: rgb(0, 102, 120)
+}
+
+.row.order-list-item a:hover {
+  text-decoration: none;
+  color: rgb(214, 151, 140)
+}
+
 .row.order-list-item .quantity {
   text-align: center;
 }

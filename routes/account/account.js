@@ -83,7 +83,7 @@ router.get('/', async function (req, res, next) {
                             <div class="col-4">
                                 <span class="title">Product Detail</span>
                                 <br>
-                                <span class="product-name">${orderProduct.productName}</span>
+                                <a href="/listprod?productName=${orderProduct.productName}"><span class="product-name">${orderProduct.productName}</span></a>
                                 <br><span class="category">${orderProduct.categoryName}</span>
                             </div>
                             <div class="col-3">
