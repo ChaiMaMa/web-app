@@ -20,6 +20,8 @@ let product = require('./routes/products/product');
 let displayImage = require('./routes/products/displayImage');
 let shipment = require('./routes/checkout/ship');
 let customer = require('./routes/admin/customer');
+let adminOrder = require('./routes/admin/orders');
+let warehouse = require('./routes/admin/warehouse');
 
 // Create an express app
 const app = express();
@@ -80,6 +82,8 @@ app.use('/product', product);
 app.use('/displayImage', displayImage);
 app.use('/shipment', shipment);
 app.use('/admin/customer', customer);
+app.use('/admin/orders', adminOrder);
+app.use('/admin/warehouse', warehouse);
 
 // Rendering the main page
 app.get('/', function (req, res) {
