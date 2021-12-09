@@ -50,9 +50,7 @@ router.get('/', function (req, res, next) {
                 thumbnail += `
                     <img id= "thumb_0" class="ref-image active rounded-img" src="${imageLink}" alt= "Product Image" data-reflow-preview-type="image" onclick="switchMainImage(0);" />
                 `;
-            }
-
-            if (binaryImage) {
+            } else if (binaryImage) {
                 // If there is already an image, we don't set the second image as active
                 let isActive = imageLink ? '' : 'active';
                 image_ref += `
