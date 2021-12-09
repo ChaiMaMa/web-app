@@ -1,3 +1,7 @@
+.btn{
+  background-color: #212529;
+}
+
 .dropdown.no-arrow .dropdown-toggle:after {
   display: none;
 }

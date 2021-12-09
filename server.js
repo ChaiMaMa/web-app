@@ -24,6 +24,7 @@ let adminOrder = require('./routes/admin/orders');
 let warehouse = require('./routes/admin/warehouse');
 let adminProduct = require('./routes/admin/products');
 let adminShipment = require('./routes/admin/shipment');
+let productUpdate = require('./routes/admin/product-update');
 
 // Create an express app
 const app = express();
@@ -89,6 +90,8 @@ app.use('/admin/orders', adminOrder);
 app.use('/admin/warehouse', warehouse);
 app.use('/admin/products', adminProduct);
 app.use('/admin/shipment', adminShipment);
+app.use('/admin/shipment', adminShipment);
+app.use('/admin/product-update', productUpdate);
 
 // Rendering the main page
 app.get('/', function (req, res) {

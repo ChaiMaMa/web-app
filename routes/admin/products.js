@@ -21,12 +21,12 @@ router.get('/', async function (req, res, next) {
         let product = products.recordset[i];
        
         productInfo += `
-            <tr>
-                <td>${product.productId}</td>
-                <td>${product.productName}</td>
-                <td>${product.productDesc}</td>
-                <td>${product.productPrice}</td>
-                <td><img src="/displayImage?id=${product.productId}" alt= "Product Image" data-reflow-preview-type="image" /></td>
+            <tr id = ${product.productId} contenteditable="true" class = "contenteditable">
+                <td contenteditable="false">${product.productId}</td>
+                <td class ="productName">${product.productName}</td>
+                <td class ="productDesc">${product.productDesc}</td>
+                <td class ="productPrice">${product.productPrice}</td>
+                <td class ="productImage"><img src="/displayImage?id=${product.productId}" alt= "Product Image" data-reflow-preview-type="image" /></td>
             </tr>
         `;
     }
