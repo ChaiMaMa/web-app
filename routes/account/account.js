@@ -63,11 +63,21 @@ router.get('/', async function (req, res, next) {
                 let orderedProducts = await getProductInOrder(historyResult.orderId);
 
                 for (let orderProduct of orderedProducts) {
-                    // let imageSrc = orderProduct.
+
+                    // Get the image source
+                    let imageSrc = false;
+
+                    if (orderProduct.productImageURL || orderProduct.productImage) {
+                        imageSrc = orderProduct.productImageURL || "/displayImage?id=" + orderProduct.productId;
+                    } else {
+                        imageSrc = "/images/placeholder.jpeg";
+                    }
+
+
                     orderHistory += `   
                         <div class="row order-list-item">
                             <div class="col-2">
-                                <img src="/images/placeholder.jpeg" height="100%" width="100%"
+                                <img src="${imageSrc}" height="100%" width="100%"
                                     style="border-radius: 6px;">
                             </div>
                             <div class="col-4">
