@@ -1,6 +1,8 @@
 function authenticateUser() {
     // Create a form data object"
-    var params = "username=" + document.getElementById('username').value + "&password=" + document.getElementById('password').value;
+    var params = "username=" + document.getElementById('username').value
+        + "&password=" + document.getElementById('password').value
+        + "&remember=" + document.getElementById('remember').checked;
     console.log(params);
 
     // Create a request and send it out
