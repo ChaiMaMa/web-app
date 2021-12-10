@@ -3,6 +3,12 @@ const router = express.Router();
 const query = require('../../utilities/query').query;
 
 router.get('/', async function (req, res, next) {
+    // Check if the user is an admin
+    if (!req.session.user || !req.session.user.info.isAdmin) {
+        res.status(401).end();
+        return;
+    }
+
     var warehouseInfo = '';
 
     res.setHeader('Content-Type', 'text/html');
@@ -11,7 +17,7 @@ router.get('/', async function (req, res, next) {
     // let name = req.query.productName;
     // let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'" : "";
 
-    let warehouses= await query(`
+    let warehouses = await query(`
         SELECT w.warehouseId, warehouseName, p.productId, quantity FROM warehouse w join productinventory p on w.warehouseId = p.warehouseId
     `, null
     );
@@ -19,7 +25,7 @@ router.get('/', async function (req, res, next) {
     for (let i = 0; i < warehouses.recordset.length; i++) {
 
         let warehouse = warehouses.recordset[i];
-       
+
         warehouseInfo += `
             <tr>
                 <td>${warehouse.productId}</td>

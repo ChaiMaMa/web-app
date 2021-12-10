@@ -4,6 +4,12 @@ const moment = require('moment');
 const query = require('../../utilities/query').query;
 
 router.get('/', async function (req, res, next) {
+    // Check if the user is an admin
+    if (!req.session.user || !req.session.user.info.isAdmin) {
+        res.status(401).end();
+        return;
+    }
+
     var orderInfo = '';
 
     res.setHeader('Content-Type', 'text/html');
@@ -12,13 +18,13 @@ router.get('/', async function (req, res, next) {
     // let name = req.query.productName;
     // let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'" : "";
 
-    let orders= await query(`
+    let orders = await query(`
         SELECT o.orderId, orderDate, customerId, shipmentId, totalAmount FROM ordersummary o left join shipment s on o.orderId = s.orderId 
     `, null
     );
 
     let totalSales = 0;
-    let totalOrders = orders.recordset.length ;
+    let totalOrders = orders.recordset.length;
 
     for (let i = 0; i < orders.recordset.length; i++) {
 
@@ -27,7 +33,7 @@ router.get('/', async function (req, res, next) {
 
         totalSales += order.totalAmount;
 
-        if(order.shipment == null)
+        if (order.shipment == null)
             status = "Not shipped"
         else
             status = "Shipped"
