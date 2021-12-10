@@ -26,7 +26,7 @@ router.get('/', async function (req, res, next) {
 
         let shipment = shipments.recordset[i];
 
-        productInfo += `
+        shipmentInfo += `
             <tr>
                 <td>${shipment.shipmentId}</td>
                 <td>${shipment.orderId}</td>
