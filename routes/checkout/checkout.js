@@ -37,23 +37,34 @@ router.get('/', async function (req, res, next) {
             subTotal += Number(product.price) * Number(product.quantity);
         }
 
-        let options = {};
-        options.products = products;
-        options.subTotal = subTotal.toFixed(2);
-        options.shipFee = shipFee.toFixed(2);
-        options.total = (subTotal + shipFee).toFixed(2);
+        let options = {
+            layout: false,
+            products: products,
+            subTotal: subTotal.toFixed(2),
+            shipFee: shipFee.toFixed(2),
+            total: (subTotal + shipFee).toFixed(2),
+            main_menu_ref: req.session.user ? "/account" : "/login",
+            main_menu: req.session.user ? "Account" : "Login",
+            logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+            admin_portal: (req.session.user && req.session.user.info.isAdmin) ? "<a href='/admin/customer'>Admin Portal</a>" : null,
+        };
 
         if (req.session.user) {
             let user = req.session.user;
-            options.id = user.info.id;
+            options.id = user.info.customerId;
             options.email = user.info.email;
             options.phone = user.info.phonenum;
         }
+
         res.render('layouts/checkout', options);
     } else {
-        res.sendFile(
-            path.join(__dirname, '../../public/layouts/empty_cart.html')
-        );
+        res.render('layouts/empty_cart', {
+            layout: false,
+            main_menu_ref: req.session.user ? "/account" : "/login",
+            main_menu: req.session.user ? "Account" : "Login",
+            logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+            admin_portal: (req.session.user && req.session.user.info.isAdmin) ? "<a href='/admin/customer'>Admin Portal</a>" : null,
+        });
     }
 
 

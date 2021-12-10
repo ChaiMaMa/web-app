@@ -3,9 +3,9 @@ const { query } = require('../../utilities/query');
 
 
 class User {
-    constructor(username, password) { // Password should be hashed
+    constructor(userid, password) { // Password should be hashed
         this.info = false; // Holder
-        this.username = username;
+        this.userid = userid;
         this.password = password;
     }
 
@@ -14,9 +14,9 @@ class User {
             `
             SELECT customerId, firstName, lastName, email, phonenum, address, city, state, postalCode, country
             FROM customer
-            WHERE userid = @username AND password = @password`,
+            WHERE userid = @userid AND password = @password`,
             {
-                username: this.username,
+                userid: this.userid,
                 password: this.password
             }
         );
@@ -30,14 +30,14 @@ class User {
 
         let userInfo = result.recordset[0];
         this.info = {
-            id: userInfo.customerId,
-            username: userInfo.username,
-            password: userInfo.password,
+            customerId: userInfo.customerId,
+            userid: this.userid,
+            password: this.password,
             firstName: userInfo.firstName,
             lastName: userInfo.lastName,
             email: userInfo.email,
             phonenum: userInfo.phonenum,
-            addressNum: userInfo.address,
+            address: userInfo.address,
             city: userInfo.city,
             state: userInfo.state,
             postalCode: userInfo.postalCode,
@@ -48,5 +48,50 @@ class User {
 }
 
 
-module.exports = { User };
+class Admin {
+    constructor(userid, password) {
+        this.info = false;
+        this.userid = userid;
+        this.password = password;
+    }
+
+    async intializeInfo() {
+        console.log(this);
+        let result = await query(
+            `
+            SELECT adminId, firstName, lastName, email, phonenum
+            FROM admin
+            WHERE userid = @userid AND password = @password`,
+            {
+                userid: this.userid,
+                password: this.password
+            }
+        );
+
+        console.log(result);
+        // Duplicate credentials are not allowed. This should be handled at registering step.
+        if (result.recordset.length > 1) {
+            console.log("Duplicate credential in database");
+        } else if (result.recordset.length < 1) {
+            throw new Error("Invalid intialization of a user!");
+        }
+
+        let userInfo = result.recordset[0];
+        this.info = {
+            adminId: userInfo.adminId,
+            userid: this.userid,
+            password: this.password,
+            firstName: userInfo.firstName,
+            lastName: userInfo.lastName,
+            email: userInfo.email,
+            phonenum: userInfo.phonenum,
+            isAdmin: true
+        };
+        return this;
+    }
+
+}
+
+
+module.exports = { User, Admin };
 

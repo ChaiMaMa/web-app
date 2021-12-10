@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const query = require('../../utilities/query').query;
+const { query } = require('../../utilities/query');
 
 router.get('/', async function (req, res, next) {
     var productInfo = '';
@@ -8,14 +8,22 @@ router.get('/', async function (req, res, next) {
     res.setHeader('Content-Type', 'text/html');
 
     // Get the product name to search for
-    let name = req.query.productName;
-    let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'" : "";
-
-    let products = await query(`
+    let productName = req.query.productName;
+    let products = false;
+    if (productName && productName.length > 0) {
+        console.log("Searched Name: " + productName);
+        products = await query(`
         SELECT * FROM product
-        ${condition}
-    `, null
-    );
+        WHERE LOWER(productName) LIKE @productName
+        `,
+            {
+                productName: `%${productName}%`
+            }
+        );
+    } else {
+        products = await query(`SELECT * FROM product`);
+    }
+
 
     for (let product of products.recordset) {
         let imageLink = product.productImageURL;
@@ -29,7 +37,7 @@ router.get('/', async function (req, res, next) {
         }
 
         productInfo += `
-        <a class="ref-product" href="/product?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">
+        <a class="ref-product" href="/product?id=${product.productId}&name=${product.productName}&price=${product.productPrice}&desc=${product.productDesc}&cat=${product.categoryName}">
             <img class="ref-image" src=${src} loading="lazy" />
             <div class="ref-product-data">
                 <div class="ref-product-info">
@@ -44,7 +52,12 @@ router.get('/', async function (req, res, next) {
     res.render(
         'layouts/listprod',
         {
-            products: productInfo
+            products: productInfo,
+            main_menu_ref: req.session.user ? "/account" : "/login",
+            main_menu: req.session.user ? "Account" : "Login",
+            logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+            admin_portal: (req.session.user && req.session.user.info.isAdmin) ? "<a href='/admin/customer'>Admin Portal</a>" : null,
+            layout: false,
         }
     );
 });

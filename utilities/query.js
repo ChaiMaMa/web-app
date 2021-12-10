@@ -101,6 +101,11 @@ async function updateShipment(orderedItems, changes) {
 
 
 
+/**
+ * 
+ * @param {number} productId The id of the product to get image url for
+ * @returns 
+ */
 async function getProductImageURL(productId) {
     let result = await query(`
         SELECT productImageURL, productImage 
@@ -118,7 +123,57 @@ async function getProductImageURL(productId) {
     } else {
         return '/images/placeholder.jpeg';
     }
+}
 
+/**
+ * 
+ * @param {number} cusId 
+ * @param {object} info 
+ * @returns True if update is successful and False otherwise.
+ */
+async function updateAccount(info) {
+    let result = await update(
+        `
+        UPDATE customer
+        SET firstName = @firstname, lastName = @lastname, email = @email, phonenum = @phonenum, 
+        address = @address, city = @city, state = @city, postalCode = @postalCode, country = @country
+        WHERE customerId  = @customerId
+        `,
+        info
+    );
+    console.log(result);
+    return result.rowsAffected[0] > 0;
+}
+
+
+/**
+ * Get the customer's order history.
+ * @param {number} customerId The customer id
+ * @returns {Promise<sql.IRecordSet<any>>} The order history of the specified user
+ */
+async function getOrderHistory(customerId) {
+    return (await query(`
+        SELECT *
+        FROM ordersummary
+        WHERE customerId = @customerId
+    `, { customerId: customerId })
+    ).recordset;
+}
+
+
+/**
+ * 
+ * @param {number} orderId The id of the order
+ */
+async function getProductInOrder(orderId) {
+    return (await query(
+        `
+        SELECT OP.productId AS productId, productName, categoryName, productPrice, productImageURL, productImage, quantity, price 
+        FROM (orderproduct AS OP JOIN product AS P ON OP.productId = P.productId) JOIN category AS C ON P.categoryId = C.categoryId
+
+        WHERE OP.orderId = @orderId
+        `, { orderId: orderId })
+    ).recordset;
 }
 
 
@@ -127,5 +182,8 @@ module.exports = {
     query,
     update,
     updateShipment,
-    getProductImageURL
+    getProductImageURL,
+    updateAccount,
+    getOrderHistory,
+    getProductInOrder
 };

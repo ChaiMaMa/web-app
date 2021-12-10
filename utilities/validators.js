@@ -9,17 +9,32 @@ function isNumeric(input) {
     return pattern.test(input);
 }
 
-async function isAuthenticated(username, password) {
-    let result = await query(`
+async function isAuthenticated(username, password, isAdmin) {
+    let result = false;
+
+    if (isAdmin) {
+        result = await query(`
+        SELECT COUNT(*) AS count
+        FROM admin
+        WHERE userid = @userid AND password = @password
+        `,
+            {
+                userid: username,
+                password: password
+            }
+        );
+    } else {
+        result = await query(`
         SELECT COUNT(*) AS count
         FROM customer
         WHERE userid = @userid AND password = @password
-    `,
-        {
-            userid: username,
-            password: password
-        }
-    );
+        `,
+            {
+                userid: username,
+                password: password
+            }
+        );
+    }
 
     if (result.recordset[0].count > 1) {
         console.log('Database has duplicate credentials!');

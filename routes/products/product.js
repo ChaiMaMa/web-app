@@ -13,6 +13,8 @@ router.get('/', function (req, res, next) {
             let id = req.query.id;
             let name = req.query.name;
             let price = req.query.price;
+            let desc = req.query.desc;
+            // let cat = req.query.cat;
 
             // Check if parameters are present
             if (!id || !name || !price) {
@@ -50,9 +52,7 @@ router.get('/', function (req, res, next) {
                 thumbnail += `
                     <img id= "thumb_0" class="ref-image active rounded-img" src="${imageLink}" alt= "Product Image" data-reflow-preview-type="image" onclick="switchMainImage(0);" />
                 `;
-            }
-
-            if (binaryImage) {
+            } else if (binaryImage) {
                 // If there is already an image, we don't set the second image as active
                 let isActive = imageLink ? '' : 'active';
                 image_ref += `
@@ -73,10 +73,17 @@ router.get('/', function (req, res, next) {
 
             res.render('layouts/product', {
                 product_name: name,
+                // category: cat,
                 price: Number(price).toFixed(2),
                 productId: id,
+                productDesc: desc,
                 image_ref: image_ref,
-                thumbnail: thumbnail
+                thumbnail: thumbnail,
+                main_menu_ref: req.session.user ? "/account" : "/login",
+                main_menu: req.session.user ? "Account" : "Login",
+                logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+                admin_portal: (req.session.user && req.session.user.info.isAdmin) ? "<a href='/admin/customer'>Admin Portal</a>" : null,
+                layout: false,
             });
         } catch (err) {
             console.dir(err);

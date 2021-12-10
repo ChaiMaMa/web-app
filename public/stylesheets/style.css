@@ -2,6 +2,11 @@ html,body {
 	height: 100%;
 }
 
+
+nav.navbar.navbar-light.navbar-expand-md .container-fluid {
+	padding-left: 30px;
+}
+
 .link {
 	color: rgba(142,147,115,1);
 }
@@ -14,7 +19,7 @@ body.my-product-page {
     
 /* Log-in page */
 body.my-login-page {
-	background-image: url("../images/login/background.jpg");
+	background-image: url("/images/login/background.jpg");
 	background-color: rgba(142,147,115,1);
 	background-size: cover;
 	background-blend-mode: multiply;
@@ -89,12 +94,14 @@ body.my-login-page {
 	left: 0;
 	width: 100%;
 	margin: 0;
+	justify-items: start;
 }
 
 .my-home-page .web-header a {
 	color: #bac5c4;
-	padding-left: 10px;
-	padding-right: 10px;
+	/* padding-left: 10px;
+	padding-right: 10px; */
+	text-decoration: none;
 }
 
 .my-home-page .web-header a:hover{
@@ -213,7 +220,7 @@ body.my-login-page {
 }  
   
 .large-about-text{
-	font-size: 50px;
+	font-size: 45px;
 	color: #828887;
 	font-weight: bold;
 	position: absolute; 
@@ -222,12 +229,10 @@ body.my-login-page {
 }
 
 .large-contact-text {
-	font-size: 50px;
+	font-size: 45px;
 	color: white;
 	font-weight: bold;
-	position: absolute; 
-	top: 113px;
-	left: 15%;
+	text-align: center;
 }
 
 
@@ -242,4 +247,47 @@ body.my-login-page {
 	border-style: solid;
 	justify-self: end;
 	grid-area: 1/ 2/ 1/ 2;
+}
+
+/*
+Use in drop down menu
+*/
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	border-radius: 8px;
+	display: none;
+	position: absolute;
+	background-color: #f1f1f1;
+	min-width: max-content;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 10;
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 12px 12px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: rgb(197, 206, 204);
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.dropdown.nav-link a {
+	text-decoration: none;
+	color: rgb(115,115,115);
+}
+
+.dropdown.nav-link a:hover {
+	color: black;
+	cursor: pointer;
 }

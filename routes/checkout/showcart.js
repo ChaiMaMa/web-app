@@ -37,9 +37,9 @@ router.get('/', async function (req, res) {
                 <div class="ref-quantity-col">
                     <div class="ref-product-quantity">
                         <div class="ref-quantity-widget">
-                            <div class="ref-decrease" onclick='updateQuantity(${product.id}, false, false);'>-</div>
-                            <input id='quantity_${product.id}' type="text" value=${product.quantity} />
-                            <div class="ref-increase" onclick='updateQuantity(${product.id}, true, false);'>+</div>
+                            <div class="ref-decrease" onclick='updateQuantity(${product.id}, false, false, false);'>-</div>
+                            <input id='quantity_${product.id}' type="text" onchange="updateQuantity(${product.id}, false, false, true);" value=${product.quantity} />
+                            <div class="ref-increase" onclick='updateQuantity(${product.id}, true, false, false);'>+</div>
                         </div>
                         <div class="ref-product-remove" onclick='updateQuantity(${product.id}, false, true);'>Remove</div>
                     </div>
@@ -59,11 +59,22 @@ router.get('/', async function (req, res) {
         }
 
         res.render('layouts/showcart', {
+            layout: false,
             products: products,
-            subTotal: subTotal.toFixed(2)
+            subTotal: subTotal.toFixed(2),
+            main_menu_ref: req.session.user ? "/account" : "/login",
+            main_menu: req.session.user ? "Account" : "Login",
+            logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+            admin_portal: (req.session.user && req.session.user.info.isAdmin) ? "<a href='/admin/customer'>Admin Portal</a>" : null,
         });
     } else {
-        res.sendFile(path.join(__dirname, '../../public/layouts/empty_cart.html'));
+        res.render('layouts/empty_cart', {
+            layout: false,
+            main_menu_ref: req.session.user ? "/account" : "/login",
+            main_menu: req.session.user ? "Account" : "Login",
+            logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+            admin_portal: (req.session.user && req.session.user.info.isAdmin) ? "<a href='/admin/customer'>Admin Portal</a>" : null,
+        });
     }
 });
 

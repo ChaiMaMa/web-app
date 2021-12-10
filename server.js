@@ -19,6 +19,13 @@ let validateLogin = require('./routes/authentication/validateLogin');
 let product = require('./routes/products/product');
 let displayImage = require('./routes/products/displayImage');
 let shipment = require('./routes/checkout/ship');
+let account = require('./routes/account/account');
+let customer = require('./routes/admin/customer');
+let adminOrder = require('./routes/admin/orders');
+let inventory = require('./routes/admin/inventory');
+let adminProduct = require('./routes/admin/products');
+let adminShipment = require('./routes/admin/shipment');
+let productUpdate = require('./routes/admin/product-update');
 
 // Create an express app
 const app = express();
@@ -49,7 +56,7 @@ app.use(session({
   cookie: {
     httpOnly: false,
     secure: false,
-    maxAge: 60000,
+    maxAge: 1 * 60 * 60 * 1000, // Expire after 1 hour
   }
 }))
 
@@ -75,9 +82,18 @@ app.use('/validateLogin', validateLogin);
 app.use('/images', express.static('public/images'));
 app.use('/stylesheets', express.static('public/stylesheets'));
 app.use('/js', express.static('public/javascripts'));
+app.use('/fonts', express.static('public/fonts'));
 app.use('/product', product);
 app.use('/displayImage', displayImage);
 app.use('/shipment', shipment);
+app.use('/account', account);
+app.use('/admin/customer', customer);
+app.use('/admin/orders', adminOrder);
+app.use('/admin/inventory', inventory);
+app.use('/admin/products', adminProduct);
+app.use('/admin/shipment', adminShipment);
+app.use('/admin/shipment', adminShipment);
+app.use('/admin/product-update', productUpdate);
 
 // Rendering the main page
 app.get('/', function (req, res) {
