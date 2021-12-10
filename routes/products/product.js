@@ -69,12 +69,13 @@ router.get('/', function (req, res, next) {
                     <img class="ref-image active rounded-img" src="/images/placeholder.jpeg" alt= "Product Image" data-reflow-preview-type="image" />
                 `;
             }
-
+          
 
             res.render('layouts/product', {
                 product_name: name,
                 price: Number(price).toFixed(2),
                 productId: id,
+                productDesc: "productDesc",
                 image_ref: image_ref,
                 thumbnail: thumbnail
             });
