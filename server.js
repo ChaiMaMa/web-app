@@ -1,7 +1,10 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
+const path = require('path');
 
+
+// Imports route handlers
 let loadData = require('./routes/loaddata');
 let listOrder = require('./routes/account/listorder');
 let listProd = require('./routes/products/listprod');
@@ -9,7 +12,22 @@ let addCart = require('./routes/checkout/addcart');
 let showCart = require('./routes/checkout/showcart');
 let checkout = require('./routes/checkout/checkout');
 let order = require('./routes/checkout//order');
+let login = require('./routes/authentication/login');
+let logout = require('./routes/authentication/logout');
+let validateLogin = require('./routes/authentication/validateLogin');
+// let customer = require('./routes/account/customer');
+let product = require('./routes/products/product');
+let displayImage = require('./routes/products/displayImage');
+let shipment = require('./routes/checkout/ship');
+let account = require('./routes/account/account');
+let customer = require('./routes/admin/customer');
+let adminOrder = require('./routes/admin/orders');
+let inventory = require('./routes/admin/inventory');
+let adminProduct = require('./routes/admin/products');
+let adminShipment = require('./routes/admin/shipment');
+let productUpdate = require('./routes/admin/product-update');
 
+// Create an express app
 const app = express();
 
 // This DB Config is accessible globally
@@ -25,8 +43,8 @@ dbConfig = {
 }
 
 // Setting up JSON Parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Parsing json string to js object
+app.use(express.urlencoded({ extended: true })); // Parsing queries in POST http message (Content-Type: application/x-www-form-urlencoded)
 
 // Setting up the session.
 // This uses MemoryStorage which is not
@@ -38,14 +56,15 @@ app.use(session({
   cookie: {
     httpOnly: false,
     secure: false,
-    maxAge: 60000,
+    maxAge: 1 * 60 * 60 * 1000, // Expire after 1 hour
   }
 }))
 
 // Setting up the rendering engine
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
-app.set('views', './public')
+app.set('views', path.join(__dirname, 'public'));
+
 
 // Setting up Express.js routes.
 // These present a "route" on the URL of the site.
@@ -57,13 +76,30 @@ app.use('/addcart', addCart);
 app.use('/showcart', showCart);
 app.use('/checkout', checkout);
 app.use('/order', order);
+app.use('/login', login);
+app.use('/logout', logout);
+app.use('/validateLogin', validateLogin);
+app.use('/images', express.static('public/images'));
+app.use('/stylesheets', express.static('public/stylesheets'));
+app.use('/js', express.static('public/javascripts'));
+app.use('/fonts', express.static('public/fonts'));
+app.use('/product', product);
+app.use('/displayImage', displayImage);
+app.use('/shipment', shipment);
+app.use('/account', account);
+app.use('/admin/customer', customer);
+app.use('/admin/orders', adminOrder);
+app.use('/admin/inventory', inventory);
+app.use('/admin/products', adminProduct);
+app.use('/admin/shipment', adminShipment);
+app.use('/admin/shipment', adminShipment);
+app.use('/admin/product-update', productUpdate);
 
 // Rendering the main page
 app.get('/', function (req, res) {
-  res.render('index', {
-    title: "ChaiMaMa"
-  });
+  res.sendFile(path.join(__dirname, "public", "layouts", "index.html"));
 })
 
 // Starting our Express app
-app.listen(process.env.PORT || 3000, () => console.log('Server started on port ' + (process.env.PORT || 3000)));
+let port = process.env.PORT || 3000;
+app.listen(port, () => console.log('Server started on port ' + port));
