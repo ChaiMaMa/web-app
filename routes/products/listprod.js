@@ -12,7 +12,7 @@ router.get('/', async function (req, res, next) {
     let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'" : "";
 
     let products = await query(`
-        SELECT * FROM product
+        SELECT * FROM product JOIN category ON product.categoryId = category.categoryId
         ${condition}
     `, null
     );
@@ -29,7 +29,7 @@ router.get('/', async function (req, res, next) {
         }
 
         productInfo += `
-        <a class="ref-product" href="/product?id=${product.productId}&name=${product.productName}&price=${product.productPrice}">
+        <a class="ref-product" href="/product?id=${product.productId}&name=${product.productName}&price=${product.productPrice}&desc=${product.productDesc}&cat=${product.categoryName}">
             <img class="ref-image" src=${src} loading="lazy" />
             <div class="ref-product-data">
                 <div class="ref-product-info">

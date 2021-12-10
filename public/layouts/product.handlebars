@@ -32,10 +32,10 @@
     </div>
     </nav>
     <div>
-        <div class="row">
+        <div class="row" style="padding-top: 5%; padding-right:5%">
             <div class="col align-self-center">{{{image_ref}}}</div>
             <div class="col">
-                <div><span class="d-lg-flex justify-content-lg-end" style="font-size: 18px;">Japan</span>
+                <div><span class="d-lg-flex justify-content-lg-end" style="font-size: 18px;">{{{category}}}</span>
                     <h1 id = "product_name" class="display-1 text-center" style="font-family: 'Didact Gothic', sans-serif;">{{{product_name}}}</h1>
                     <div id="divider" class="container" style="display: flex; align-items: center; justify-content: center;">
                         <hr style="min-width: 150px;"/>
@@ -48,8 +48,7 @@
                     </div>
                 </div>
                 <span id="price" class="d-lg-flex justify-content-lg-center" style="transform: translate(0px);">${{{price}}}</span>
-                <p style="font-family: 'Didact Gothic', sans-serif;">something something<br /><br /></p>
-                {{{productDesc}}}
+                <p style="font-family: 'Didact Gothic', sans-serif;"><br />{{{productDesc}}}</p><br />
                 <span data-reflow-type="add-to-cart" data-reflow-variant="746363596_s">
                     <div class="ref-product-controls">
                         <div class="ref-quantity-widget">
