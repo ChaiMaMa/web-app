@@ -3,7 +3,8 @@ const router = express.Router();
 const { isAuthenticated } = require('../../utilities/validators');
 const { body, validationResult } = require('express-validator');
 const { hash } = require('../../utilities/security');
-const { User } = require('./user');
+const { User, Admin } = require('./user');
+const { is } = require('express/lib/request');
 
 router.post('/',
     [
@@ -15,15 +16,20 @@ router.post('/',
             console.log('Checking user...');
             // If authentication fails or database connection errors, user is consider not authenticated.
             try {
+                // Checking if the request is for an admin access
+                let isAdmin = /^\w+.chaimama.admin$/.test(req.body.username);
+                console.log('isAdmin: ' + isAdmin);
+
                 // Check system for the requested user with posted information
-                let authenticated = await isAuthenticated(req.body.username, hash(req.body.password));
+                let authenticated = await isAuthenticated(req.body.username, hash(req.body.password), isAdmin);
 
                 // Return error if not authenticated (Check out http error codes 4xx!)
                 if (!authenticated) {
                     res.status(401).send('Authentication failed.');
                 } else {
                     // Create an object representing the user
-                    let user = new User(req.body.username, hash(req.body.password));
+                    let user = isAdmin ? new Admin(req.body.username, hash(req.body.password))
+                        : new User(req.body.username, hash(req.body.password));
 
                     // Add the user as a property to the current session after self-intializing
                     req.session.user = await user.intializeInfo();
