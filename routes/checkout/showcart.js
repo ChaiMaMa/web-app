@@ -68,7 +68,13 @@ router.get('/', async function (req, res) {
             admin_portal: (req.session.user && req.session.user.info.isAdmin) ? "<a href='/admin/customer'>Admin Portal</a>" : null,
         });
     } else {
-        res.sendFile(path.join(__dirname, '../../public/layouts/empty_cart.html'));
+        res.render('layouts/empty_cart', {
+            layout: false,
+            main_menu_ref: req.session.user ? "/account" : "/login",
+            main_menu: req.session.user ? "Account" : "Login",
+            logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+            admin_portal: (req.session.user && req.session.user.info.isAdmin) ? "<a href='/admin/customer'>Admin Portal</a>" : null,
+        });
     }
 });
 
