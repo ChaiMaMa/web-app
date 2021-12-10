@@ -111,6 +111,7 @@ router.post('/', async function (req, res, next) {
         } else {
             message = "Unknown Error occurs while placing your order. Please try again!";
         }
+        console.log("Error: " + message);
         console.dir(err);
         res.status(500).sendFile(path.join(__dirname, '../../public/layouts/error.html'));
     }
