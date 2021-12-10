@@ -40,7 +40,9 @@ router.post('/',
                     }
 
                     // Return success status
-                    res.status(200).end();
+                    res.status(200).send({
+                        isAdmin: isAdmin
+                    });
                 }
             } catch (err) {
                 console.log(err);
