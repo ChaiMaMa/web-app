@@ -74,7 +74,11 @@ router.get('/', function (req, res, next) {
                 price: Number(price).toFixed(2),
                 productId: id,
                 image_ref: image_ref,
-                thumbnail: thumbnail
+                thumbnail: thumbnail,
+                main_menu_ref: req.session.user ? "/account" : "/login",
+                main_menu: req.session.user ? "Account" : "Login",
+                logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+                admin_portal: null
             });
         } catch (err) {
             console.dir(err);

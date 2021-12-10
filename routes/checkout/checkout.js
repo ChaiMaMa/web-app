@@ -41,7 +41,11 @@ router.get('/', async function (req, res, next) {
             products: products,
             subTotal: subTotal.toFixed(2),
             shipFee: shipFee.toFixed(2),
-            total: (subTotal + shipFee).toFixed(2)
+            total: (subTotal + shipFee).toFixed(2),
+            main_menu_ref: req.session.user ? "/account" : "/login",
+            main_menu: req.session.user ? "Account" : "Login",
+            logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+            admin_portal: null
         };
 
         if (req.session.user) {
@@ -50,6 +54,7 @@ router.get('/', async function (req, res, next) {
             options.email = user.info.email;
             options.phone = user.info.phonenum;
         }
+
         res.render('layouts/checkout', options);
     } else {
         res.sendFile(

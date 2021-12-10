@@ -60,7 +60,11 @@ router.get('/', async function (req, res) {
 
         res.render('layouts/showcart', {
             products: products,
-            subTotal: subTotal.toFixed(2)
+            subTotal: subTotal.toFixed(2),
+            main_menu_ref: req.session.user ? "/account" : "/login",
+            main_menu: req.session.user ? "Account" : "Login",
+            logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+            admin_portal: null
         });
     } else {
         res.sendFile(path.join(__dirname, '../../public/layouts/empty_cart.html'));

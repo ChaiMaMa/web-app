@@ -281,3 +281,13 @@ Use in drop down menu
 .dropdown:hover .dropdown-content {
 	display: block;
 }
+
+.dropdown.nav-link a {
+	text-decoration: none;
+	color: rgb(115,115,115);
+}
+
+.dropdown.nav-link a:hover {
+	color: black;
+	cursor: pointer;
+}

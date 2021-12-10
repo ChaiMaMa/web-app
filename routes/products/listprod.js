@@ -52,7 +52,11 @@ router.get('/', async function (req, res, next) {
     res.render(
         'layouts/listprod',
         {
-            products: productInfo
+            products: productInfo,
+            main_menu_ref: req.session.user ? "/account" : "/login",
+            main_menu: req.session.user ? "Account" : "Login",
+            logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+            admin_portal: null
         }
     );
 });

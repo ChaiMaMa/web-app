@@ -122,6 +122,10 @@ router.get('/', async function (req, res, next) {
                 postalCode: user.info.postalCode,
                 country: user.info.country,
                 orderHistory: orderHistory,
+                main_menu_ref: req.session.user ? "/account" : "/login",
+                main_menu: req.session.user ? "Account" : "Login",
+                logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
+                admin_portal: null,
                 layout: false // This will not set a default layout (e.g. avoiding duplicate head/body tags)
             });
         } else { // Not authenticated? Redirect to login
