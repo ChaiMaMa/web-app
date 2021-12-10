@@ -247,12 +247,12 @@ UPDATE Product SET productName = 'White Tip' where productId = 10;
 UPDATE Product SET productName = 'Frozen Peak' where productId = 11;
 UPDATE Product SET productName = 'Baozhong' where productId = 12;
 UPDATE Product SET productName = 'Silver Needle' where productId = 13;
-UPDATE Product SET productName = 'Darjeeling' where productId = 15;
-UPDATE Product SET productName = 'Chamomile' where productId = 16;
-UPDATE Product SET productName = 'Ginger' where productId = 17;
-UPDATE Product SET productName = 'Hibiscus' where productId = 18;
-UPDATE Product SET productName = 'Peppermint' where productId = 19;
-UPDATE Product SET productName = 'Rooibos' where productId = 20;
+UPDATE Product SET productName = 'Darjeeling' where productId = 14;
+UPDATE Product SET productName = 'Chamomile' where productId = 15;
+UPDATE Product SET productName = 'Ginger' where productId = 16;
+UPDATE Product SET productName = 'Hibiscus' where productId = 17;
+UPDATE Product SET productName = 'Peppermint' where productId = 18;
+UPDATE Product SET productName = 'Rooibos' where productId = 1;
 
 UPDATE Product set productImageURL = '/images/assam.jpg' where productId = 1;
 UPDATE Product set productImageURL = '/images/ceylon.jpg' where productId = 2;
@@ -267,13 +267,12 @@ UPDATE Product set productImageURL = '/images/whitetip.jpg' where productId = 10
 UPDATE Product set productImageURL = '/images/frozenpeak.jpg' where productId = 11;
 UPDATE Product set productImageURL = '/images/Baozhong.jpg' where productId = 12;
 UPDATE Product set productImageURL = '/images/silverneedle.jpg' where productId = 13;
-UPDATE Product set productImageURL = '/images/whitetip.png' where productId = 14;
-UPDATE Product set productImageURL = '/images/darjeeling.jpg' where productId = 15;
-UPDATE Product set productImageURL = '/images/camo.jpg' where productId = 16;
-UPDATE Product set productImageURL = '/images/ginger.jpg' where productId = 17;
-UPDATE Product set productImageURL = '/images/hibiscus.jpg' where productId = 18;
-UPDATE Product set productImageURL = '/images/peppermint.jpg' where productId = 19;
-UPDATE Product set productImageURL = '/images/rooibos.jpg' where productId = 20;
+UPDATE Product set productImageURL = '/images/darjeeling.jpg' where productId = 14;
+UPDATE Product set productImageURL = '/images/camo.jpg' where productId = 15;
+UPDATE Product set productImageURL = '/images/ginger.jpg' where productId = 16;
+UPDATE Product set productImageURL = '/images/hibiscus.jpg' where productId = 17;
+UPDATE Product set productImageURL = '/images/peppermint.jpg' where productId = 18;
+UPDATE Product set productImageURL = '/images/rooibos.jpg' where productId = 19;
 
 
 UPDATE Product set productDesc = 'Assam tea is usually described as full bodied and strong with a malty flavor. Full bodied means that tea is rich and complex and is most often related to black tea.'  where productId = 1;
@@ -289,11 +288,11 @@ UPDATE Product set productDesc = 'White Tip tea has a fruity, crisp finish.' whe
 UPDATE Product set productDesc = 'Frozen Peak tea has a nutty flavor with a smooth finish.' where productId = 11;
 UPDATE Product set productDesc = 'Baozhong tea undergoes minimal processing and boasts a delicate, subtle flavor.' where productId = 12;
 UPDATE Product set productDesc = 'Silver Needle tea is a rare tea made only from buds. It has a floral scent and sweet flavor.' where productId = 13;
-UPDATE Product set productDesc = 'Darjeeling is grown in India and is usually less expensive than white teas grown in Yunnan.' where productId = 15;
-UPDATE Product set productDesc = 'Chamomile has gentle notes of apple, and there is a mellow, honey-like sweetness in the cup. It has a silky mouthfeel and yet remains a clean, delicately floral herbal tea, and even from the very first sip it feels wonderfully soothing.' where productId = 16;
-UPDATE Product set productDesc = 'Ginger tea is a warming, invigorating, and spicy caffeine-free alternative to black tea or coffee. Ginger is an ancient herb thats been used throughout history for its medicinal benefits, particularly for indigestion, nausea, and motion sickness.' where productId = 17;
-UPDATE Product set productDesc = 'Hibiscus tea has a tart flavor similar to that of cranberries and can be enjoyed both hot and cold.' where productId = 18;
-UPDATE Product set productDesc = 'Peppermint leaves contain several essential oils that are released when steeped in hot water, including menthol, menthone and limonene. Collectively, these give peppermint tea its refreshing, cooling, minty taste.' where productId = 19;
-UPDATE Product set productDesc = 'Rooibos tea is incredibly smooth and gentle with a natural sweetness and slightly nutty taste. When brewed for longer, rooibos is full-bodied and rich, and you can smell the warm woody notes rising from your cup or teapot.' where productId = 20;
+UPDATE Product set productDesc = 'Darjeeling is grown in India and is usually less expensive than white teas grown in Yunnan.' where productId = 14;
+UPDATE Product set productDesc = 'Chamomile has gentle notes of apple, and there is a mellow, honey-like sweetness in the cup. It has a silky mouthfeel and yet remains a clean, delicately floral herbal tea, and even from the very first sip it feels wonderfully soothing.' where productId = 15;
+UPDATE Product set productDesc = 'Ginger tea is a warming, invigorating, and spicy caffeine-free alternative to black tea or coffee. Ginger is an ancient herb thats been used throughout history for its medicinal benefits, particularly for indigestion, nausea, and motion sickness.' where productId = 16;
+UPDATE Product set productDesc = 'Hibiscus tea has a tart flavor similar to that of cranberries and can be enjoyed both hot and cold.' where productId = 17;
+UPDATE Product set productDesc = 'Peppermint leaves contain several essential oils that are released when steeped in hot water, including menthol, menthone and limonene. Collectively, these give peppermint tea its refreshing, cooling, minty taste.' where productId = 18;
+UPDATE Product set productDesc = 'Rooibos tea is incredibly smooth and gentle with a natural sweetness and slightly nutty taste. When brewed for longer, rooibos is full-bodied and rich, and you can smell the warm woody notes rising from your cup or teapot.' where productId = 19;
 
 
