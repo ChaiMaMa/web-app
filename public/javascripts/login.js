@@ -11,8 +11,10 @@ function authenticateUser() {
     xhttp.onload = function () {
         console.log("xhttp.status");
         if (xhttp.status === 200) {
+            let isAdmin = JSON.parse(xhttp.response).isAdmin;
+            let newRef = Boolean(isAdmin) ? "/admin/customer" : "/listprod";
             // If the user is authenticated, redirect to the home page or previous page (if there was one)
-            window.location.replace("/");
+            window.location.replace(newRef);
         } else {
             alert("Invalid username or password");
         }
