@@ -252,7 +252,7 @@ UPDATE Product SET productName = 'Chamomile' where productId = 15;
 UPDATE Product SET productName = 'Ginger' where productId = 16;
 UPDATE Product SET productName = 'Hibiscus' where productId = 17;
 UPDATE Product SET productName = 'Peppermint' where productId = 18;
-UPDATE Product SET productName = 'Rooibos' where productId = 1;
+UPDATE Product SET productName = 'Rooibos' where productId = 19;
 
 UPDATE Product set productImageURL = '/images/assam.jpg' where productId = 1;
 UPDATE Product set productImageURL = '/images/ceylon.jpg' where productId = 2;
