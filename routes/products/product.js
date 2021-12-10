@@ -13,6 +13,8 @@ router.get('/', function (req, res, next) {
             let id = req.query.id;
             let name = req.query.name;
             let price = req.query.price;
+            let desc = req.query.desc;
+            // let cat = req.query.cat;
 
             // Check if parameters are present
             if (!id || !name || !price) {
@@ -71,8 +73,10 @@ router.get('/', function (req, res, next) {
 
             res.render('layouts/product', {
                 product_name: name,
+                // category: cat,
                 price: Number(price).toFixed(2),
                 productId: id,
+                productDesc: desc,
                 image_ref: image_ref,
                 thumbnail: thumbnail,
                 main_menu_ref: req.session.user ? "/account" : "/login",
