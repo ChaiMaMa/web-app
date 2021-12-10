@@ -94,12 +94,14 @@ body.my-login-page {
 	left: 0;
 	width: 100%;
 	margin: 0;
+	justify-items: start;
 }
 
 .my-home-page .web-header a {
 	color: #bac5c4;
-	padding-left: 10px;
-	padding-right: 10px;
+	/* padding-left: 10px;
+	padding-right: 10px; */
+	text-decoration: none;
 }
 
 .my-home-page .web-header a:hover{
