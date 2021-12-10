@@ -107,7 +107,7 @@ router.get('/', async function (req, res, next) {
                 `;
             }
 
-
+            console.log(req.session.user && req.session.user.info.isAdmin);
 
             // Render the template
             res.render('layouts/account', {
@@ -125,7 +125,7 @@ router.get('/', async function (req, res, next) {
                 main_menu_ref: req.session.user ? "/account" : "/login",
                 main_menu: req.session.user ? "Account" : "Login",
                 logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
-                admin_portal: null,
+                admin_portal: (req.session.user && req.session.user.info.isAdmin) ? "<a href='/admin/customer'>Admin Portal</a>" : null,
                 layout: false // This will not set a default layout (e.g. avoiding duplicate head/body tags)
             });
         } else { // Not authenticated? Redirect to login
