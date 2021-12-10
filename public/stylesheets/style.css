@@ -2,6 +2,11 @@ html,body {
 	height: 100%;
 }
 
+
+nav.navbar.navbar-light.navbar-expand-md .container-fluid {
+	padding-left: 30px;
+}
+
 .link {
 	color: rgba(142,147,115,1);
 }

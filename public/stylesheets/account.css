@@ -1,6 +1,8 @@
 body {
   font-family: brandon-grotesque,sans-serif;
+  height: 100%;
 }
+
 
 .far:hover {
   cursor: pointer;
