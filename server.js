@@ -31,11 +31,7 @@ let productUpdate = require('./routes/admin/product-update');
 
 // Create an express app
 const app = express();
-const redisClient = redis.createClient(process.env.REDIS_TLS_URL, {
-  tls: {
-    rejectUnauthorized: false
-  }
-});
+const redisClient = redis.createClient(process.env.REDIS_URL);
 
 // This DB Config is accessible globally
 dbConfig = {
@@ -64,7 +60,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: false,
-    secure: true,
+    secure: false,
     maxAge: 1 * 60 * 60 * 1000, // Expire after 1 hour
   }
 }))
