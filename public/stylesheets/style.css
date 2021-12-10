@@ -218,7 +218,7 @@ body.my-login-page {
 }  
   
 .large-about-text{
-	font-size: 50px;
+	font-size: 45px;
 	color: #828887;
 	font-weight: bold;
 	position: absolute; 
@@ -227,12 +227,10 @@ body.my-login-page {
 }
 
 .large-contact-text {
-	font-size: 50px;
+	font-size: 45px;
 	color: white;
 	font-weight: bold;
-	position: absolute; 
-	top: 113px;
-	left: 15%;
+	text-align: center;
 }
 
 
