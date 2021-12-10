@@ -3,7 +3,7 @@ const exphbs = require('express-handlebars');
 const session = require('express-session');
 const path = require('path');
 const redis = require('redis')
-let RedisStore = require('connect-redis')(session)
+const RedisStore = require('connect-redis')(session)
 
 
 // Imports route handlers
@@ -31,6 +31,11 @@ let productUpdate = require('./routes/admin/product-update');
 
 // Create an express app
 const app = express();
+const redisClient = redis.createClient(process.env.REDIS_TLS_URL, {
+  tls: {
+    rejectUnauthorized: false
+  }
+});
 
 // This DB Config is accessible globally
 dbConfig = {
@@ -52,11 +57,7 @@ app.use(express.urlencoded({ extended: true })); // Parsing queries in POST http
 // Redis is used as the session store.
 app.use(session({
   store: new RedisStore({
-    client: redis.createClient(
-      {
-        url: process.env.REDIS_URL
-      }
-    )
+    client: redisClient
   }),
   secret: process.env.SESSION_SECRET,
   resave: false,
