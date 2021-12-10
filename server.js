@@ -54,10 +54,7 @@ app.use(session({
   store: new RedisStore({
     client: redis.createClient(
       {
-        url: process.env.REDIS_TLS_URL,
-        socket: {
-          tls: true
-        }
+        url: process.env.REDIS_URL
       }
     )
   }),
