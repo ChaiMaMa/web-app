@@ -42,7 +42,8 @@ router.get('/', async function (req, res, next) {
     res.render(
         'layouts/admin_customer',
         {
-            customers: customerInfo
+            customers: customerInfo,
+            layout: false,
         }
     );
 });

@@ -40,7 +40,8 @@ router.get('/', async function (req, res, next) {
     res.render(
         'layouts/admin_shipment',
         {
-            shipments: shipmentInfo
+            shipments: shipmentInfo,
+            layout: false,
         }
     );
 });

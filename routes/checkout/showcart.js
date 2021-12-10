@@ -59,6 +59,7 @@ router.get('/', async function (req, res) {
         }
 
         res.render('layouts/showcart', {
+            layout: false,
             products: products,
             subTotal: subTotal.toFixed(2),
             main_menu_ref: req.session.user ? "/account" : "/login",

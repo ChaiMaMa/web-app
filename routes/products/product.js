@@ -79,6 +79,7 @@ router.get('/', function (req, res, next) {
                 main_menu: req.session.user ? "Account" : "Login",
                 logout: req.session.user ? "<a href='/logout'>Logout</a>" : null,
                 admin_portal: (req.session.user && req.session.user.info.isAdmin) ? "<a href='/admin/customer'>Admin Portal</a>" : null,
+                layout: false,
             });
         } catch (err) {
             console.dir(err);

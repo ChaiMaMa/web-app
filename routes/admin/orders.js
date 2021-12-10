@@ -53,7 +53,8 @@ router.get('/', async function (req, res, next) {
         {
             orders: orderInfo,
             totalOrders: totalOrders,
-            totalSales: totalSales.toFixed(2)
+            totalSales: totalSales.toFixed(2),
+            layout: false,
         }
     );
 });

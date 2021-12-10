@@ -38,6 +38,7 @@ router.get('/', async function (req, res, next) {
         }
 
         let options = {
+            layout: false,
             products: products,
             subTotal: subTotal.toFixed(2),
             shipFee: shipFee.toFixed(2),
