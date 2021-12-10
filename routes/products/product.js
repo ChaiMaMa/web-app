@@ -22,7 +22,7 @@ router.get('/', function (req, res, next) {
             // Get product images
             let result = await query(
                 `
-                SELECT productImageURL, productImage 
+                SELECT productImageURL, productImage, productDesc
                 FROM Product 
                 WHERE productId = @productId
                 `,
@@ -69,13 +69,14 @@ router.get('/', function (req, res, next) {
                     <img class="ref-image active rounded-img" src="/images/placeholder.jpeg" alt= "Product Image" data-reflow-preview-type="image" />
                 `;
             }
-          
+            
+            let productDesc = result.recordset[0].productDesc;
 
             res.render('layouts/product', {
                 product_name: name,
                 price: Number(price).toFixed(2),
                 productId: id,
-                productDesc: "productDesc",
+                productDesc: productDesc,
                 image_ref: image_ref,
                 thumbnail: thumbnail
             });
