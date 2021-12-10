@@ -285,8 +285,8 @@ UPDATE Product set productDesc = 'Hibiscus tea has a tart flavor similar to that
 UPDATE Product set productDesc = 'Peppermint leaves contain several essential oils that are released when steeped in hot water, including menthol, menthone and limonene. Collectively, these give peppermint tea its refreshing, cooling, minty taste.'where productId = 19;
 UPDATE Product set productDesc = 'Rooibos tea is incredibly smooth and gentle with a natural sweetness and slightly nutty taste. When brewed for longer, rooibos is full-bodied and rich, and you can smell the warm woody notes rising from your cup or teapot.'where productId = 20;
 
-UPDATE Product set productImage = 'img/assam.jpg' where productId = 1;
-UPDATE Product set productImageURL = 'img/ceylon.jpg' where productId = 2;
+UPDATE Product set productImageURL = 'img/assam.jpg' where productId = 1;
+UPDATE Product set productImage = 'img/ceylon.jpg' where productId = 2;
 UPDATE Product set productImageURL = 'img/earl grey.jpg' where productId = 3;
 UPDATE Product set productImageURL = 'img/English breakfast.jpg' where productId = 4;
 UPDATE Product set productImageURL = 'img/rose.jpg' where productId = 5;
