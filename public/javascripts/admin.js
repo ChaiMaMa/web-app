@@ -2,12 +2,11 @@ var edittedProdRecord = new Set();
 
 function setUpEditableListeners() {
     let editables = document.getElementsByClassName("contenteditable");
-    
-    for (let editable of editables) {
-        editable.addEventListener("input", function(){
 
+    for (let editable of editables) {
+        editable.addEventListener("input", function () {
             edittedProdRecord.add(editable.id);
-    
+            console.log(edittedProdRecord);
         });
     }
 }
@@ -17,27 +16,27 @@ function setUpEditableListeners() {
  */
 function updateProduct() {
 
-    for(let id of edittedProdRecord){
+    for (let id of edittedProdRecord) {
         //Get product info
         let prodInfo = document.getElementById(id).children;
         let prodName = prodInfo[1].innerHTML;
-        let prodPrice = prodInfo[2].innerHTML;
-        let prodDesc = prodInfo[3].innerHTML;
+        let prodPrice = prodInfo[3].innerHTML;
+        let prodDesc = prodInfo[2].innerHTML;
         let prodImage = prodInfo[4].innerHTML;
 
-        
+        console.log(prodName);
+
+
         /// Ajax to send post request
         let xhttp = new XMLHttpRequest();
 
         // Define a callback on result
-        xhttp.onload = function() {
+        xhttp.onload = function () {
             // TODO: Do something after a result is returned
             if (xhttp.status == 200) {
-
+                // alert("Successfully updated product");
             } else {
-
-                alert(xhttp.response);
-
+                alert("Failed to update product");
             }
         };
 
