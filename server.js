@@ -2,10 +2,11 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const path = require('path');
+const { hash } = require('./utilities/security');
 
 
 // Imports route handlers
-let loadData = require('./routes/loaddata');
+// let loadData = require('./routes/loaddata');
 let listOrder = require('./routes/account/listorder');
 let listProd = require('./routes/products/listprod');
 let addCart = require('./routes/checkout/addcart');
@@ -32,13 +33,13 @@ const app = express();
 
 // This DB Config is accessible globally
 dbConfig = {
-  user: 'SA',
-  password: process.env.SA_PASSWORD,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   server: process.env.DB_SERVER,
-  database: 'tempdb',
+  database: process.env.DB_NAME,
   options: {
     'enableArithAbort': true,
-    'encrypt': false,
+    'encrypt': true,
   }
 }
 
@@ -50,7 +51,7 @@ app.use(express.urlencoded({ extended: true })); // Parsing queries in POST http
 // This uses MemoryStorage which is not
 // recommended for production use.
 app.use(session({
-  secret: 'COSC 304 Rules!',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -69,7 +70,7 @@ app.set('views', path.join(__dirname, 'public'));
 // Setting up Express.js routes.
 // These present a "route" on the URL of the site.
 // Eg: http://127.0.0.1/loaddata
-app.use('/loaddata', loadData);
+// app.use('/loaddata', loadData);
 app.use('/listorder', listOrder);
 app.use('/listprod', listProd);
 app.use('/addcart', addCart);
