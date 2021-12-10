@@ -12,13 +12,8 @@ router.get('/', async function (req, res, next) {
     var productInfo = '';
 
     res.setHeader('Content-Type', 'text/html');
-
-    // Get the product name to search for
-    // let name = req.query.productName;
-    // let condition = (name && name.length > 0) ? "WHERE LOWER(productName) LIKE '%" + name.toLowerCase() + "%'" : "";
-
     let products = await query(`
-        SELECT productId, productName, productDesc, productPrice, productImage FROM product
+        SELECT productId, productName, productDesc, productPrice, productImage, productImageURL FROM product
     `, null
     );
 
@@ -26,13 +21,21 @@ router.get('/', async function (req, res, next) {
 
         let product = products.recordset[i];
 
+        let imageSrc = false;
+        if (product.productImageURL || product.productImage) {
+            imageSrc = product.productImageURL || `/displayImage?id=${product.productId}`;
+        } else {
+            imageSrc = '/images/placeholder.jpeg';
+        }
+        console.log(imageSrc);
+
         productInfo += `
             <tr id = ${product.productId} contenteditable="true" class = "contenteditable">
                 <td contenteditable="false">${product.productId}</td>
-                <td class ="productName">${product.productName}</td>
-                <td class ="productDesc">${product.productDesc}</td>
-                <td class ="productPrice">${product.productPrice}</td>
-                <td class ="productImage"><img src="/displayImage?id=${product.productId}" alt= "Product Image" data-reflow-preview-type="image" /></td>
+                <td class="productName">${product.productName}</td>
+                <td class="productDesc">${product.productDesc}</td>
+                <td class="productPrice">${product.productPrice}</td>
+                <td class="productImage"><img src="${imageSrc}" height="100%" width="100%" alt="Product Image" data-reflow-preview-type="image" /></td>
             </tr>
         `;
     }
