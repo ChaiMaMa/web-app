@@ -2,7 +2,8 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const path = require('path');
-const { hash } = require('./utilities/security');
+const redis = require('redis')
+let RedisStore = require('connect-redis')(session)
 
 
 // Imports route handlers
@@ -48,15 +49,24 @@ app.use(express.json()); // Parsing json string to js object
 app.use(express.urlencoded({ extended: true })); // Parsing queries in POST http message (Content-Type: application/x-www-form-urlencoded)
 
 // Setting up the session.
-// This uses MemoryStorage which is not
-// recommended for production use.
+// Redis is used as the session store.
 app.use(session({
+  store: new RedisStore({
+    client: redis.createClient(
+      {
+        url: process.env.REDIS_TLS_URL,
+        socket: {
+          tls: true
+        }
+      }
+    )
+  }),
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
     httpOnly: false,
-    secure: false,
+    secure: true,
     maxAge: 1 * 60 * 60 * 1000, // Expire after 1 hour
   }
 }))
