@@ -31,7 +31,11 @@ let productUpdate = require('./routes/admin/product-update');
 
 // Create an express app
 const app = express();
-const redisClient = redis.createClient(process.env.REDIS_URL);
+const redisClient = redis.createClient(
+  {
+    url: process.env.REDIS_URL
+  }
+);
 
 // This DB Config is accessible globally
 dbConfig = {
