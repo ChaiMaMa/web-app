@@ -24,7 +24,7 @@ CREATE TABLE customer (
     postalCode          VARCHAR(20),
     country             VARCHAR(40),
     userid              VARCHAR(20),
-    password            VARCHAR(30),
+    password            VARCHAR(256),
     PRIMARY KEY (customerId)
 );
 
