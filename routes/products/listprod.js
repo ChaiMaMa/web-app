@@ -12,16 +12,15 @@ router.get('/', async function (req, res, next) {
     let products = false;
     if (productName && productName.length > 0) {
         console.log("Searched Name: " + productName);
-        products = await query(`
-        SELECT * FROM product JOIN category ON product.categoryId = category.categoryId
-        WHERE LOWER(productName) LIKE @productName
-        `,
+        let sql = `SELECT * FROM product JOIN category ON product.categoryId = category.categoryId`;
+        products = await query(sql+
+        `WHERE LOWER(productName) LIKE @productName`,
             {
                 productName: `%${productName}%`
             }
         );
     } else {
-        products = await query(`SELECT * FROM product`);
+        products = await query(sql);
     }
 
 
