@@ -10,9 +10,9 @@ router.get('/', async function (req, res, next) {
     // Get the product name to search for
     let productName = req.query.productName;
     let products = false;
+    let sql = `SELECT * FROM product JOIN category ON product.categoryId = category.categoryId`;
     if (productName && productName.length > 0) {
         console.log("Searched Name: " + productName);
-        let sql = `SELECT * FROM product JOIN category ON product.categoryId = category.categoryId`;
         products = await query(sql+
         `WHERE LOWER(productName) LIKE @productName`,
             {
