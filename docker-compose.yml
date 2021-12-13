@@ -7,9 +7,15 @@ services:
         image: node-app
         environment:
             DB_SERVER: cosc304-db
-            SA_PASSWORD: 'YourStrong@Passw0rd'
+            DB_NAME: tempdb
+            DB_USER: SA
+            DB_PASSWORD: 'YourStrong@Passw0rd'
+            REDIS_URL: redis://redis-store:6379
+            SESSION_SECRET: 'ChaiM8M8'
+            NODE_ENV: dev
         depends_on:
             - db
+            - redis
         container_name: node-app
         volumes:
             - ./:/app/
@@ -37,7 +43,22 @@ services:
             node-network:
                 aliases:
                     - cosc304-db
+    redis:
+        image: redis:latest
+        container_name: redis
+        restart: always
+        ports:
+            - '6379:6379'
+        expose:
+            - '6379'
+        volumes:
+            - redis-data:/data
+        networks:
+            node-network:
+                aliases:
+                    - redis-store
 volumes:
     cosc304-db: null
+    redis-data: null
 networks:
     node-network: null

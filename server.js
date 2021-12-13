@@ -7,7 +7,7 @@ const RedisStore = require('connect-redis')(session)
 
 
 // Imports route handlers
-// let loadData = require('./routes/loaddata');
+let loadData = require('./routes/loaddata');
 let listOrder = require('./routes/account/listorder');
 let listProd = require('./routes/products/listprod');
 let addCart = require('./routes/checkout/addcart');
@@ -78,7 +78,7 @@ app.set('views', path.join(__dirname, 'public'));
 // Setting up Express.js routes.
 // These present a "route" on the URL of the site.
 // Eg: http://127.0.0.1/loaddata
-// app.use('/loaddata', loadData);
+if (process.env.NODE_ENV === 'dev') { app.use('/loaddata', loadData); }
 app.use('/listorder', listOrder);
 app.use('/listprod', listProd);
 app.use('/addcart', addCart);
