@@ -6,3 +6,6 @@ build/
 
 # OS specific files
 .DS_Store
+
+# VSCODE
+.vscode/
