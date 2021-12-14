@@ -44,8 +44,9 @@ dbConfig = {
   server: process.env.DB_SERVER,
   database: process.env.DB_NAME,
   options: {
-    'enableArithAbort': true,
-    'encrypt': true,
+    enableArithAbort: true,
+    encrypt: true,
+    abortTransactionOnError: true
   }
 }
 
