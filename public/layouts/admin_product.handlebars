@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="/stylesheets/admin/customer/Table-with-search-1.css">
-    <link rel="stylesheet" href="/stylesheets/admin/customer/Table-with-search.css">
     <link rel="stylesheet" href="/stylesheets/admin/customer/Tamplate-SB-Admin-on-BSS.css">
 </head>
 
@@ -102,7 +101,7 @@
                     <button class="btn" type="button" style="position: fixed;bottom: 10px;right: 10px;color:white"
                         onclick="updateProduct();">Update</button>
                     <div class="form-group pull-right">
-                        <input type="text" class="search form-control" placeholder="What you looking for?">
+                        <input type="text" class="search form-control" placeholder="Search">
                     </div>
                     <span class="counter pull-right"></span>
                     <table class="table table-hover table-bordered results">
@@ -123,6 +122,8 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/Table-with-search.js"></script>
     <script src="/js/admin.js"></script>

@@ -15,12 +15,16 @@ $(document).ready(function() {
 
   $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e){
     $(this).attr('visible','true');
+    $(this).removeHighlight().highlight(searchTerm);
   });
 
-  var jobCount = $('.results tbody tr[visible="true"]').length;
-    $('.counter').text(jobCount + ' item');
+  var itemCount = $('.results tbody tr[visible="true"]').length;
+  $('.counter').text(itemCount + ' item');
 
-  if(jobCount == '0') {$('.no-result').show();}
-    else {$('.no-result').hide();}
+  if(itemCount == '0') {
+    $('.no-result').show();
+  } else {
+    $('.no-result').hide();
+  }
 		  });
 });
