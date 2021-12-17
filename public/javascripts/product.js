@@ -20,7 +20,7 @@ function addCart() {
                 <div class="ref-notification-content">
                     <div class="ref-notification-title">Product added to cart</div>
                     <div class="ref-notification-description"></div>
-                    <div class="ref-close-button" onclick='closeDialog();'>×</div>
+                    <div class="ref-close-button" onclick='closeDialog();'>x</div>
                     <a class="ref-button" href='/showcart'>See Cart</a>
                 </div>
             </div>
@@ -31,7 +31,7 @@ function addCart() {
                 <div class="ref-notification-content">
                     <div class="ref-notification-title">Failed to add to cart</div>
                     <div class="ref-notification-description"></div>
-                    <div class="ref-close-button" onclick='closeDialog();'>×</div>
+                    <div class="ref-close-button" onclick='closeDialog();'>x</div>
                 </div>
             </div>
             `;
