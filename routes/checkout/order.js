@@ -2,13 +2,21 @@ const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const sql = require('mssql');
-const query = require('../../utilities/query').query;
-const update = require('../../utilities/query').update;
-const isNumeric = require('../../utilities/validators').isNumeric;
 const path = require('path');
-const { ValidationError, PropertyRequiredError, UserNotFoundError } = require('../../utilities/errors');
+const { TransactionError } = require('mssql');
+const { NotEnoughInventory, ProductNotFound, OrderEmptyError, ValidationError, PropertyRequiredError, UserNotFoundError } = require('../../utilities/errors');
+const { isNumeric } = require('../../utilities/validators');
+const { updateShipment, query, update } = require('../../utilities/query');
+const { hash } = require('../../utilities/security');
+const { redirect } = require('express/lib/response');
 
-router.post('/', async function (req, res, next) {
+
+router.post('/', [
+    setupOrder,
+    setupShipment
+]);
+
+async function setupOrder(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     try {
         /** 
@@ -60,6 +68,7 @@ router.post('/', async function (req, res, next) {
                 customerId: customerInfo.customerId
             });
 
+
         let orderId = result.recordset[0].orderId;
 
 
@@ -98,8 +107,15 @@ router.post('/', async function (req, res, next) {
         delete req.session.productList;
         delete req.session.productCount;
 
-        /** Redirect to shipment route to handle creating shipments **/
-        res.redirect(`/shipment?orderId=${orderId}`);
+        // TODO: Set an attribute to save the pendig orderId
+        req.session.pendingOrder = {
+            orderId: orderId,
+            hashedId: null
+        };
+
+        // Move to the next handler for shipment
+        next();
+
     } catch (err) {
         let message = false;
         if (err instanceof ValidationError || err instanceof UserNotFoundError) {
@@ -113,9 +129,59 @@ router.post('/', async function (req, res, next) {
         }
         console.log("Error: " + message);
         console.dir(err);
-        res.status(500).sendFile(path.join(__dirname, '../../public/layouts/error.html'));
+        res.status(500).send();
     }
-});
+}
 
+async function setupShipment(req, res) {
+    res.setHeader('Content-Type', 'text/html');
+
+    // Get order id from session
+    // Certainly orderId is valid as handle is passed to this handler.
+    let orderId = req.session.pendingOrder.orderId;
+
+    // Create a hashed string for the confirmation
+    let hashedId = hash(orderId + moment().format("YYYY-MM-DD"));
+
+    // Save it to session
+    req.session.pendingOrder.hashedId = hashedId;
+
+
+    (async function () {
+        try {
+            let orderedItems = await query(
+                `
+                SELECT OS.orderId AS orderId, productId, quantity, orderDate
+                FROM ordersummary AS OS, orderproduct AS OP
+                WHERE OS.orderId = OP.orderId AND OS.orderId = @orderId
+                `,
+                { orderId: orderId }
+            );
+
+            // Run transaction for each item
+            // Might throw an error if a rollback is triggered or any sql-related errors occur
+            if (orderedItems.recordset.length > 0) {
+                await updateShipment(orderedItems.recordset);
+            } else {
+                throw new OrderEmptyError(orderId);
+            }
+
+            // If successful, redirect to confirmation page
+            res.redirect("/confirmation/success/" + hashedId);
+        } catch (err) {
+            if (err instanceof TransactionError) {
+                res.status(500);
+            } else if (err instanceof NotEnoughInventory) {
+                res.status(500);
+            } else if (err instanceof ProductNotFound || err instanceof OrderEmptyError) {
+                res.status(400);
+            } else {
+                res.status(500);
+            }
+            console.dir(err);
+            res.redirect("/confirmation/pending/" + hashedId);
+        }
+    })();
+}
 
 module.exports = router;
