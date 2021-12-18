@@ -28,6 +28,7 @@ let adminProduct = require('./routes/admin/products');
 let adminShipment = require('./routes/admin/shipment');
 let productUpdate = require('./routes/admin/product-update');
 let confirm = require('./routes/checkout/confirm');
+let payment = require('./routes/checkout/payment');
 
 // Create an express app
 const app = express();
@@ -104,6 +105,7 @@ app.use('/admin/shipment', adminShipment);
 app.use('/admin/shipment', adminShipment);
 app.use('/admin/product-update', productUpdate);
 app.use('/confirmation', confirm);
+app.use('/payment', payment);
 
 // Rendering the main page
 app.get('/', function (req, res) {
