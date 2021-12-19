@@ -2,7 +2,7 @@
 // This is a public sample test API key.
 // To avoid exposing it, don't submit any personally identifiable information through requests with this API key.
 // Sign in to see your own test API key embedded in code samples.
-const stripe = Stripe("pk_test_A7jK4iCYHL045qgjjfzAfPxu");
+const stripe = Stripe("pk_test_51K7zbyCSXHo9Vk8qjnUXhsigMmZ1cTS60MGYdXd6OnQL9pI6KpqQepmDofa2uz61T2g6ATCdlwyIAul3X6ulfl9B00FTwFhGaH");
 
 // The items the customer wants to buy
 const items = [{ id: "xl-tshirt" }];
