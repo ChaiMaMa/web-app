@@ -1,10 +1,19 @@
+// Core
 const express = require('express');
+
+// Temlate engine
 const exphbs = require('express-handlebars');
+
+// Session store
 const session = require('express-session');
-const path = require('path');
 const redis = require('redis')
 const RedisStore = require('connect-redis')(session)
 
+// Security
+const helmet = require('helmet');
+
+// Utility
+const path = require('path');
 
 // Imports route handlers
 let loadData = require('./routes/loaddata');
@@ -17,7 +26,6 @@ let order = require('./routes/checkout//order');
 let login = require('./routes/authentication/login');
 let logout = require('./routes/authentication/logout');
 let validateLogin = require('./routes/authentication/validateLogin');
-// let customer = require('./routes/account/customer');
 let product = require('./routes/products/product');
 let displayImage = require('./routes/products/displayImage');
 let account = require('./routes/account/account');
@@ -32,11 +40,6 @@ let payment = require('./routes/checkout/payment');
 
 // Create an express app
 const app = express();
-const redisClient = redis.createClient(
-  {
-    url: process.env.REDIS_URL
-  }
-);
 
 // This DB Config is accessible globally
 dbConfig = {
@@ -51,12 +54,22 @@ dbConfig = {
   }
 }
 
-// Setting up JSON Parser
-app.use(express.json()); // Parsing json string to js object
-app.use(express.urlencoded({ extended: true })); // Parsing queries in POST http message (Content-Type: application/x-www-form-urlencoded)
+// Set up proxy configuration
+// Client’s IP address is understood as the left-most entry in the X-Forwarded-For header
+app.set('trust proxy', true);
+
+// Setting up the rendering engine
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'public'));
 
 // Setting up the session.
 // Redis is used as the session store.
+const redisClient = redis.createClient(
+  {
+    url: process.env.REDIS_URL
+  }
+);
 app.use(session({
   store: new RedisStore({
     client: redisClient
@@ -71,16 +84,18 @@ app.use(session({
   }
 }))
 
-// Setting up the rendering engine
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'public'));
+// Setting up JSON Parser
+app.use(express.json()); // Parsing json string to js object
+app.use(express.urlencoded({ extended: true })); // Parsing queries in POST http message (Content-Type: application/x-www-form-urlencoded)
 
+// Set up security enhancement (secure format of HTTP Response headers)
+// Check Helmet doc: https://www.npmjs.com/package/helmet
+app.use(helmet);
 
 // Setting up Express.js routes.
 // These present a "route" on the URL of the site.
-// Eg: http://127.0.0.1/loaddata
-if (process.env.NODE_ENV === 'dev') { app.use('/loaddata', loadData); }
+// Eg: http://127.0.0.1/loaddata (local development environment)
+if (process.env.NODE_ENV != 'production') { app.use('/loaddata', loadData); }
 app.use('/listorder', listOrder);
 app.use('/listprod', listProd);
 app.use('/addcart', addCart);
