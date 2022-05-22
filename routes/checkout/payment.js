@@ -4,7 +4,7 @@ const path = require('path');
 // This is created with a sample API key
 // Do not use in production
 // TODO: Replace with your own API key
-const stripe = require('stripe')('sk_test_Hrs6SAopgFPF0bZXSN3f6ELN');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 
 // Change this field for default currency

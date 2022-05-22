@@ -25,6 +25,20 @@ services:
             node-network:
                 aliases:
                     - node-app
+    proxy:
+        image: ngix:latest
+        hostname: proxy
+        container_name: reverse_proxy
+        ports:
+            - 80:80
+            - 143:143
+        volumes:
+            - ./nginx:/etc/nginx
+            - ./ngix/ssl/private:/etc/ssl/private
+        networks:
+            node-network:
+                aliases:
+                    - reverse_proxy
     db:
         image: mcr.microsoft.com/mssql/server:2019-latest
         container_name: mssql
