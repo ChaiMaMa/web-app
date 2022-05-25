@@ -36,7 +36,7 @@ async function update(queryStr, params) {
  * @param {sql.IRecordSet<any>} orderedItems The object representing the ordered item.
  * @param {Array<string>} changes The log of successful steps in transaction.
  */
-async function updateShipment(orderedItems, changes) {
+async function updateShipment(orderedItems) {
     let transaction = new sql.Transaction(); // Use global connection pool
     await transaction.begin();
 
@@ -73,8 +73,6 @@ async function updateShipment(orderedItems, changes) {
         } else if (result.quantity < 0) {
             await transaction.rollback();
             throw new NotEnoughInventory(orderedItem.productId, result.quantity);
-        } else {
-            changes.push(`Ordered Product ID: ${orderedItem.productId} Qty: ${orderedItem.quantity} Previous inventory: ${result.quantity + orderedItem.quantity} New inventory: ${result.quantity}`);
         }
     }
 

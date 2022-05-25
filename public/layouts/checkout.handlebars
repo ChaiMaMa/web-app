@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.reflowhq.com/v1/toolkit.min.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/checkout.css">
     <title>ChaiMaMa</title>
 </head>
 
@@ -48,7 +49,8 @@
                     <div class="reflow-shopping-cart">
                         <div class="ref-checkout" style="display:flex;">
                             <div class="ref-checkout-content">
-                                <form id='checkout_form' class="ref-details" action="/order" method="post">
+                                <form id='checkout_form' class="ref-details" action="/order" method="post"
+                                    onsubmit="showOverlay();">
                                     <div class="ref-heading">Details</div>
                                     <label>
                                         <span>Customer ID</span>
@@ -121,9 +123,9 @@
             </div>
         </div>
     </div>
-
-
-
+    <div id='overlay'>
+        <progress class="pure-material-progress-circular" />
+    </div>
     <script src=" https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
         </script>
